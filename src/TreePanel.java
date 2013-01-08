@@ -157,8 +157,10 @@ public class TreePanel extends JPanel implements MouseListener, MouseWheelListen
 			setMindmapTo(mindmap.next());
 		else {			
 			MindmapNode dummy=mindmap.parent();
-			if (dummy!=null) setMindmapTo(dummy);
-			sheduleNavigation(DOWN);
+			if (dummy!=null) {
+				setMindmapTo(dummy);
+				sheduleNavigation(DOWN);
+			}
 		}
 	}
 	
@@ -197,8 +199,11 @@ public class TreePanel extends JPanel implements MouseListener, MouseWheelListen
 			setMindmapTo(mindmap.prev());
 		else {
 			MindmapNode dummy=mindmap.parent();
-			if (dummy!=null) setMindmapTo(dummy);
-			sheduleNavigation(UP);
+			if (dummy!=null) {
+				setMindmapTo(dummy);
+				sheduleNavigation(UP);
+			}
+			
 
 		}
 	}

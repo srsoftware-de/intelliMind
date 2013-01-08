@@ -37,7 +37,7 @@ import tools.srsoftware.Tools;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = "0.3.18";
+	private String version = "0.3.19";
 	private String date = "April 2012";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
@@ -846,6 +846,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 					if (display.equals("StarTreePanel")) enableStarTree(true);
 				}
 			}
+			configurationFile.close();
 		} catch (FileNotFoundException e) {
 			try {
 				mindmapToOpenAtStart = new URL(helpFile);
