@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.zip.DataFormatException;
 
 public class StarTreePanel extends TreePanel {
@@ -101,6 +102,8 @@ public class StarTreePanel extends TreePanel {
 					System.out.println("Fehler beim Laden von: " + e.getMessage());
 				} catch (DataFormatException e) {
 					System.out.println("Dateityp wird nicht unterstützt: " + e.getMessage());
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
 				}
 			}
 		}

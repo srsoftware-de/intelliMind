@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -159,9 +160,9 @@ public class TreePanel extends JPanel implements MouseListener, MouseWheelListen
 			MindmapNode dummy=mindmap.parent();
 			if (dummy!=null) {
 				setMindmapTo(dummy);
-				sheduleNavigation(DOWN);
-			}
+			sheduleNavigation(DOWN);
 		}
+	}
 	}
 	
 	private class NavigationThread extends Thread{
@@ -201,7 +202,7 @@ public class TreePanel extends JPanel implements MouseListener, MouseWheelListen
 			MindmapNode dummy=mindmap.parent();
 			if (dummy!=null) {
 				setMindmapTo(dummy);
-				sheduleNavigation(UP);
+			sheduleNavigation(UP);
 			}
 			
 
@@ -461,7 +462,7 @@ public class TreePanel extends JPanel implements MouseListener, MouseWheelListen
 		fontSize = fs;
 	}
 
-	public void startHtmlExport(String folder, boolean onlyCurrent, int maxDepth, boolean interactive, boolean singleFile, boolean noMultipleFollow) throws IOException, DataFormatException {
+	public void startHtmlExport(String folder, boolean onlyCurrent, int maxDepth, boolean interactive, boolean singleFile, boolean noMultipleFollow) throws IOException, DataFormatException, URISyntaxException {
 		exportedFiles = new TreeSet<String>();
 		MindmapNode root = mindmap.getSuperRoot();
 		writeHtmlFile(root, folder, 1, onlyCurrent, maxDepth, interactive, singleFile, noMultipleFollow);
@@ -507,6 +508,7 @@ public class TreePanel extends JPanel implements MouseListener, MouseWheelListen
 							} catch (FileNotFoundException fnfe){								
 							} catch (NullPointerException npwe){								
 							} catch (DataFormatException e) {
+							} catch (URISyntaxException e) {
 							}
 						}
 						if (singleFile) {

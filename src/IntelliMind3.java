@@ -19,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.zip.DataFormatException;
 
@@ -37,8 +38,8 @@ import tools.srsoftware.Tools;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = "0.3.19";
-	private String date = "April 2012";
+	private String version = "0.3.20";
+	private String date = "April 2013";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
 	private KeyStroke CtrlW=KeyStroke.getKeyStroke(KeyEvent.VK_W,2);
@@ -537,6 +538,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			fileNotFound(e1);
 		} catch (DataFormatException e1) {
 			fileNotSupported(e1);
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
 		}
 		if (command.equals("navigateToRoot") && (commandKnown = true)) mindmapPanel.navigateToRoot();
 		if (command.equals("new") && (commandKnown = true)) createNewMindmap();
@@ -556,6 +559,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			fileNotFound(e1);
 		} catch (DataFormatException e1) {
 			fileNotSupported(e1);
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
 		}
 		if (command.equals("refreshView") && (commandKnown = true)) mindmapPanel.refreshView();
 		if (command.equals("smaller") && (commandKnown = true)) {
@@ -602,6 +607,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			e.printStackTrace();
 		} catch (DataFormatException e) {
 			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -614,6 +621,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (DataFormatException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			}
 		}
@@ -640,6 +649,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				fileNotFound(e);
 			} catch (DataFormatException e) {
 				fileNotSupported(e);
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -686,16 +697,16 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return (u == null) ? null : new NodeImage(u);
 	}
 
-	private MindmapNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException {
+	private MindmapNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException, URISyntaxException {
 		if (fileUrl == null) return null; // wenn keine URl angegeben ist: abbrechen
-		URL fileUrl2 = null;
+		URL urlPlusExtension = null;
 		try {
-			fileUrl2 = new URL(fileUrl.toString() + ".imf"); // alternative Url mit Standardendung erzeugen
+			urlPlusExtension = new URL(fileUrl.toString() + ".imf"); // alternative Url mit Standardendung erzeugen
 		} catch (MalformedURLException e) {	} // muss nicht gefangen werden: aus einer validen URL kann durch anhängen von ".imf" keine ungültige werden
 
 		if (Tools.fileIsLocal(fileUrl) && !Tools.fileExists(fileUrl)) { // wenn der Pfad ein lokaler ist und auf eine nicht existierde Datei zeigt:
-			if (Tools.fileExists(fileUrl2)) { // testen, ob die Datei mit zusätzlicher Endung .imf existiert
-				fileUrl = fileUrl2; // wenn ja: diese nutzen
+			if (Tools.fileExists(urlPlusExtension)) { // testen, ob die Datei mit zusätzlicher Endung .imf existiert
+				fileUrl = urlPlusExtension; // wenn ja: diese nutzen
 			} else { // wenn keine der beiden Dateinamen eine existierende datei bezeichnet: Fragen, ob Datei erzeugt werden soll
 				File f = new File(fileUrl.getPath());
 				String name = f.getName();
@@ -706,7 +717,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				if (searchedFile != null) {
 					fileUrl = searchedFile;
 				} else {
-					if (!fileUrl.toString().toLowerCase().endsWith(".mm") && !fileUrl.toString().toLowerCase().endsWith(".imf")) fileUrl = fileUrl2;
+					if (!fileUrl.toString().toLowerCase().endsWith(".mm") && !fileUrl.toString().toLowerCase().endsWith(".imf")) fileUrl = urlPlusExtension;
 					if (!requestFileCreation(fileUrl)) return null;
 				}
 			}
@@ -729,7 +740,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return JOptionPane.showConfirmDialog(this, languagePack.UNSAVED_CHANGES(), languagePack.SAVE_ERROR(), JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
-	private MindmapNode openMindmap() throws FileNotFoundException, DataFormatException {
+	private MindmapNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
 		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
 		URL fileUrl = Tools.showSelectFileDialog(languagePack.OPEN_MINDMAP(), null, new GenericFileFilter(languagePack.MINDMAP_FILE(), ".imf;.mm"), this);
 		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, languagePack.SELECT_TARGET_MANUALLY());
@@ -954,6 +965,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (DataFormatException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}

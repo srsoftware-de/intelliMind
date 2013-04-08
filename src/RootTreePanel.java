@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Stroke;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.zip.DataFormatException;
@@ -43,6 +44,8 @@ public class RootTreePanel extends TreePanel {
 					System.out.println("Fehler beim Laden von: " + e.getMessage());
 				} catch (DataFormatException e) {
 					System.out.println("Dateityp wird nicht unterstützt: " + e.getMessage());
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
 				}
 			}
 			MindmapNode child;

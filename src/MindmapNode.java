@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -297,7 +301,7 @@ public class MindmapNode {
 		mindmapChanged();
 	}
 
-	public void loadFromFile() throws FileNotFoundException, IOException, DataFormatException {
+	public void loadFromFile() throws FileNotFoundException, IOException, DataFormatException, URISyntaxException {
 		if (this.nodeFile != null) this.loadFromFile(this.nodeFile);
 	}
 
@@ -306,7 +310,7 @@ public class MindmapNode {
 		return (new File("intelliMind3.tmp.imf")).toURL();
 	}
 
-	public void loadFromFile(URL fileUrl) throws FileNotFoundException, IOException, DataFormatException {
+	public void loadFromFile(URL fileUrl) throws FileNotFoundException, IOException, DataFormatException, URISyntaxException {
 		if (!nodeFileHasBeenLoaded) {
 			nodeFileHasBeenLoaded = true;
 			if (!Tools.fileIsLocal(fileUrl)) {
@@ -317,6 +321,9 @@ public class MindmapNode {
 			if (!Tools.fileExists(fileUrl)) {
 				throw new FileNotFoundException(fileUrl.toString());
 			} else {
+				
+				fileUrl=resolveSymLinks(fileUrl);
+				
 				MindmapNode n = nodeOpenAndChanged(fileUrl);
 				if (n != null) {
 					// TODO wenn ein Mindmap geöffnet wird, das schon offen, geändert und noch ncht gespeichert ist:
@@ -342,6 +349,18 @@ public class MindmapNode {
 				}
 			}
 		}
+	}
+
+	private static URL resolveSymLinks(URL fileUrl) throws URISyntaxException, IOException {
+		Path path = Paths.get(fileUrl.toString().substring(5));
+		if (Files.isSymbolicLink(path))	{
+			Path target = Files.readSymbolicLink(path);
+			if (path.isAbsolute()){
+				if (!target.isAbsolute())	target=path.getParent().resolve(target);
+			} else target=target.toAbsolutePath();
+			fileUrl = new URL("file:"+target);
+		}
+		return fileUrl;
 	}
 
 	private void loadKeggFile(URL fileUrl) throws IOException {
@@ -388,13 +407,9 @@ public class MindmapNode {
 	}
 
 	public static MindmapNode nodeOpenAndChanged(URL url) {
-		for (Iterator<MindmapNode> i = changedMindmaps.iterator(); i.hasNext();) {
-			MindmapNode n = i.next();
+		for (MindmapNode n : changedMindmaps) {
 			URL u = n.nodeFile();
-			if ((u != null) && (url.equals(u)) && n.nodeFileHasBeenLoaded) {
-				// System.out.println(url.toString() + " is already open and has been changed!");
-				return n;
-			}
+			if ((u != null) && (url.equals(u)) && n.nodeFileHasBeenLoaded) return n;
 		}
 		return null;
 	}
@@ -902,7 +917,7 @@ public class MindmapNode {
 		return this.nodeFileHasBeenLoaded;
 	}
 
-	public MindmapNode reload() throws FileNotFoundException, IOException, DataFormatException {
+	public MindmapNode reload() throws FileNotFoundException, IOException, DataFormatException, URISyntaxException {
 		// TODO Auto-generated method stub
 		MindmapNode result = new MindmapNode();
 		result.nodeFile = this.nodeFile;
