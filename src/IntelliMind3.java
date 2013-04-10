@@ -33,12 +33,13 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import tools.srsoftware.GenericFileFilter;
+import tools.srsoftware.SuggestField;
 import tools.srsoftware.Tools;
 
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = "0.3.20";
+	private String version = "0.3.21";
 	private String date = "April 2013";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
@@ -905,6 +906,10 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	public void windowClosed(WindowEvent arg0) {}
 
 	public void windowClosing(WindowEvent arg0) {
+		try {
+			SuggestField.save();
+		} catch (IOException e) {
+		}
 		if (closeMindmap()) System.exit(0);
 	}
 
