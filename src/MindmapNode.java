@@ -13,9 +13,6 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -350,19 +347,34 @@ public class MindmapNode {
 			}
 		}
 	}
+	
+	private static boolean isSymbolicLink(File file) throws IOException {
+	  if (file == null)
+	    throw new NullPointerException("File must not be null");
+	  File canon;
+	  if (file.getParent() == null) {
+	    canon = file;
+	  } else {
+	    File canonDir = file.getParentFile().getCanonicalFile();
+	    canon = new File(canonDir, file.getName());
+	  }
+	  return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
+	}
 
 	private static URL resolveSymLinks(URL fileUrl) throws URISyntaxException, IOException {
-		Path path = Paths.get(fileUrl.toString().substring(5));
-		if (Files.isSymbolicLink(path))	{
-			Path target = Files.readSymbolicLink(path);
-			if (path.isAbsolute()){
+		File path = new File(fileUrl.toString().substring(5));
+		if (isSymbolicLink(path))	{
+			System.out.println(fileUrl+" refers to symlink");
+	    File target = path.getCanonicalFile();	    
+//			File target = readSymbolicLink(path);
+/*			if (path.isAbsolute()){
 				if (!target.isAbsolute())	target=path.getParent().resolve(target);
-			} else target=target.toAbsolutePath();
+			} else target=target.toAbsolutePath();*/
 			fileUrl = new URL("file:"+target);
 		}
 		return fileUrl;
 	}
-
+	
 	private void loadKeggFile(URL fileUrl) throws IOException {
 		System.out.println("loading "+fileUrl);
 		String url=fileUrl.toString();
