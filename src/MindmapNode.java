@@ -524,7 +524,9 @@ public class MindmapNode {
 					node = node.next();
 				}
 				if (line.equals("[UP]")) {
-					node = node.parent();
+					if (node.parent()!=null){
+						node = node.parent();
+					} else System.out.println("Mindmap corrupt: UP-command found while at root node.");
 				}
 
 				if (line.startsWith("text=")) {
