@@ -5,6 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/BitmapHandling"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Formula"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/xml formatter"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xml-formatter"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
