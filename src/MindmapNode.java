@@ -298,7 +298,7 @@ public class MindmapNode {
 		mindmapChanged();
 	}
 
-	public void loadFromFile() throws FileNotFoundException, IOException, DataFormatException, URISyntaxException {
+	public void loadFromFile() throws FileNotFoundException, IOException, DataFormatException, URISyntaxException {	
 		if (this.nodeFile != null) this.loadFromFile(this.nodeFile);
 	}
 
@@ -959,5 +959,17 @@ public class MindmapNode {
 
 	public boolean isFolded() {
 		return (numChildren>0 && folded) || (nodeFile!=null && !nodeFileHasBeenLoaded);
+	}
+
+	public void waitForLoading() {
+		System.out.println("Waiting for "+this.getText());
+		while (this.nodeFile!=null && !hasBeenLoadedFromFile()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

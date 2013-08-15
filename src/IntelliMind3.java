@@ -39,8 +39,8 @@ import tools.srsoftware.Tools;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = "0.4.3";
-	private String date = "April 2013";
+	private String version = "0.5.1";
+	private String date = "August 2013";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
 	private KeyStroke CtrlW=KeyStroke.getKeyStroke(KeyEvent.VK_W,2);
@@ -60,6 +60,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private JMenu InfoMenu;
 	private JMenuItem IHelp, IInfo, IPreferences, INodeDetails;
 	private JMenuItem IMindmapForChild2, IInsertImage2, IDeleteImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
+	private static String trace;
 	private static URL mindmapToOpenAtStart;
 	private static MindmapLanguagePack languagePack=null;
 	//private URL lastOpenedFile = null;
@@ -839,6 +840,9 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				if (configurationLine.startsWith("TextSize=")) {
 					mindmapPanel.setTextSize(Float.parseFloat(configurationLine.substring(9)));
 				}
+				if (configurationLine.startsWith("Trace=")) {
+					trace=configurationLine.substring(6);
+				}
 				if (configurationLine.startsWith("WindowSize=")) {
 					String size=configurationLine.substring(11).trim();
 					int h=size.indexOf(' ');
@@ -884,7 +888,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		try {
 			BufferedWriter configFile = new BufferedWriter(new FileWriter(".intelliMind.config"));
 			try {
-				configFile.write("Mindmap=" + mindmapPanel.currentMindmap().getRoot().nodeFile() + "\n");
+				
+				configFile.write("Mindmap=" + getTrace() + "\n");
 			} catch (NullPointerException e) {
 
 			}
@@ -901,6 +906,20 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 	
  
+	private String getTrace() {
+		MindmapNode node = mindmapPanel.currentMindmap();
+		StringBuffer trace=new StringBuffer();
+		while (node.parent()!=null){
+			while (node.prev()!=null){
+				node=node.prev();
+				trace.insert(0, 'D');
+			}
+			node=node.parent();
+			trace.insert(0, "R");
+		}
+		return node.getRoot().nodeFile().toString()+"\nTrace="+trace;
+	}
+
 	public void windowActivated(WindowEvent arg0) {}
 
 	public void windowClosed(WindowEvent arg0) {}
@@ -961,7 +980,10 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				if (!args[0].contains(":")) args[0]="file://"+args[0];
 				mindmapToOpenAtStart=new URL(args[0]);
 			}
-			intelliMind.setMindmap(intelliMind.openMindmap(mindmapToOpenAtStart));
+			intelliMind.setMindmap(intelliMind.openMindmap(mindmapToOpenAtStart));			
+			if (trace!=null) {
+				(new Tracer(intelliMind.mindmapPanel,trace)).start();
+			}
 			/*
 			 * / intelliMind.setMindmap(intelliMind.openMindmap(new URL("http://srsoftware.dyndns.info/mindmaps/I/intelliMind3.imf"))); //
 			 */
@@ -975,5 +997,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			e.printStackTrace();
 		}
 	}
+
 
 }
