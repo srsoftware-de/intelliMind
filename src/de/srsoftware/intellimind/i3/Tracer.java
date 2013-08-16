@@ -25,7 +25,7 @@ import de.srsoftware.gui.treepanel.TreePanel;
 				case 'D': mindmap.navigateDown(); 
 					break;
 				}
-				mindmap.currentMindmap().waitForLoading();
+				mindmap.currentNode().waitForLoading();
 			}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

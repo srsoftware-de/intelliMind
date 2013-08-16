@@ -505,7 +505,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		boolean commandKnown = false;
 		if (command.equals("bgColor") && (commandKnown = true)) mindmapPanel.setCurrentBackgroundColor(JColorChooser.showDialog(this, languagePack.get("SELECT_BACKGROUND_COLOR"), mindmapPanel.getBackground()));
 		if (command.equals("bgColorTrace") && (commandKnown = true)) startStopBackgroundtrace();
-		if (command.equals("changeText") && (commandKnown = true)) mindmapPanel.editMindmap();
+		if (command.equals("changeText") && (commandKnown = true)) mindmapPanel.editNode();
 		if (command.equals("changeBGColor") && (commandKnown = true)) {
 			mindmapPanel.setBackground(JColorChooser.showDialog(this, languagePack.get("SELECT_BACKGROUND_COLOR"), mindmapPanel.getBackground()));
 			changeConfigurationFile();
@@ -521,13 +521,13 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (command.equals("delete") && (commandKnown = true)) mindmapPanel.deleteActive();
 		if (command.equals("deleteImage") && (commandKnown = true)) mindmapPanel.deleteActiveImage();
 		if (command.equals("deleteLink") && (commandKnown = true)) mindmapPanel.deleteActiveLink();
-		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
+		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
 		if (command.equals("export") && (commandKnown = true)) doHtmlExport();
 
 		if (command.equals("foreColor") && (commandKnown = true)) mindmapPanel.setCurrentForegroundColor(JColorChooser.showDialog(this, languagePack.get("SELECT_FOREGROUND_COLOR"), mindmapPanel.getForeground()));
 		if (command.equals("foreColorTrace") && (commandKnown = true)) startStopForegroundtrace();
-		if (command.equals("googleSearch") && (commandKnown = true)) Tools.execute("\"http://www.google.de/search?q=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
-		if (command.equals("imageSearch") && (commandKnown = true)) Tools.execute("\"http://images.google.de/images?q=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
+		if (command.equals("googleSearch") && (commandKnown = true)) Tools.execute("\"http://www.google.de/search?q=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
+		if (command.equals("imageSearch") && (commandKnown = true)) Tools.execute("\"http://images.google.de/images?q=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
 		if (command.equals("incVertDist") && (commandKnown = true)) {
 				mindmapPanel.increaseDistance();
 				changeConfigurationFile();
@@ -555,7 +555,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (command.equals("navigateToRoot") && (commandKnown = true)) mindmapPanel.navigateToRoot();
 		if (command.equals("new") && (commandKnown = true)) createNewMindmap();
 		if (command.equals("newBrother") && (commandKnown = true)) insertNewBrother();
-		if (command.equals("newChild") && (commandKnown = true)) mindmapPanel.appendNewChild(createNewNode(mindmapPanel.mindmap.getOrigin()));
+		if (command.equals("newChild") && (commandKnown = true)) mindmapPanel.appendNewChild(createNewNode(mindmapPanel.tree.getOrigin()));
 		if (command.equals("navigateRight") && (commandKnown = true)) mindmapPanel.navigateRight();
 		if (command.equals("navigateLeft") && (commandKnown = true)) mindmapPanel.navigateLeft();
 		if (command.equals("navigateDown") && (commandKnown = true)) mindmapPanel.navigateDown();
@@ -582,7 +582,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			mindmapPanel.setTextLarger();
 			changeConfigurationFile();
 		}
-		if (command.equals("save") && (commandKnown = true)) mindmapPanel.saveMindmaps();
+		if (command.equals("save") && (commandKnown = true)) mindmapPanel.saveNodes();
 		if (command.equals("saveAs") && (commandKnown = true)) {
 			mindmapPanel.saveRoot();
 			changeConfigurationFile();
@@ -598,14 +598,14 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			mindmapPanel.setSize(mindmapPanel.getSize()); // forces distances to be newly calculated
 			changeConfigurationFile();
 		}
-		if (command.equals("wikiSearch")) Tools.execute("\"http://de.wikipedia.org/wiki/Spezial:Search?search=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
+		if (command.equals("wikiSearch")) Tools.execute("\"http://de.wikipedia.org/wiki/Spezial:Search?search=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
 		if (command.startsWith("SetTitle:") && (commandKnown = true)) setTitle(command.substring(9));
 		if (command.equals("NodeDetails") && (commandKnown = true)) mindmapPanel.showNodeDetails();
-		if (mindmapPanel.currentMindmap() != null) {
-			IInsertLink.setEnabled(mindmapPanel.currentMindmap().firstChild() == null);
-			IInsertLink2.setEnabled(mindmapPanel.currentMindmap().firstChild() == null);
-			IDeleteLink.setEnabled(mindmapPanel.currentMindmap().getLink() != null);
-			IDeleteLink2.setEnabled(mindmapPanel.currentMindmap().getLink() != null);
+		if (mindmapPanel.currentNode() != null) {
+			IInsertLink.setEnabled(mindmapPanel.currentNode().firstChild() == null);
+			IInsertLink2.setEnabled(mindmapPanel.currentNode().firstChild() == null);
+			IDeleteLink.setEnabled(mindmapPanel.currentNode().getLink() != null);
+			IDeleteLink2.setEnabled(mindmapPanel.currentNode().getLink() != null);
 		}
 		if (!commandKnown) System.out.println("actionPerformed recieved the following, unimplemented command: " + command);
 
@@ -613,7 +613,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void moveCurrentNodeToRoot() {
 		try {
-			setMindmap(openMindmap(mindmapPanel.currentMindmap().getRoot().nodeFile()));
+			setMindmap(openMindmap(mindmapPanel.currentNode().getRoot().nodeFile()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (DataFormatException e) {
@@ -642,7 +642,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private void loadHelp() {
 		boolean online = true;
 		if (online) {
-			TreeNode dummy = mindmapPanel.currentMindmap();
+			TreeNode dummy = mindmapPanel.currentNode();
 			URL url = null;
 			try {
 				url = new URL(helpFile);
@@ -694,9 +694,9 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void insertNewBrother() {
 		// TODO Auto-generated method stub
-		TreeNode dummy = mindmapPanel.currentMindmap();
+		TreeNode dummy = mindmapPanel.currentNode();
 		if (dummy.parent() != null) {
-			mindmapPanel.appendNewBrother(createNewNode(mindmapPanel.mindmap.getOrigin()));
+			mindmapPanel.appendNewBrother(createNewNode(mindmapPanel.tree.getOrigin()));
 		} else {
 			JOptionPane.showMessageDialog(this, languagePack.get("NO_BROTHER_FOR_ROOT"), "Warning", JOptionPane.OK_OPTION);
 		}
@@ -784,7 +784,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (newRoot != null && closeMindmap()) {
 			setMindmap(newRoot);
 			setTitle(languagePack.get("NEW_MINDMAP") + "*");
-			newRoot.mindmapChanged();
+			newRoot.treeChanged();
 			enableMindmapOptions();
 		}
 	}
@@ -799,21 +799,21 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private boolean closeMindmap() {
-		if (mindmapPanel.hasUnsavedMindmap()) {
+		if (mindmapPanel.hasUnsavedNodes()) {
 			int choice = aksForSavingMindmaps();
 			switch (choice) {
 			case JOptionPane.YES_OPTION:
-				mindmapPanel.saveMindmaps();
+				mindmapPanel.saveNodes();
 				break;
 			case JOptionPane.NO_OPTION:
-				mindmapPanel.flushMindmapChanges();
+				mindmapPanel.flushTreeChanges();
 				break;
 			case JOptionPane.CANCEL_OPTION:
 				return false;
 			}
 		}
 		changeConfigurationFile();
-		mindmapPanel.setMindmap(null);
+		mindmapPanel.setTree(null);
 		disableMindmapOptions();
 		return true;
 	}
@@ -887,7 +887,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void setMindmap(TreeNode mindmapNode) {
 		if (mindmapNode != null && closeMindmap()) {
-			mindmapPanel.setMindmap(mindmapNode);
+			mindmapPanel.setTree(mindmapNode);
 			changeConfigurationFile();
 			enableMindmapOptions();
 		}
@@ -916,7 +916,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	
  
 	private String getTrace() {
-		TreeNode node = mindmapPanel.currentMindmap();
+		TreeNode node = mindmapPanel.currentNode();
 		StringBuffer trace=new StringBuffer();
 		while (node.parent()!=null){
 			while (node.prev()!=null){
