@@ -35,7 +35,7 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import de.srsoftware.formula.FormulaInputDialog;
-import de.srsoftware.gui.treepanel.MindmapNode;
+import de.srsoftware.gui.treepanel.TreeNode;
 import de.srsoftware.gui.treepanel.NodeImage;
 import de.srsoftware.gui.treepanel.RootTreePanel;
 import de.srsoftware.gui.treepanel.StarTreePanel;
@@ -642,7 +642,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private void loadHelp() {
 		boolean online = true;
 		if (online) {
-			MindmapNode dummy = mindmapPanel.currentMindmap();
+			TreeNode dummy = mindmapPanel.currentMindmap();
 			URL url = null;
 			try {
 				url = new URL(helpFile);
@@ -694,7 +694,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void insertNewBrother() {
 		// TODO Auto-generated method stub
-		MindmapNode dummy = mindmapPanel.currentMindmap();
+		TreeNode dummy = mindmapPanel.currentMindmap();
 		if (dummy.parent() != null) {
 			mindmapPanel.appendNewBrother(createNewNode(mindmapPanel.mindmap.getOrigin()));
 		} else {
@@ -708,7 +708,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return (u == null) ? null : new NodeImage(u);
 	}
 
-	private MindmapNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException, URISyntaxException {
+	private TreeNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException, URISyntaxException {
 		if (fileUrl == null) return null; // wenn keine URl angegeben ist: abbrechen
 		URL urlPlusExtension = null;
 		try {
@@ -734,7 +734,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			}
 		}
 
-		MindmapNode result = new MindmapNode();
+		TreeNode result = new TreeNode();
 		try {
 			result.loadFromFile(fileUrl);
 			this.setTitle(fileUrl.toString());
@@ -751,7 +751,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return JOptionPane.showConfirmDialog(this, languagePack.get("UNSAVED_CHANGES"), languagePack.get("SAVE_ERROR"), JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
-	private MindmapNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
+	private TreeNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
 		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
 		URL fileUrl = Tools.showSelectFileDialog(languagePack.get("OPEN_MINDMAP"), null, new GenericFileFilter(languagePack.get("MINDMAP_FILE"), ".imf;.mm"), this);
 		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, languagePack.get("SELECT_TARGET_MANUALLY"));
@@ -772,7 +772,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			StringBuffer formula=new StringBuffer("\\small{"+fileUrl.getFile()+"}");
 			formula.insert(formula.lastIndexOf("/")+1, "}\\bold{");
 			formula.insert(formula.lastIndexOf("."), "}\\small{");
-			MindmapNode newMindmap = new MindmapNode(formula.toString());
+			TreeNode newMindmap = new TreeNode(formula.toString());
 			newMindmap.saveTo(fileUrl);
 			return true;
 		}
@@ -780,7 +780,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createNewMindmap() {
-		MindmapNode newRoot = createNewNode(null);
+		TreeNode newRoot = createNewNode(null);
 		if (newRoot != null && closeMindmap()) {
 			setMindmap(newRoot);
 			setTitle(languagePack.get("NEW_MINDMAP") + "*");
@@ -789,13 +789,13 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 	}
 
-	private MindmapNode createNewNode(Point point) {
+	private TreeNode createNewNode(Point point) {
 		// TODO Auto-generated method stub
 		// System.out.println("createNewNode");
 		String text = FormulaInputDialog.readInput(this, languagePack.get("NEW_NODE"), null);
 		this.requestFocus();
 		if (text == null) return null;
-		return new MindmapNode(text,point);
+		return new TreeNode(text,point);
 	}
 
 	private boolean closeMindmap() {
@@ -885,7 +885,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 	}
 
-	private void setMindmap(MindmapNode mindmapNode) {
+	private void setMindmap(TreeNode mindmapNode) {
 		if (mindmapNode != null && closeMindmap()) {
 			mindmapPanel.setMindmap(mindmapNode);
 			changeConfigurationFile();
@@ -916,7 +916,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	
  
 	private String getTrace() {
-		MindmapNode node = mindmapPanel.currentMindmap();
+		TreeNode node = mindmapPanel.currentMindmap();
 		StringBuffer trace=new StringBuffer();
 		while (node.parent()!=null){
 			while (node.prev()!=null){
