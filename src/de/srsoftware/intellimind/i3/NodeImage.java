@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import tools.srsoftware.Tools;
+import de.srsoftware.bitmaphandler.BMPLoader;
 
 public class NodeImage {
 	private URL imageUrl = null;

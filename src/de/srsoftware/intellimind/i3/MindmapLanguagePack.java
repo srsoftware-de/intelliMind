@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 import javax.swing.Action;
 
 

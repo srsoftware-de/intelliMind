@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 
 public class MindmapLanguagePack_English implements MindmapLanguagePack{
 	public String ASK_FOR_CREATION(){ return "Shall this file be created?"; }	

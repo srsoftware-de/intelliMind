@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,6 +33,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+
+import de.srsoftware.formula.FormulaInputDialog;
 
 import tools.srsoftware.GenericFileFilter;
 import tools.srsoftware.SuggestField;

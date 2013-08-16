@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 	public class Tracer extends Thread{
 		private TreePanel mindmap;
 		private String trace;

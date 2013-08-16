@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -31,6 +33,7 @@ import javax.swing.JPanel;
 
 import tools.srsoftware.GenericFileFilter;
 import tools.srsoftware.Tools;
+import de.srsoftware.formula.FormulaInputDialog;
 
 /**
  * @author Stephan Richter

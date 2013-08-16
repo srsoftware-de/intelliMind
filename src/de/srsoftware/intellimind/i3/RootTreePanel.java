@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;

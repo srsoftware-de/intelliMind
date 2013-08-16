@@ -1,3 +1,5 @@
+package de.srsoftware.intellimind.i3;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,6 +24,8 @@ import java.util.zip.DataFormatException;
 import tools.srsoftware.FileRecoder;
 import tools.srsoftware.ObjectComparator;
 import tools.srsoftware.Tools;
+import de.srsoftware.formula.Formula;
+import de.srsoftware.xmlformatter.XmlFormatter;
 
 public class MindmapNode {
 	private static TreeSet<MindmapNode> changedMindmaps = new TreeSet<MindmapNode>(new ObjectComparator());
