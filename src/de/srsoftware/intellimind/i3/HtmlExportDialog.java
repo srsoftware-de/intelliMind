@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import de.srsoftware.gui.treepanel.MindmapLanguagePack;
 import de.srsoftware.tools.Tools;
 
 

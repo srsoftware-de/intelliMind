@@ -35,6 +35,14 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import de.srsoftware.formula.FormulaInputDialog;
+import de.srsoftware.gui.treepanel.MindmapLanguagePack;
+import de.srsoftware.gui.treepanel.MindmapLanguagePack_English;
+import de.srsoftware.gui.treepanel.MindmapLanguagePack_German;
+import de.srsoftware.gui.treepanel.MindmapNode;
+import de.srsoftware.gui.treepanel.NodeImage;
+import de.srsoftware.gui.treepanel.RootTreePanel;
+import de.srsoftware.gui.treepanel.StarTreePanel;
+import de.srsoftware.gui.treepanel.TreePanel;
 import de.srsoftware.tools.GenericFileFilter;
 import de.srsoftware.tools.SuggestField;
 import de.srsoftware.tools.Tools;
