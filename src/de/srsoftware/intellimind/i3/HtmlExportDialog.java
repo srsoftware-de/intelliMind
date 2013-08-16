@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import tools.srsoftware.Tools;
+import de.srsoftware.tools.Tools;
 
 
 public class HtmlExportDialog extends JDialog {

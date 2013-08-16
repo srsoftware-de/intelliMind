@@ -10,8 +10,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import tools.srsoftware.Tools;
 import de.srsoftware.bitmaphandler.BMPLoader;
+import de.srsoftware.tools.Tools;
 
 public class NodeImage {
 	private URL imageUrl = null;

@@ -35,10 +35,9 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import de.srsoftware.formula.FormulaInputDialog;
-
-import tools.srsoftware.GenericFileFilter;
-import tools.srsoftware.SuggestField;
-import tools.srsoftware.Tools;
+import de.srsoftware.tools.GenericFileFilter;
+import de.srsoftware.tools.SuggestField;
+import de.srsoftware.tools.Tools;
 
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 

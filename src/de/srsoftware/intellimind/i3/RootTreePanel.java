@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.zip.DataFormatException;
 
-import tools.srsoftware.ObjectComparator;
+import de.srsoftware.tools.ObjectComparator;
 
 public class RootTreePanel extends TreePanel {
 

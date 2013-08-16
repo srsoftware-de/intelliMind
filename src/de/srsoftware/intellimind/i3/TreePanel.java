@@ -31,9 +31,9 @@ import java.util.zip.DataFormatException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import tools.srsoftware.GenericFileFilter;
-import tools.srsoftware.Tools;
 import de.srsoftware.formula.FormulaInputDialog;
+import de.srsoftware.tools.GenericFileFilter;
+import de.srsoftware.tools.Tools;
 
 /**
  * @author Stephan Richter

@@ -21,10 +21,10 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.zip.DataFormatException;
 
-import tools.srsoftware.FileRecoder;
-import tools.srsoftware.ObjectComparator;
-import tools.srsoftware.Tools;
 import de.srsoftware.formula.Formula;
+import de.srsoftware.tools.FileRecoder;
+import de.srsoftware.tools.ObjectComparator;
+import de.srsoftware.tools.Tools;
 import de.srsoftware.xmlformatter.XmlFormatter;
 
 public class MindmapNode {
