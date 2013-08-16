@@ -35,9 +35,6 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import de.srsoftware.formula.FormulaInputDialog;
-import de.srsoftware.gui.treepanel.MindmapLanguagePack;
-import de.srsoftware.gui.treepanel.MindmapLanguagePack_English;
-import de.srsoftware.gui.treepanel.MindmapLanguagePack_German;
 import de.srsoftware.gui.treepanel.MindmapNode;
 import de.srsoftware.gui.treepanel.NodeImage;
 import de.srsoftware.gui.treepanel.RootTreePanel;
@@ -46,6 +43,7 @@ import de.srsoftware.gui.treepanel.TreePanel;
 import de.srsoftware.tools.GenericFileFilter;
 import de.srsoftware.tools.SuggestField;
 import de.srsoftware.tools.Tools;
+import de.srsoftware.tools.language.LanguagePack;
 
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
@@ -73,7 +71,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private JMenuItem IMindmapForChild2, IInsertImage2, IDeleteImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
 	private static String trace;
 	private static URL mindmapToOpenAtStart;
-	private static MindmapLanguagePack languagePack=null;
+	private static LanguagePack languagePack=null;
 	//private URL lastOpenedFile = null;
 
 	
@@ -114,19 +112,19 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		InfoMenu = new JMenu("Info");
 		InfoMenu.setMnemonic(KeyEvent.VK_I);
 
-		InfoMenu.add(IHelp = new JMenuItem(languagePack.HELP(), KeyEvent.VK_H));
+		InfoMenu.add(IHelp = new JMenuItem(languagePack.get("HELP"), KeyEvent.VK_H));
 		IHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		IHelp.setActionCommand("LoadHelp");
 		IHelp.addActionListener(this);
 
-		InfoMenu.add(IInfo = new JMenuItem(languagePack.INFO(), KeyEvent.VK_I));
+		InfoMenu.add(IInfo = new JMenuItem(languagePack.get("INFO"), KeyEvent.VK_I));
 		IInfo.setActionCommand("InfoWindow");
 		IInfo.addActionListener(this);
 
-		InfoMenu.add(IPreferences = new JMenuItem(languagePack.PREFERENCES(), KeyEvent.VK_E));
+		InfoMenu.add(IPreferences = new JMenuItem(languagePack.get("PREFERENCES"), KeyEvent.VK_E));
 		IPreferences.addActionListener(this);
 
-		InfoMenu.add(INodeDetails = new JMenuItem(languagePack.NODE_DETAILS(), KeyEvent.VK_D));
+		InfoMenu.add(INodeDetails = new JMenuItem(languagePack.get("NODE_DETAILS"), KeyEvent.VK_D));
 		INodeDetails.setActionCommand("NodeDetails");
 		INodeDetails.addActionListener(this);
 		
@@ -134,46 +132,46 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createNavigationMenu() {
-		NavigationMenu = new JMenu(languagePack.NAVIGATION());
+		NavigationMenu = new JMenu(languagePack.get("NAVIGATION"));
 		NavigationMenu.setMnemonic(KeyEvent.VK_N);
 
-		NavigationMenu.add(IToRoot = new JMenuItem(languagePack.TO_ROOT(), KeyEvent.VK_W));
+		NavigationMenu.add(IToRoot = new JMenuItem(languagePack.get("TO_ROOT"), KeyEvent.VK_W));
 		IToRoot.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
 		IToRoot.setActionCommand("navigateToRoot");
 		IToRoot.addActionListener(this);
 
-		NavigationMenu.add(IToParent = new JMenuItem(languagePack.TO_PARENT(), KeyEvent.VK_U));
+		NavigationMenu.add(IToParent = new JMenuItem(languagePack.get("TO_PARENT"), KeyEvent.VK_U));
 		IToParent.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
 		IToParent.setActionCommand("navigateLeft");
 		IToParent.addActionListener(this);
 
 		NavigationMenu.addSeparator();
 
-		NavigationMenu.add(IToFirstChild = new JMenuItem(languagePack.TO_FIRST_CHILD(), KeyEvent.VK_U));
+		NavigationMenu.add(IToFirstChild = new JMenuItem(languagePack.get("TO_FIRST_CHILD"), KeyEvent.VK_U));
 		IToFirstChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
 		IToFirstChild.setActionCommand("navigateRight");
 		IToFirstChild.addActionListener(this);
 
-		NavigationMenu.add(IToLastChild = new JMenuItem(languagePack.TO_LAST_CHILD(), KeyEvent.VK_L));
+		NavigationMenu.add(IToLastChild = new JMenuItem(languagePack.get("TO_LAST_CHILD"), KeyEvent.VK_L));
 		IToLastChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
 		IToLastChild.setActionCommand("navigateToLastChild");
 		IToLastChild.addActionListener(this);
 
 		NavigationMenu.addSeparator();
 
-		NavigationMenu.add(IToNext = new JMenuItem(languagePack.NEXT(), KeyEvent.VK_N));
+		NavigationMenu.add(IToNext = new JMenuItem(languagePack.get("NEXT"), KeyEvent.VK_N));
 		IToNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 		IToNext.setActionCommand("navigateDown");
 		IToNext.addActionListener(this);
 
-		NavigationMenu.add(IToPrev = new JMenuItem(languagePack.PREVIOUS(), KeyEvent.VK_V));
+		NavigationMenu.add(IToPrev = new JMenuItem(languagePack.get("PREVIOUS"), KeyEvent.VK_V));
 		IToPrev.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
 		IToPrev.setActionCommand("navigateUp");
 		IToPrev.addActionListener(this);
 
 		NavigationMenu.addSeparator();
 
-		NavigationMenu.add(ILoadToRoot = new JMenuItem(languagePack.CURRENT_SUBTREE_TO_ROOT(), KeyEvent.VK_A));
+		NavigationMenu.add(ILoadToRoot = new JMenuItem(languagePack.get("CURRENT_SUBTREE_TO_ROOT"), KeyEvent.VK_A));
 		ILoadToRoot.setAccelerator(KeyStroke.getKeyStroke(36, 0));
 		ILoadToRoot.setActionCommand("LoadToRoot");
 		ILoadToRoot.addActionListener(this);
@@ -182,22 +180,22 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createSuchenMenu() {
-		SuchenMenu = new JMenu(languagePack.SEARCH());
+		SuchenMenu = new JMenu(languagePack.get("SEARCH"));
 		SuchenMenu.setMnemonic(KeyEvent.VK_S);
 
-		SuchenMenu.add(IWikiSearch = new JMenuItem(languagePack.WIKI_SEARCH(), KeyEvent.VK_W));
+		SuchenMenu.add(IWikiSearch = new JMenuItem(languagePack.get("WIKI_SEARCH"), KeyEvent.VK_W));
 		IWikiSearch.setActionCommand("wikiSearch");
 		IWikiSearch.addActionListener(this);
 
-		SuchenMenu.add(IGoogleSearch = new JMenuItem(languagePack.GOOGLE_SEARCH(), KeyEvent.VK_G));
+		SuchenMenu.add(IGoogleSearch = new JMenuItem(languagePack.get("GOOGLE_SEARCH"), KeyEvent.VK_G));
 		IGoogleSearch.setActionCommand("googleSearch");
 		IGoogleSearch.addActionListener(this);
 
-		SuchenMenu.add(IImageSearch = new JMenuItem(languagePack.GOOGLE_IMAGE_SEARCH(), KeyEvent.VK_B));
+		SuchenMenu.add(IImageSearch = new JMenuItem(languagePack.get("GOOGLE_IMAGE_SEARCH"), KeyEvent.VK_B));
 		IImageSearch.setActionCommand("imageSearch");
 		IImageSearch.addActionListener(this);
 
-		SuchenMenu.add(IEbaySearch = new JMenuItem(languagePack.EBAY_SEARCH(), KeyEvent.VK_E));
+		SuchenMenu.add(IEbaySearch = new JMenuItem(languagePack.get("EBAY_SEARCH"), KeyEvent.VK_E));
 		IEbaySearch.setActionCommand("ebaySearch");
 		IEbaySearch.addActionListener(this);
 		
@@ -205,57 +203,57 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createAnsichtMenu() {
-		AnsichtMenu = new JMenu(languagePack.VIEW());
+		AnsichtMenu = new JMenu(languagePack.get("VIEW"));
 		AnsichtMenu.setMnemonic(KeyEvent.VK_A);
 
-		AnsichtMenu.add(IFold = new JMenuItem(languagePack.FOLD(), KeyEvent.VK_Z));
+		AnsichtMenu.add(IFold = new JMenuItem(languagePack.get("FOLD"), KeyEvent.VK_Z));
 		IFold.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
 		IFold.addActionListener(this);
 		IFold.setActionCommand("fold");
 
-		AnsichtMenu.add(IFoldAll = new JMenuItem(languagePack.UNFOLD_RECURSIVE(), KeyEvent.VK_L));
+		AnsichtMenu.add(IFoldAll = new JMenuItem(languagePack.get("UNFOLD_RECURSIVE"), KeyEvent.VK_L));
 		IFoldAll.addActionListener(this);
 		IFoldAll.setActionCommand("foldall");
 
 		AnsichtMenu.addSeparator();
 
-		AnsichtMenu.add(ILarger = new JMenuItem(languagePack.LARGER(), KeyEvent.VK_G));
+		AnsichtMenu.add(ILarger = new JMenuItem(languagePack.get("LARGER"), KeyEvent.VK_G));
 		ILarger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, 0));
 		ILarger.setActionCommand("larger");
 		ILarger.addActionListener(this);
 
-		AnsichtMenu.add(ISmaller = new JMenuItem(languagePack.SMALLER(), KeyEvent.VK_K));
+		AnsichtMenu.add(ISmaller = new JMenuItem(languagePack.get("SMALLER"), KeyEvent.VK_K));
 		ISmaller.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, 0));
 		ISmaller.setActionCommand("smaller");
 		ISmaller.addActionListener(this);
 
-		AnsichtMenu.add(IIncVertDist = new JMenuItem(languagePack.INCREASE_DISTANCE(), KeyEvent.VK_V));
+		AnsichtMenu.add(IIncVertDist = new JMenuItem(languagePack.get("INCREASE_DISTANCE"), KeyEvent.VK_V));
 		IIncVertDist.setActionCommand("incVertDist");
 		IIncVertDist.addActionListener(this);
 
-		AnsichtMenu.add(IDecVertDist = new JMenuItem(languagePack.DECREASE_DISTANCE(), KeyEvent.VK_N));
+		AnsichtMenu.add(IDecVertDist = new JMenuItem(languagePack.get("DECREASE_DISTANCE"), KeyEvent.VK_N));
 		IDecVertDist.setActionCommand("decVertDist");
 		IDecVertDist.addActionListener(this);
 
 		AnsichtMenu.addSeparator();
 
-		AnsichtMenu.add(IResetView = new JMenuItem(languagePack.RESTORE_DEFAULTS(), KeyEvent.VK_S));
+		AnsichtMenu.add(IResetView = new JMenuItem(languagePack.get("RESTORE_DEFAULTS"), KeyEvent.VK_S));
 		IResetView.setActionCommand("setDefaultView");
 		IResetView.addActionListener(this);
 
-		AnsichtMenu.add(IRefresh = new JMenuItem(languagePack.REFRESH(), KeyEvent.VK_F5));
+		AnsichtMenu.add(IRefresh = new JMenuItem(languagePack.get("REFRESH"), KeyEvent.VK_F5));
 		IRefresh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		IRefresh.setActionCommand("refreshView");
 		IRefresh.addActionListener(this);
 
 		AnsichtMenu.addSeparator();
 
-		AnsichtMenu.add(IStarTree = new JMenuItem(languagePack.STARTREE(), KeyEvent.VK_F6));
+		AnsichtMenu.add(IStarTree = new JMenuItem(languagePack.get("STARTREE"), KeyEvent.VK_F6));
 		IStarTree.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		IStarTree.setActionCommand("switchToStarTree");
 		IStarTree.addActionListener(this);
 		
-		AnsichtMenu.add(IRootedTree = new JMenuItem(languagePack.ROOTEDTREE(), KeyEvent.VK_F7));
+		AnsichtMenu.add(IRootedTree = new JMenuItem(languagePack.get("ROOTEDTREE"), KeyEvent.VK_F7));
 		IRootedTree.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		IRootedTree.setActionCommand("switchToRootedTree");
 		IRootedTree.addActionListener(this);
@@ -264,135 +262,135 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createBearbeitenMenu() {
-		BearbeitenMenu = new JMenu(languagePack.EDIT()); // Zweites...
+		BearbeitenMenu = new JMenu(languagePack.get("EDIT")); // Zweites...
 		BearbeitenMenu.setMnemonic(KeyEvent.VK_B);
 
-		BearbeitenMenu.add(INewBrother = new JMenuItem(languagePack.NEW_BROTHER(), KeyEvent.VK_B));
+		BearbeitenMenu.add(INewBrother = new JMenuItem(languagePack.get("NEW_BROTHER"), KeyEvent.VK_B));
 		INewBrother.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
 		INewBrother.setActionCommand("newBrother");
 		INewBrother.addActionListener(this);
 
-		BearbeitenMenu.add(INewChild = new JMenuItem(languagePack.NEW_CHILD(), KeyEvent.VK_K));
+		BearbeitenMenu.add(INewChild = new JMenuItem(languagePack.get("NEW_CHILD"), KeyEvent.VK_K));
 		INewChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
 		INewChild.setActionCommand("newChild");
 		INewChild.addActionListener(this);
 
-		BearbeitenMenu.add(IMindmapForChild = new JMenuItem(languagePack.MINDMAP_FOR_SUBTREE(), KeyEvent.VK_M));
+		BearbeitenMenu.add(IMindmapForChild = new JMenuItem(languagePack.get("MINDMAP_FOR_SUBTREE"), KeyEvent.VK_M));
 		IMindmapForChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 8));
 		IMindmapForChild.setActionCommand("mindmapForChild");
 		IMindmapForChild.addActionListener(this);
 
-		IMindmapForChild2 = new JMenuItem(languagePack.MINDMAP_FOR_SUBTREE(), KeyEvent.VK_M);
+		IMindmapForChild2 = new JMenuItem(languagePack.get("MINDMAP_FOR_SUBTREE"), KeyEvent.VK_M);
 		IMindmapForChild2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 8));
 		IMindmapForChild2.setActionCommand("mindmapForChild");
 		IMindmapForChild2.addActionListener(this);
 
 		BearbeitenMenu.addSeparator();
 
-		BearbeitenMenu.add(IChangeText = new JMenuItem(languagePack.EDIT_TEXT(), KeyEvent.VK_T));
+		BearbeitenMenu.add(IChangeText = new JMenuItem(languagePack.get("EDIT_TEXT"), KeyEvent.VK_T));
 		IChangeText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		IChangeText.setActionCommand("changeText");
 		IChangeText.addActionListener(this);
 
-		BearbeitenMenu.add(IInsertImage = new JMenuItem(languagePack.INSERT_IMAGE(), KeyEvent.VK_I));
+		BearbeitenMenu.add(IInsertImage = new JMenuItem(languagePack.get("INSERT_IMAGE"), KeyEvent.VK_I));
 		IInsertImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));
 		IInsertImage.setActionCommand("insertImage");
 		IInsertImage.addActionListener(this);
 
-		IInsertImage2 = new JMenuItem(languagePack.INSERT_IMAGE(), KeyEvent.VK_I);
+		IInsertImage2 = new JMenuItem(languagePack.get("INSERT_IMAGE"), KeyEvent.VK_I);
 		IInsertImage2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));
 		IInsertImage2.setActionCommand("insertImage");
 		IInsertImage2.addActionListener(this);
 
-		BearbeitenMenu.add(IDeleteImage = new JMenuItem(languagePack.DELETE_IMAGE(), KeyEvent.VK_D));
+		BearbeitenMenu.add(IDeleteImage = new JMenuItem(languagePack.get("DELETE_IMAGE"), KeyEvent.VK_D));
 		IDeleteImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
 		IDeleteImage.setActionCommand("deleteImage");
 		IDeleteImage.addActionListener(this);
 
-		IDeleteImage2 = new JMenuItem(languagePack.DELETE_IMAGE(), KeyEvent.VK_D);
+		IDeleteImage2 = new JMenuItem(languagePack.get("DELETE_IMAGE"), KeyEvent.VK_D);
 		IDeleteImage2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
 		IDeleteImage2.setActionCommand("deleteImage");
 		IDeleteImage2.addActionListener(this);
 
-		BearbeitenMenu.add(IInsertLink = new JMenuItem(languagePack.INSERT_LINK(), KeyEvent.VK_N));
+		BearbeitenMenu.add(IInsertLink = new JMenuItem(languagePack.get("INSERT_LINK"), KeyEvent.VK_N));
 		IInsertLink.setActionCommand("insertLink");
 		IInsertLink.addActionListener(this);
 
-		IInsertLink2 = new JMenuItem(languagePack.INSERT_LINK(), KeyEvent.VK_N);
+		IInsertLink2 = new JMenuItem(languagePack.get("INSERT_LINK"), KeyEvent.VK_N);
 		IInsertLink2.setActionCommand("insertLink");
 		IInsertLink2.addActionListener(this);
 
-		BearbeitenMenu.add(IDeleteLink = new JMenuItem(languagePack.DELETE_LINK(), KeyEvent.VK_E));
+		BearbeitenMenu.add(IDeleteLink = new JMenuItem(languagePack.get("DELETE_LINK"), KeyEvent.VK_E));
 		IDeleteLink.setActionCommand("deleteLink");
 		IDeleteLink.addActionListener(this);
 
-		IDeleteLink2 = new JMenuItem(languagePack.DELETE_LINK(), KeyEvent.VK_E);
+		IDeleteLink2 = new JMenuItem(languagePack.get("DELETE_LINK"), KeyEvent.VK_E);
 		IDeleteLink2.setActionCommand("deleteLink");
 		IDeleteLink2.addActionListener(this);
 
 		BearbeitenMenu.addSeparator();
 
-		BearbeitenMenu.add(ICut = new JMenuItem(languagePack.CUT(), KeyEvent.VK_A));
+		BearbeitenMenu.add(ICut = new JMenuItem(languagePack.get("CUT"), KeyEvent.VK_A));
 		ICut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, 2));
 		ICut.setActionCommand("cut");
 		ICut.addActionListener(this);
 
-		ICut2 = new JMenuItem(languagePack.CUT(), KeyEvent.VK_A);
+		ICut2 = new JMenuItem(languagePack.get("CUT"), KeyEvent.VK_A);
 		ICut2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, 2));
 		ICut2.setActionCommand("cut");
 		ICut2.addActionListener(this);
 
-		BearbeitenMenu.add(ICopy = new JMenuItem(languagePack.COPY(), KeyEvent.VK_O));
+		BearbeitenMenu.add(ICopy = new JMenuItem(languagePack.get("COPY"), KeyEvent.VK_O));
 		ICopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, 2));
 		ICopy.setActionCommand("copy");
 		ICopy.addActionListener(this);
 
-		ICopy2 = new JMenuItem(languagePack.COPY(), KeyEvent.VK_O);
+		ICopy2 = new JMenuItem(languagePack.get("COPY"), KeyEvent.VK_O);
 		ICopy2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, 2));
 		ICopy2.setActionCommand("copy");
 		ICopy2.addActionListener(this);
 
-		BearbeitenMenu.add(IPaste = new JMenuItem(languagePack.INSERT(), KeyEvent.VK_F));
+		BearbeitenMenu.add(IPaste = new JMenuItem(languagePack.get("INSERT"), KeyEvent.VK_F));
 		IPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, 2));
 		IPaste.setActionCommand("paste");
 		IPaste.addActionListener(this);
-		IPaste2 = new JMenuItem(languagePack.INSERT(), KeyEvent.VK_F);
+		IPaste2 = new JMenuItem(languagePack.get("INSERT"), KeyEvent.VK_F);
 		IPaste2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, 2));
 		IPaste2.setActionCommand("paste");
 		IPaste2.addActionListener(this);
 
-		BearbeitenMenu.add(IDelete = new JMenuItem(languagePack.DELETE(), KeyEvent.VK_L));
+		BearbeitenMenu.add(IDelete = new JMenuItem(languagePack.get("DELETE"), KeyEvent.VK_L));
 		IDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		IDelete.setActionCommand("delete");
 		IDelete.addActionListener(this);
-		IDelete2 = new JMenuItem(languagePack.DELETE(), KeyEvent.VK_L);
+		IDelete2 = new JMenuItem(languagePack.get("DELETE"), KeyEvent.VK_L);
 		IDelete2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		IDelete2.setActionCommand("delete");
 		IDelete2.addActionListener(this);
 
 		BearbeitenMenu.addSeparator();
 
-		BearbeitenMenu.add(IBGColor = new JMenuItem(languagePack.BACKGROUND_COLOR(), KeyEvent.VK_H));
+		BearbeitenMenu.add(IBGColor = new JMenuItem(languagePack.get("BACKGROUND_COLOR"), KeyEvent.VK_H));
 		IBGColor.setActionCommand("bgColor");
 		IBGColor.addActionListener(this);
 
-		BearbeitenMenu.add(IBGCTrace = new JMenuItem(languagePack.BACKGROUND_COLOR_FOLLOW(), KeyEvent.VK_V));
+		BearbeitenMenu.add(IBGCTrace = new JMenuItem(languagePack.get("BACKGROUND_COLOR_FOLLOW"), KeyEvent.VK_V));
 		IBGCTrace.setActionCommand("bgColorTrace");
 		IBGCTrace.addActionListener(this);
 
-		IBGColor2 = new JMenuItem(languagePack.BACKGROUND_COLOR(), KeyEvent.VK_H);
+		IBGColor2 = new JMenuItem(languagePack.get("BACKGROUND_COLOR"), KeyEvent.VK_H);
 		IBGColor2.setActionCommand("bgColor");
 		IBGColor2.addActionListener(this);
 
-		BearbeitenMenu.add(IForeColor = new JMenuItem(languagePack.TEXT_COLOR(), KeyEvent.VK_X));
+		BearbeitenMenu.add(IForeColor = new JMenuItem(languagePack.get("TEXT_COLOR"), KeyEvent.VK_X));
 		IForeColor.setActionCommand("foreColor");
 		IForeColor.addActionListener(this);
 
-		IForeColor2 = new JMenuItem(languagePack.TEXT_COLOR(), KeyEvent.VK_X);
+		IForeColor2 = new JMenuItem(languagePack.get("TEXT_COLOR"), KeyEvent.VK_X);
 		IForeColor2.setActionCommand("foreColor");
 		IForeColor2.addActionListener(this);
 
-		BearbeitenMenu.add(IFGCTrace = new JMenuItem(languagePack.TEXT_COLOR_FOLLOW(), KeyEvent.VK_P));
+		BearbeitenMenu.add(IFGCTrace = new JMenuItem(languagePack.get("TEXT_COLOR_FOLLOW"), KeyEvent.VK_P));
 		IFGCTrace.setActionCommand("foreColorTrace");
 		IFGCTrace.addActionListener(this);
 		
@@ -400,56 +398,56 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createMindmapMenu() {
-		MindmapMenu = new JMenu(languagePack.MINDMAP()); // Erstes Menü
+		MindmapMenu = new JMenu(languagePack.get("MINDMAP")); // Erstes Menü
 		MindmapMenu.setMnemonic(KeyEvent.VK_D);
 
-		MindmapMenu.add(INew = new JMenuItem(languagePack.NEW_MINDMAP(), KeyEvent.VK_N));
+		MindmapMenu.add(INew = new JMenuItem(languagePack.get("NEW_MINDMAP"), KeyEvent.VK_N));
 		INew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, 2));
 		INew.setActionCommand("new");
 		INew.addActionListener(this);
 
-		MindmapMenu.add(IOpen = new JMenuItem(languagePack.OPEN(), KeyEvent.VK_F));
+		MindmapMenu.add(IOpen = new JMenuItem(languagePack.get("OPEN"), KeyEvent.VK_F));
 		IOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, 2));
 		IOpen.setActionCommand("open");
 		IOpen.addActionListener(this);
 
-		MindmapMenu.add(IClose = new JMenuItem(languagePack.CLOSE(), KeyEvent.VK_C));
+		MindmapMenu.add(IClose = new JMenuItem(languagePack.get("CLOSE"), KeyEvent.VK_C));
 		IClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 2));
 		IClose.setActionCommand("closeMindmap");
 		IClose.addActionListener(this);
 
 		MindmapMenu.addSeparator();
 
-		MindmapMenu.add(ISave = new JMenuItem(languagePack.SAVE(), KeyEvent.VK_S));
+		MindmapMenu.add(ISave = new JMenuItem(languagePack.get("SAVE"), KeyEvent.VK_S));
 		ISave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, 2));
 		ISave.setActionCommand("save");
 		ISave.addActionListener(this);
 
-		MindmapMenu.add(ISaveAs = new JMenuItem(languagePack.SAVE_AS(), KeyEvent.VK_U));
+		MindmapMenu.add(ISaveAs = new JMenuItem(languagePack.get("SAVE_AS"), KeyEvent.VK_U));
 		ISaveAs.setActionCommand("saveAs");
 		ISaveAs.addActionListener(this);
 
 		MindmapMenu.addSeparator();
 
-		MindmapMenu.add(ISaveTreeAs = new JMenuItem(languagePack.SAVE_SUBTREE(), KeyEvent.VK_T));
+		MindmapMenu.add(ISaveTreeAs = new JMenuItem(languagePack.get("SAVE_SUBTREE"), KeyEvent.VK_T));
 		ISaveTreeAs.setActionCommand("saveTreeAs");
 		ISaveTreeAs.addActionListener(this);
 
 		MindmapMenu.addSeparator();
 
-		MindmapMenu.add(IExport = new JMenuItem(languagePack.EXPORT_TO_HTML(), KeyEvent.VK_E));
+		MindmapMenu.add(IExport = new JMenuItem(languagePack.get("EXPORT_TO_HTML"), KeyEvent.VK_E));
 		IExport.setActionCommand("export");
 		IExport.addActionListener(this);
 
 		MindmapMenu.addSeparator();
 
-		MindmapMenu.add(ISetBGColor = new JMenuItem(languagePack.CHANGE_BACKGROUND(), KeyEvent.VK_S));
+		MindmapMenu.add(ISetBGColor = new JMenuItem(languagePack.get("CHANGE_BACKGROUND"), KeyEvent.VK_S));
 		ISetBGColor.setActionCommand("changeBGColor");
 		ISetBGColor.addActionListener(this);
 
 		MindmapMenu.addSeparator();
 
-		MindmapMenu.add(IExit = new JMenuItem(languagePack.EXIT(), KeyEvent.VK_B));
+		MindmapMenu.add(IExit = new JMenuItem(languagePack.get("EXIT"), KeyEvent.VK_B));
 		IExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 8));
 		IExit.setActionCommand("close");
 		IExit.addActionListener(this);
@@ -505,11 +503,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		boolean commandKnown = false;
-		if (command.equals("bgColor") && (commandKnown = true)) mindmapPanel.setCurrentBackgroundColor(JColorChooser.showDialog(this, languagePack.SELECT_BACKGROUND_COLOR(), mindmapPanel.getBackground()));
+		if (command.equals("bgColor") && (commandKnown = true)) mindmapPanel.setCurrentBackgroundColor(JColorChooser.showDialog(this, languagePack.get("SELECT_BACKGROUND_COLOR"), mindmapPanel.getBackground()));
 		if (command.equals("bgColorTrace") && (commandKnown = true)) startStopBackgroundtrace();
 		if (command.equals("changeText") && (commandKnown = true)) mindmapPanel.editMindmap();
 		if (command.equals("changeBGColor") && (commandKnown = true)) {
-			mindmapPanel.setBackground(JColorChooser.showDialog(this, languagePack.SELECT_BACKGROUND_COLOR(), mindmapPanel.getBackground()));
+			mindmapPanel.setBackground(JColorChooser.showDialog(this, languagePack.get("SELECT_BACKGROUND_COLOR"), mindmapPanel.getBackground()));
 			changeConfigurationFile();
 		}
 		if (command.equals("close") && (commandKnown = true) && closeMindmap()) System.exit(0);
@@ -526,7 +524,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
 		if (command.equals("export") && (commandKnown = true)) doHtmlExport();
 
-		if (command.equals("foreColor") && (commandKnown = true)) mindmapPanel.setCurrentForegroundColor(JColorChooser.showDialog(this, languagePack.SELECT_FOREGROUND_COLOR(), mindmapPanel.getForeground()));
+		if (command.equals("foreColor") && (commandKnown = true)) mindmapPanel.setCurrentForegroundColor(JColorChooser.showDialog(this, languagePack.get("SELECT_FOREGROUND_COLOR"), mindmapPanel.getForeground()));
 		if (command.equals("foreColorTrace") && (commandKnown = true)) startStopForegroundtrace();
 		if (command.equals("googleSearch") && (commandKnown = true)) Tools.execute("\"http://www.google.de/search?q=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
 		if (command.equals("imageSearch") && (commandKnown = true)) Tools.execute("\"http://images.google.de/images?q=" + mindmapPanel.currentMindmap().getTextWithoutPath() + "\"");
@@ -626,7 +624,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void doHtmlExport() {
-		HtmlExportDialog exportDialog = new HtmlExportDialog(this, languagePack.EXPORT_TO_HTML(), true, languagePack);
+		HtmlExportDialog exportDialog = new HtmlExportDialog(this, languagePack.get("EXPORT_TO_HTML"), true, languagePack);
 		exportDialog.setVisible(true);
 		if (exportDialog.notCancelled()) {
 			try {
@@ -649,7 +647,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			try {
 				url = new URL(helpFile);
 			} catch (MalformedURLException e) {
-				JOptionPane.showMessageDialog(this, languagePack.NO_HELP(), "Warning", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(this, languagePack.get("NO_HELP"), "Warning", JOptionPane.OK_OPTION);
 			}
 			try {
 				if (dummy != null) {
@@ -669,28 +667,28 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void fileNotFound(FileNotFoundException e) {
-		JOptionPane.showMessageDialog(this, languagePack.FILE_NOT_FOUND().replace("##", e.toString().split(" ")[1]), "Warning", JOptionPane.OK_OPTION);
+		JOptionPane.showMessageDialog(this, languagePack.get("FILE_NOT_FOUND").replace("##", e.toString().split(" ")[1]), "Warning", JOptionPane.OK_OPTION);
 	}
 
 	private void fileNotSupported(DataFormatException e) {
-		JOptionPane.showMessageDialog(this, languagePack.FILE_NOT_SUPPORTED().replace("##", e.toString().split(" ")[1]), "Warning", JOptionPane.OK_OPTION);
+		JOptionPane.showMessageDialog(this, languagePack.get("FILE_NOT_SUPPORTED").replace("##", e.toString().split(" ")[1]), "Warning", JOptionPane.OK_OPTION);
 	}
 	
 	private void startStopBackgroundtrace() {
 		// TODO Auto-generated method stub
 		if (mindmapPanel.traceBGColor()) {
-			IBGCTrace.setText("x " + languagePack.BACKGROUND_COLOR_FOLLOW());
+			IBGCTrace.setText("x " + languagePack.get("BACKGROUND_COLOR_FOLLOW"));
 		} else {
-			IBGCTrace.setText(languagePack.BACKGROUND_COLOR_FOLLOW());
+			IBGCTrace.setText(languagePack.get("BACKGROUND_COLOR_FOLLOW"));
 		}
 	}
 
 	private void startStopForegroundtrace() {
 		// TODO Auto-generated method stub
 		if (mindmapPanel.traceForeColor()) {
-			IFGCTrace.setText("x " + languagePack.TEXT_COLOR_FOLLOW());
+			IFGCTrace.setText("x " + languagePack.get("TEXT_COLOR_FOLLOW"));
 		} else {
-			IFGCTrace.setText(languagePack.TEXT_COLOR_FOLLOW());
+			IFGCTrace.setText(languagePack.get("TEXT_COLOR_FOLLOW"));
 		}
 	}
 
@@ -700,12 +698,12 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (dummy.parent() != null) {
 			mindmapPanel.appendNewBrother(createNewNode(mindmapPanel.mindmap.getOrigin()));
 		} else {
-			JOptionPane.showMessageDialog(this, languagePack.NO_BROTHER_FOR_ROOT(), "Warning", JOptionPane.OK_OPTION);
+			JOptionPane.showMessageDialog(this, languagePack.get("NO_BROTHER_FOR_ROOT"), "Warning", JOptionPane.OK_OPTION);
 		}
 	}
 
 	private NodeImage selectImage() {
-		URL u = Tools.showSelectFileDialog(languagePack.OPEN_IMAGE(), null, new GenericFileFilter(languagePack.IMAGE_FILE(), "*.jpg;*.jpeg;*.gif;*.png;*.bmp"), this);
+		URL u = Tools.showSelectFileDialog(languagePack.get("OPEN_IMAGE"), null, new GenericFileFilter(languagePack.get("IMAGE_FILE"), "*.jpg;*.jpeg;*.gif;*.png;*.bmp"), this);
 		this.requestFocus();
 		return (u == null) ? null : new NodeImage(u);
 	}
@@ -750,27 +748,27 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private int aksForSavingMindmaps() {
 		// TODO Auto-generated method stub
-		return JOptionPane.showConfirmDialog(this, languagePack.UNSAVED_CHANGES(), languagePack.SAVE_ERROR(), JOptionPane.YES_NO_CANCEL_OPTION);
+		return JOptionPane.showConfirmDialog(this, languagePack.get("UNSAVED_CHANGES"), languagePack.get("SAVE_ERROR"), JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
 	private MindmapNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
 		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
-		URL fileUrl = Tools.showSelectFileDialog(languagePack.OPEN_MINDMAP(), null, new GenericFileFilter(languagePack.MINDMAP_FILE(), ".imf;.mm"), this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, languagePack.SELECT_TARGET_MANUALLY());
+		URL fileUrl = Tools.showSelectFileDialog(languagePack.get("OPEN_MINDMAP"), null, new GenericFileFilter(languagePack.get("MINDMAP_FILE"), ".imf;.mm"), this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, languagePack.get("SELECT_TARGET_MANUALLY"));
 		//lastOpenedFile = fileUrl;
 		return openMindmap(fileUrl);
 	}
 	
 	private URL openFile() throws FileNotFoundException {
 		String filename=null;
-		URL fileUrl = Tools.showSelectFileDialog(languagePack.OPEN_MINDMAP(), filename, null, this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, languagePack.SELECT_TARGET_MANUALLY());
+		URL fileUrl = Tools.showSelectFileDialog(languagePack.get("OPEN_MINDMAP"), filename, null, this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, languagePack.get("SELECT_TARGET_MANUALLY"));
 		//lastOpenedFile = fileUrl;
 		return fileUrl;
 	}	
 
 	private boolean requestFileCreation(URL fileUrl) {
-		if (JOptionPane.showConfirmDialog(this, languagePack.FILE_NOT_FOUND().replace("##", fileUrl.toString()) + ' ' + languagePack.ASK_FOR_CREATION()) == 0) {
+		if (JOptionPane.showConfirmDialog(this, languagePack.get("FILE_NOT_FOUND").replace("##", fileUrl.toString()) + ' ' + languagePack.get("ASK_FOR_CREATION")) == 0) {
 			StringBuffer formula=new StringBuffer("\\small{"+fileUrl.getFile()+"}");
 			formula.insert(formula.lastIndexOf("/")+1, "}\\bold{");
 			formula.insert(formula.lastIndexOf("."), "}\\small{");
@@ -785,7 +783,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		MindmapNode newRoot = createNewNode(null);
 		if (newRoot != null && closeMindmap()) {
 			setMindmap(newRoot);
-			setTitle(languagePack.NEW_MINDMAP() + "*");
+			setTitle(languagePack.get("NEW_MINDMAP") + "*");
 			newRoot.mindmapChanged();
 			enableMindmapOptions();
 		}
@@ -794,7 +792,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private MindmapNode createNewNode(Point point) {
 		// TODO Auto-generated method stub
 		// System.out.println("createNewNode");
-		String text = FormulaInputDialog.readInput(this, languagePack.NEW_NODE(), null);
+		String text = FormulaInputDialog.readInput(this, languagePack.get("NEW_NODE"), null);
 		this.requestFocus();
 		if (text == null) return null;
 		return new MindmapNode(text,point);
@@ -824,8 +822,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		super(title);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (Tools.language.equals("English")){
-			languagePack=new MindmapLanguagePack_English(); // auch verwendet in StarTreePanel und MindmapNode; FormulaInputDialog verwendet FormulaLanguagePack 
-		} else languagePack = new MindmapLanguagePack_German(); // auch verwendet in StarTreePanel und MindmapNode; FormulaInputDialog verwendet FormulaLanguagePack
+			languagePack=new English_Mindmap(); // auch verwendet in StarTreePanel und MindmapNode; FormulaInputDialog verwendet FormulaLanguagePack 
+		} else languagePack = new German_Mindmap(); // auch verwendet in StarTreePanel und MindmapNode; FormulaInputDialog verwendet FormulaLanguagePack
 
 		addWindowListener(this);
 		addKeyListener(this);

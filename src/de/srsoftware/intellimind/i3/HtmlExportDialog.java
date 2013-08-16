@@ -18,8 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import de.srsoftware.gui.treepanel.MindmapLanguagePack;
 import de.srsoftware.tools.Tools;
+import de.srsoftware.tools.language.LanguagePack;
 
 
 public class HtmlExportDialog extends JDialog {
@@ -32,13 +32,13 @@ public class HtmlExportDialog extends JDialog {
 	JTextField depthEditor,fileNameField;
 	ButtonGroup RadioButtons;
 	JButton increaseDepth,decreaseDepth,ok,cancel,selectFolder;
-	MindmapLanguagePack languagePack;
+	LanguagePack languagePack;
 	JRadioButton exportToOneFile,exportToMultiplefiles;
 	String filename=null;
 	private boolean okPressed=false;
 	private int maxDepth=10;
 
-  public HtmlExportDialog(JFrame owner, String title, boolean modal,MindmapLanguagePack languagePack) {
+  public HtmlExportDialog(JFrame owner, String title, boolean modal,LanguagePack languagePack) {
     // Dialog-Initialisierung
     super(owner, title, modal);
     this.languagePack=languagePack;
@@ -63,7 +63,7 @@ public class HtmlExportDialog extends JDialog {
     fileNameField=new JTextField(filename);
     folderPanel.add(fileNameField);
     
-    selectFolder=new JButton(languagePack.SELECT_FOLDER());
+    selectFolder=new JButton(languagePack.get("SELECT_FOLDER"));
     selectFolder.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	filename=Tools.selectFolder();
@@ -72,7 +72,7 @@ public class HtmlExportDialog extends JDialog {
     });
     folderPanel.add(selectFolder);
     add(folderPanel);
-    exportOnlyCurrentMindmap=new JCheckBox(languagePack.EXPORT_ONLY_CURRENT_MINDMAP());
+    exportOnlyCurrentMindmap=new JCheckBox(languagePack.get("EXPORT_ONLY_CURRENT_MINDMAP"));
     exportOnlyCurrentMindmap.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	if (exportOnlyCurrentMindmap.isSelected()){
@@ -98,7 +98,7 @@ public class HtmlExportDialog extends JDialog {
     
     depthPanel=new JPanel();
      
-    maximumDepthCheckBox=new JCheckBox(languagePack.MAXIMUM_DEPTH());
+    maximumDepthCheckBox=new JCheckBox(languagePack.get("MAXIMUM_DEPTH"));
     maximumDepthCheckBox.setSelected(true);
     depthPanel.add(maximumDepthCheckBox);
     depthEditor=new JTextField("010");
@@ -119,17 +119,17 @@ public class HtmlExportDialog extends JDialog {
     depthPanel.add(decreaseDepth);
     depthPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     add(depthPanel);
-    interactiveExport=new JCheckBox(languagePack.INTERACTIVE_EXPORT());
+    interactiveExport=new JCheckBox(languagePack.get("INTERACTIVE_EXPORT"));
     add(interactiveExport);
     
-    exportToOneFile=new JRadioButton(languagePack.EXPORT_TO_ONE_FILE());
+    exportToOneFile=new JRadioButton(languagePack.get("EXPORT_TO_ONE_FILE"));
     exportToOneFile.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	if (exportToOneFile.isSelected() && !exportOnlyCurrentMindmap.isSelected()) noMultipleFollows.setEnabled(true);
       }
     });
     add(exportToOneFile);
-    exportToMultiplefiles=new JRadioButton(languagePack.EXPORT_TO_MULTIPLE_FILES());
+    exportToMultiplefiles=new JRadioButton(languagePack.get("EXPORT_TO_MULTIPLE_FILES"));
     exportToMultiplefiles.setSelected(true);
     
     exportToMultiplefiles.addActionListener(new ActionListener() {
@@ -146,7 +146,7 @@ public class HtmlExportDialog extends JDialog {
     RadioButtons=new ButtonGroup();
     RadioButtons.add(exportToOneFile);
     RadioButtons.add(exportToMultiplefiles);
-    noMultipleFollows=new JCheckBox(languagePack.NO_MULTIPLE_FOLLOWS());
+    noMultipleFollows=new JCheckBox(languagePack.get("NO_MULTIPLE_FOLLOWS"));
     noMultipleFollows.setSelected(true);
     noMultipleFollows.setEnabled(false);
     noMultipleFollows.addActionListener(new ActionListener() {
@@ -163,7 +163,7 @@ public class HtmlExportDialog extends JDialog {
     
     okCancelPanel=new JPanel();
     okCancelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    ok=new JButton(languagePack.OK());
+    ok=new JButton(languagePack.get("OK"));
     ok.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	okPressed=true;
@@ -171,7 +171,7 @@ public class HtmlExportDialog extends JDialog {
       }
     });
     okCancelPanel.add(ok);
-    cancel=new JButton(languagePack.CANCEL());
+    cancel=new JButton(languagePack.get("CANCEL"));
     cancel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	dispose();
