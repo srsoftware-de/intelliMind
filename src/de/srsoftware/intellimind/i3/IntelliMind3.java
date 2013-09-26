@@ -48,8 +48,8 @@ import de.srsoftware.tools.language.LanguagePack;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = "0.5.1";
-	private String date = "August 2013";
+	private String version = "0.5.2";
+	private String date = "September 2013";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
 	private KeyStroke CtrlW=KeyStroke.getKeyStroke(KeyEvent.VK_W,2);
