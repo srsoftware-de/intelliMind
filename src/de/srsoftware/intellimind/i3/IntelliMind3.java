@@ -48,7 +48,7 @@ import de.srsoftware.tools.language.LanguagePack;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = "0.5.2";
+	private String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.3";
 	private String date = "September 2013";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
