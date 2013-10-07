@@ -48,7 +48,7 @@ import de.srsoftware.tools.language.LanguagePack;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.3";
+	private String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.4";
 	private String date = "September 2013";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
@@ -482,7 +482,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void enableMindmapOptions() {
-		IFold.setEnabled(false);
+		//IFold.setEnabled(false);
 		IFoldAll.setEnabled(false);
 		
 		ISave.setEnabled(true);
@@ -523,6 +523,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (command.equals("deleteLink") && (commandKnown = true)) mindmapPanel.deleteActiveLink();
 		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
 		if (command.equals("export") && (commandKnown = true)) doHtmlExport();
+		
+		if (command.equals("fold") && (commandKnown=true)) mindmapPanel.toogleFold();
 
 		if (command.equals("foreColor") && (commandKnown = true)) mindmapPanel.setCurrentForegroundColor(JColorChooser.showDialog(this, languagePack.get("SELECT_FOREGROUND_COLOR"), mindmapPanel.getForeground()));
 		if (command.equals("foreColorTrace") && (commandKnown = true)) startStopForegroundtrace();
