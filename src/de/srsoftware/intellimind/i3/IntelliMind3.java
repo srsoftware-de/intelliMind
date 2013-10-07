@@ -909,7 +909,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			configFile.write("TextSize=" + mindmapPanel.getTextSize() + "\n"); // die Schriftgröße der Knoten speichern
 			configFile.write("WindowSize="+getSize().width+" "+getSize().height + "\n");
 			configFile.write("WindowLocation="+getLocation().x+" "+getLocation().y + "\n");
-			configFile.write("Display="+(mindmapPanel.getClass().getCanonicalName()) + "\n");
+			configFile.write("Display="+(mindmapPanel.getClass().getSimpleName()) + "\n");
 			configFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
