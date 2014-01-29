@@ -1,11 +1,3 @@
-package de.srsoftware.intellimind.i3;
-
-import de.srsoftware.tools.language.English;
-
-public class English_Mindmap extends English {
-
-	public English_Mindmap() {
-		super();
 		map.put("ASK_FOR_CREATION", "Shall this file be created?");
 		map.put("ASK_FOR_OVERWRITE", "The file you selected already exists. Overwrite it?");
 		map.put("BACKGROUND_COLOR", "background color");
@@ -33,15 +25,15 @@ public class English_Mindmap extends English {
 		map.put("INTERACTIVE_EXPORT", "interactive export");
 		map.put("LARGER", "larger");
 		map.put("MAXIMUM_DEPTH", "maximum depth");
-		map.put("MINDMAP", "mindmap");
 		map.put("MINDMAP_FILE", "mindmap file");
 		map.put("MINDMAP_FOR_SUBTREE", "mindmap for subtree");
+		map.put("MINDMAP", "mindmap");
 		map.put("NAVIGATION", "naviagtion");
 		map.put("NEW_BROTHER", "new brother node");
 		map.put("NEW_CHILD", "new child node");
 		map.put("NEW_MINDMAP", "new mindmap");
-		map.put("NEW_NODE", "new mindmap node");
 		map.put("NEW_NODE_FORMULA", "[enter text/code for the node here]");
+		map.put("NEW_NODE", "new mindmap node");
 		map.put("NEXT", "to next node");
 		map.put("NO_BROTHER_FOR_ROOT", "a mindmap's root mustn't have a brother");
 		map.put("NODE_DETAILS", "node details");
@@ -70,7 +62,5 @@ public class English_Mindmap extends English {
 		map.put("TO_ROOT", "to root");
 		map.put("UNFOLD_RECURSIVE", "unfold all subtrees");
 		map.put("UNSAVED_CHANGES", "You have unsaved changes in your current mindmap. Shall those be saved?");
-		map.put("WIKI_SEARCH", "on Wikipedia.de");
 		map.put("WARNING_CONCURRENT_CHANGES", "Warning! The File ## has been concurrently edited at two or more places. Only changes of one instance will be saved to ##!\nChanges of other instances will be saved to backup files in the same folder!");
-	}
-}
+		map.put("WIKI_SEARCH", "on Wikipedia.de");
