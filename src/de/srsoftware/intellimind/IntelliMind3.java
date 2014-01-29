@@ -12,14 +12,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -40,6 +37,7 @@ import de.srsoftware.gui.treepanel.RootTreePanel;
 import de.srsoftware.gui.treepanel.StarTreePanel;
 import de.srsoftware.gui.treepanel.TreeNode;
 import de.srsoftware.gui.treepanel.TreePanel;
+import de.srsoftware.tools.Configuration;
 import de.srsoftware.tools.GenericFileFilter;
 import de.srsoftware.tools.SuggestField;
 import de.srsoftware.tools.Tools;
@@ -50,8 +48,9 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private static final long serialVersionUID = -6738627138627936663L;
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Translations.getFor(IntelliMind3.class);
 		IntelliMind3 intelliMind = new IntelliMind3();
 		try {
@@ -91,7 +90,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private KeyStroke CtrlPlus=KeyStroke.getKeyStroke(KeyEvent.VK_PLUS,2);
 	private JMenuBar MainMenu;
 	private JMenu MindmapMenu;
-	private JMenuItem IOpen, INew, IClose, ISaveAs, ISave, ISaveTreeAs, IExport, ISetBGColor, IExit;
+	private JMenuItem IOpen, INew, IClose, ISaveAs, ISave, ISaveTreeAs, IExport, ISetBGColor, ISetLanguage, IExit;
 	private JMenu BearbeitenMenu;
 	private JMenuItem INewBrother, INewChild, IMindmapForChild, IChangeText, IInsertImage, IDeleteImage, IInsertLink, IDeleteLink, ICut, ICopy, IPaste, IDelete, IBGColor, IForeColor, IBGCTrace, IFGCTrace;
 	private JMenu AnsichtMenu;
@@ -105,25 +104,30 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	
 	private JMenuItem IMindmapForChild2, IInsertImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
+	private String langConf;
+	private Configuration config;
 
 	private static String trace;
 
 	private static URL mindmapToOpenAtStart;
 	//private URL lastOpenedFile = null;
 
-	public IntelliMind3() {
+	public IntelliMind3() throws IOException {
 		this(_("Welcome to IntelliMind #",version));
 
 		this.addComponentListener(this);
 	}
 
-	public IntelliMind3(String title) {
+	public IntelliMind3(String title) throws IOException {
 		super(title);
+		config=new Configuration("intelliMind3");
+		langConf=config.get("langs");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 		addKeyListener(this);
 		createComponents();
-		loadPreferences();
+		readConfig();
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -131,6 +135,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		boolean commandKnown = false;
 		if (command.equals("bgColor") && (commandKnown = true)) mindmapPanel.setCurrentBackgroundColor(JColorChooser.showDialog(this, _("select background color"), mindmapPanel.getBackground()));
 		if (command.equals("bgColorTrace") && (commandKnown = true)) startStopBackgroundtrace();
+		if (command.equals("changeLanguage") && (commandKnown = true)) selectLang();
 		if (command.equals("changeText") && (commandKnown = true)) mindmapPanel.editNode();
 		if (command.equals("changeBGColor") && (commandKnown = true)) {
 			mindmapPanel.setBackground(JColorChooser.showDialog(this, _("select background color"), mindmapPanel.getBackground()));
@@ -239,6 +244,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	}
 
+	private void selectLang() {
+		langConf="de,en";
+		langConf=JOptionPane.showInputDialog(_("Select the languages you prefer to use (high priority first), separated by commas:"), langConf);
+		
+  }
 	public void componentHidden(ComponentEvent e) {
 		// TODO Auto-generated method stub
 		
@@ -295,22 +305,20 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void changeConfigurationFile() {
 		try {
-			BufferedWriter configFile = new BufferedWriter(new FileWriter(".intelliMind.config"));
-			try {				
-				configFile.write("Mindmap=" + getTrace() + "\n");
-			} catch (NullPointerException e) {
-
-			}
-			configFile.write("Backgroundcolor=" + mindmapPanel.getBackground().getRGB() + "\n");
-			configFile.write("NodeDistance=" + mindmapPanel.getDistance() + "\n"); // die Soll-Distanz zwischen den Knoten speichern
-			configFile.write("TextSize=" + mindmapPanel.getTextSize() + "\n"); // die Schriftgröße der Knoten speichern
-			configFile.write("WindowSize="+getSize().width+" "+getSize().height + "\n");
-			configFile.write("WindowLocation="+getLocation().x+" "+getLocation().y + "\n");
-			configFile.write("Display="+(mindmapPanel.getClass().getSimpleName()) + "\n");
-			configFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			config.set("mindmap",getTrace());
+		} catch (NullPointerException npe){}
+		config.set("language=",langConf);
+		config.set("backgroundColor",mindmapPanel.getBackground().getRGB());
+		config.set("nodeDistance",mindmapPanel.getDistance()); // die Soll-Distanz zwischen den Knoten speichern
+		config.set("textSize",mindmapPanel.getTextSize()); // die Schriftgröße der Knoten speichern
+		config.set("windowSize",getSize().width+" "+getSize().height);
+		config.set("windowLocation",getLocation().x+" "+getLocation().y);
+		config.set("display",(mindmapPanel.getClass().getSimpleName()));
+		try {
+	    config.save();
+    } catch (IOException e) {
+	    e.printStackTrace();
+    }
 	}
 
 	private boolean closeMindmap() {
@@ -620,6 +628,10 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		ISetBGColor.setActionCommand("changeBGColor");
 		ISetBGColor.addActionListener(this);
 
+		MindmapMenu.add(ISetLanguage = new JMenuItem(_("change language"), KeyEvent.VK_S));
+		ISetLanguage.setActionCommand("changeLanguage");
+		ISetLanguage.addActionListener(this);
+
 		MindmapMenu.addSeparator();
 
 		MindmapMenu.add(IExit = new JMenuItem(_("exit"), KeyEvent.VK_B));
@@ -841,47 +853,38 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 	}
 
-	private void loadPreferences() {
+	private void readConfig() {
 		try {
-			BufferedReader configurationFile = new BufferedReader(new InputStreamReader(new FileInputStream(".intelliMind.config")));
-			while (configurationFile.ready()) {
-				String configurationLine = configurationFile.readLine();
-				System.out.println();
-				if (configurationLine.startsWith("Mindmap=")) {
-					mindmapToOpenAtStart = new URL(configurationLine.substring(8));
-				}
-				if (configurationLine.startsWith("Backgroundcolor=")) {
-					mindmapPanel.setBackground(new Color(Integer.parseInt(configurationLine.substring(16))));
-				}
-				if (configurationLine.startsWith("NodeDistance=") && mindmapPanel instanceof StarTreePanel) {
-					((StarTreePanel) mindmapPanel).setDistance(Integer.parseInt(configurationLine.substring(13)));
-				}
-				if (configurationLine.startsWith("TextSize=")) {
-					mindmapPanel.setTextSize(Float.parseFloat(configurationLine.substring(9)));
-				}
-				if (configurationLine.startsWith("Trace=")) {
-					trace=configurationLine.substring(6);
-				}
-				if (configurationLine.startsWith("WindowSize=")) {
-					String size=configurationLine.substring(11).trim();
-					int h=size.indexOf(' ');
-					int w=Integer.parseInt(size.substring(0,h));
-					h=Integer.parseInt(size.substring(h+1));
-					setSize(new Dimension(w,h));
-				}
-				if (configurationLine.startsWith("WindowLocation=")) {
-					String size=configurationLine.substring(15).trim();
-					int y=size.indexOf(' ');
-					int x=Integer.parseInt(size.substring(0,y));
-					y=Integer.parseInt(size.substring(y+1));
-					setLocation(x, y);
-				}
-				if (configurationLine.startsWith("Display=")) {
-					String display=configurationLine.substring(8).trim();
-					if (display.equals("StarTreePanel")) enableStarTree(true);
-				}
+			String mindmap=config.get("mindmap");
+			if (mindmap!=null) mindmapToOpenAtStart=new URL(mindmap);
+			String bgColor = config.get("backgroundColor");
+			if (bgColor != null) mindmapPanel.setBackground(new Color(Integer.parseInt(bgColor.substring(16))));
+			String nodeDistance=config.get("nodeDistance");
+			if (nodeDistance!=null && mindmapPanel instanceof StarTreePanel) ((StarTreePanel) mindmapPanel).setDistance(Integer.parseInt(nodeDistance.substring(13)));
+			String textSize=config.get("textSize");
+			if (textSize!=null) mindmapPanel.setTextSize(Float.parseFloat(textSize.substring(9)));
+			trace=config.get("trace");
+			String windowSize = config.get("windowSize");
+			if (windowSize != null) {
+				windowSize=windowSize.substring(11).trim();
+				int h=windowSize.indexOf(' ');
+				int w=Integer.parseInt(windowSize.substring(0,h));
+				h=Integer.parseInt(windowSize.substring(h+1));
+				setSize(new Dimension(w,h));
 			}
-			configurationFile.close();
+			String location=config.get("windowLocation");
+			if (location!=null){
+				location=location.substring(15).trim();
+				int y=location.indexOf(' ');
+				int x=Integer.parseInt(location.substring(0,y));
+				y=Integer.parseInt(location.substring(y+1));
+				setLocation(x, y);
+			}
+			String display=config.get("display");
+			if (display!=null) {
+				display=display.substring(8).trim();
+				if (display.equals("StarTreePanel")) enableStarTree(true);
+			}
 		} catch (FileNotFoundException e) {
 			try {
 				mindmapToOpenAtStart = new URL(helpFile);
