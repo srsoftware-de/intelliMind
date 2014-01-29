@@ -19,7 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import de.srsoftware.tools.Tools;
-import de.srsoftware.tools.language.LanguagePack;
+import de.srsoftware.tools.translations.Translations;
 
 
 public class HtmlExportDialog extends JDialog {
@@ -32,16 +32,14 @@ public class HtmlExportDialog extends JDialog {
 	JTextField depthEditor,fileNameField;
 	ButtonGroup RadioButtons;
 	JButton increaseDepth,decreaseDepth,ok,cancel,selectFolder;
-	LanguagePack languagePack;
 	JRadioButton exportToOneFile,exportToMultiplefiles;
 	String filename=null;
 	private boolean okPressed=false;
 	private int maxDepth=10;
 
-  public HtmlExportDialog(JFrame owner, String title, boolean modal,LanguagePack languagePack) {
+  public HtmlExportDialog(JFrame owner, String title, boolean modal) {
     // Dialog-Initialisierung
     super(owner, title, modal);
-    this.languagePack=languagePack;
     init(title,null,modal);
   }
   

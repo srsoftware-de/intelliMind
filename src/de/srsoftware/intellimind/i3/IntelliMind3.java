@@ -43,7 +43,7 @@ import de.srsoftware.gui.treepanel.TreePanel;
 import de.srsoftware.tools.GenericFileFilter;
 import de.srsoftware.tools.SuggestField;
 import de.srsoftware.tools.Tools;
-import de.srsoftware.tools.language.LanguagePack;
+import de.srsoftware.tools.translations.Translations;
 
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
@@ -71,7 +71,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private JMenuItem IMindmapForChild2, IInsertImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
 	private static String trace;
 	private static URL mindmapToOpenAtStart;
-	private static LanguagePack languagePack=null;
 	//private URL lastOpenedFile = null;
 
 	
@@ -621,7 +620,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void doHtmlExport() {
-		HtmlExportDialog exportDialog = new HtmlExportDialog(this, _("export to HTML"), true, languagePack);
+		HtmlExportDialog exportDialog = new HtmlExportDialog(this, _("export to HTML"), true);
 		exportDialog.setVisible(true);
 		if (exportDialog.notCancelled()) {
 			try {
@@ -750,7 +749,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private int aksForSavingMindmaps() {
 		// TODO Auto-generated method stub
-		return JOptionPane.showConfirmDialog(this, _("You have unsaved changes in your current mindmap. Shall those be saved?"), _("error while trying to save"), JOptionPane.YES_NO_CANCEL_OPTION);
+		return JOptionPane.showConfirmDialog(this, _("You have unsaved changes in your current mindmap. Shall those be saved?"), _("Error while trying to save"), JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
 	private TreeNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
@@ -980,6 +979,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Translations.getFor(IntelliMind3.class);
 		IntelliMind3 intelliMind = new IntelliMind3();
 		try {
 			if (args!=null && args.length>0){
