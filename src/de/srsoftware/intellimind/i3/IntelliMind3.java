@@ -180,7 +180,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createSuchenMenu() {
-		SuchenMenu = new JMenu(_("SEARCH"));
+		SuchenMenu = new JMenu(_("Search"));
 		SuchenMenu.setMnemonic(KeyEvent.VK_S);
 
 		SuchenMenu.add(IWikiSearch = new JMenuItem(_("on Wikipedia"), KeyEvent.VK_W));
@@ -195,7 +195,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		IImageSearch.setActionCommand("imageSearch");
 		IImageSearch.addActionListener(this);
 
-		SuchenMenu.add(IEbaySearch = new JMenuItem(_("EBAY_SEARCH"), KeyEvent.VK_E));
+		SuchenMenu.add(IEbaySearch = new JMenuItem(_("on eBay"), KeyEvent.VK_E));
 		IEbaySearch.setActionCommand("ebaySearch");
 		IEbaySearch.addActionListener(this);
 		
@@ -206,7 +206,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		AnsichtMenu = new JMenu(_("View"));
 		AnsichtMenu.setMnemonic(KeyEvent.VK_A);
 
-		AnsichtMenu.add(IFold = new JMenuItem(_("collapse / expand"), KeyEvent.VK_Z));
+		AnsichtMenu.add(IFold = new JMenuItem(_("collapse/expand"), KeyEvent.VK_Z));
 		IFold.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
 		IFold.addActionListener(this);
 		IFold.setActionCommand("fold");
@@ -292,7 +292,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		IChangeText.setActionCommand("changeText");
 		IChangeText.addActionListener(this);
 
-		BearbeitenMenu.add(IInsertImage = new JMenuItem(_("insert Image"), KeyEvent.VK_I));
+		BearbeitenMenu.add(IInsertImage = new JMenuItem(_("insert image"), KeyEvent.VK_I));
 		IInsertImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));
 		IInsertImage.setActionCommand("insertImage");
 		IInsertImage.addActionListener(this);
@@ -370,15 +370,15 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 		BearbeitenMenu.addSeparator();
 
-		BearbeitenMenu.add(IBGColor = new JMenuItem(_("background color"), KeyEvent.VK_H));
+		BearbeitenMenu.add(IBGColor = new JMenuItem(_("node background color"), KeyEvent.VK_H));
 		IBGColor.setActionCommand("bgColor");
 		IBGColor.addActionListener(this);
 
-		BearbeitenMenu.add(IBGCTrace = new JMenuItem(_("BACKGROUND_COLOR_FOLLOW"), KeyEvent.VK_V));
+		BearbeitenMenu.add(IBGCTrace = new JMenuItem(_("propagate background color"), KeyEvent.VK_V));
 		IBGCTrace.setActionCommand("bgColorTrace");
 		IBGCTrace.addActionListener(this);
 
-		IBGColor2 = new JMenuItem(_("background color"), KeyEvent.VK_H);
+		IBGColor2 = new JMenuItem(_("node background color"), KeyEvent.VK_H);
 		IBGColor2.setActionCommand("bgColor");
 		IBGColor2.addActionListener(this);
 

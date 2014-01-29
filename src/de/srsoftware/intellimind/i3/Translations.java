@@ -17,12 +17,15 @@ public class Translations {
 		System.out.print("Loading translation for "+locale+"...");
 		Translation trans;
 		try {
-			trans = (Translation) Translation.class.getClassLoader().loadClass("Translation"+locale).newInstance();
+			trans = (Translation) Translation.class.getClassLoader().loadClass("de.srsoftware.intellimind.i3.Translation"+locale).newInstance();
 			System.out.println("success.");
 			return trans;
 		} catch (InstantiationException e) {
+			e.printStackTrace();
 		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		System.out.println("Failed. Using en.");
 		return new Translation();
