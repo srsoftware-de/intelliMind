@@ -35,10 +35,10 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import de.srsoftware.formula.FormulaInputDialog;
-import de.srsoftware.gui.treepanel.TreeNode;
 import de.srsoftware.gui.treepanel.NodeImage;
 import de.srsoftware.gui.treepanel.RootTreePanel;
 import de.srsoftware.gui.treepanel.StarTreePanel;
+import de.srsoftware.gui.treepanel.TreeNode;
 import de.srsoftware.gui.treepanel.TreePanel;
 import de.srsoftware.tools.GenericFileFilter;
 import de.srsoftware.tools.SuggestField;
@@ -48,8 +48,8 @@ import de.srsoftware.tools.language.LanguagePack;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
-	private String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.4";
-	private String date = "September 2013";
+	private String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.5";
+	private String date = "Januar 2014";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
 	private KeyStroke CtrlW=KeyStroke.getKeyStroke(KeyEvent.VK_W,2);
@@ -68,7 +68,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private JMenuItem IToRoot, IToParent, IToFirstChild, IToLastChild, IToNext, IToPrev, ILoadToRoot;
 	private JMenu InfoMenu;
 	private JMenuItem IHelp, IInfo, IPreferences, INodeDetails;
-	private JMenuItem IMindmapForChild2, IInsertImage2, IDeleteImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
+	private JMenuItem IMindmapForChild2, IInsertImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
 	private static String trace;
 	private static URL mindmapToOpenAtStart;
 	private static LanguagePack languagePack=null;
@@ -307,11 +307,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		IDeleteImage.setActionCommand("deleteImage");
 		IDeleteImage.addActionListener(this);
 
-		IDeleteImage2 = new JMenuItem(_("delete image"), KeyEvent.VK_D);
-		IDeleteImage2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
-		IDeleteImage2.setActionCommand("deleteImage");
-		IDeleteImage2.addActionListener(this);
-
 		BearbeitenMenu.add(IInsertLink = new JMenuItem(_("insert/edit link"), KeyEvent.VK_N));
 		IInsertLink.setActionCommand("insertLink");
 		IInsertLink.addActionListener(this);
@@ -534,7 +529,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				mindmapPanel.increaseDistance();
 				changeConfigurationFile();
 		}
-		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, "IntelliMind3\nversion " + version + "\nvon SRSoftware - www.srsoftware.de\nauthor:\n Stephan Richter (srichter@srsoftware.de)\nall rights reserved\n" + date, "Information", JOptionPane.INFORMATION_MESSAGE);
+		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",new Object[]{version,date}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
 		if (command.equals("insertImage") && (commandKnown = true)) mindmapPanel.setImageOfCurrentNode(selectImage());
 		if (command.equals("insertLink") && (commandKnown = true)) try {
 			mindmapPanel.setLinkOfCurrentNode(openFile());
@@ -669,11 +664,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void fileNotFound(FileNotFoundException e) {
-		JOptionPane.showMessageDialog(this, _("file (#) coult not be found.").replace("##", e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
+		JOptionPane.showMessageDialog(this, _("file (#) could not be found.",e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
 	}
 
 	private void fileNotSupported(DataFormatException e) {
-		JOptionPane.showMessageDialog(this, _("files of this type (#) can currently not be opened.").replace("##", e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
+		JOptionPane.showMessageDialog(this, _("files of this type (#) can currently not be opened.",e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
 	}
 	
 	private void startStopBackgroundtrace() {
@@ -746,8 +741,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return result;
 	}
 
-	public String _(String text){
+	private static String _(String text) { 
 		return Translations.get(text);
+	}
+	private static String _(String key, Object insert) {
+		return Translations.get(key, insert);
 	}
 
 	private int aksForSavingMindmaps() {
@@ -758,21 +756,21 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private TreeNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
 		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
 		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap..."), null, new GenericFileFilter(_("mindmap file"), ".imf;.mm"), this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("SELECT_TARGET_MANUALLY"));
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
 		//lastOpenedFile = fileUrl;
 		return openMindmap(fileUrl);
 	}
 	
 	private URL openFile() throws FileNotFoundException {
 		String filename=null;
-		URL fileUrl = Tools.showSelectFileDialog(_("OPEN_MINDMAP"), filename, null, this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target by manually:"));
+		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap"), filename, null, this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
 		//lastOpenedFile = fileUrl;
 		return fileUrl;
 	}	
 
 	private boolean requestFileCreation(URL fileUrl) {
-		if (JOptionPane.showConfirmDialog(this, _("File (#) coult not be found. Shall this file be created?").replace("##", fileUrl.toString())) == 0) {
+		if (JOptionPane.showConfirmDialog(this, _("File (#) could not be found. Shall this file be created?",fileUrl)) == 0) {
 			StringBuffer formula=new StringBuffer("\\small{"+fileUrl.getFile()+"}");
 			formula.insert(formula.lastIndexOf("/")+1, "}\\bold{");
 			formula.insert(formula.lastIndexOf("."), "}\\small{");
@@ -787,7 +785,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		TreeNode newRoot = createNewNode(null);
 		if (newRoot != null && closeMindmap()) {
 			setMindmap(newRoot);
-			setTitle(_("NEW_MINDMAP") + "*");
+			setTitle(_("new Mindmap") + "*");
 			newRoot.treeChanged();
 			enableMindmapOptions();
 		}
