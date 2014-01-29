@@ -1,4 +1,4 @@
-package de.srsoftware.intellimind.i3;
+package de.srsoftware.intellimind;
 
 
 public interface MindmapLoader {

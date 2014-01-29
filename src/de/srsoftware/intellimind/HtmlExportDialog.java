@@ -1,4 +1,4 @@
-package de.srsoftware.intellimind.i3;
+package de.srsoftware.intellimind;
 
 import java.awt.Container;
 import java.awt.FlowLayout;

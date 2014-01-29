@@ -1,4 +1,4 @@
-package de.srsoftware.intellimind.i3;
+package de.srsoftware.intellimind;
 import java.util.Locale;
 import java.util.TreeMap;
 
