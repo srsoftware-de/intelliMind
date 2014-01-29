@@ -719,7 +719,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				String name = f.getName();
 				String path = f.getParent();
 				String[] names = { name, name + ".imf", name + ".mm" };
-				System.out.print("searching for " + name);
+				System.out.print(_("searching for #",name));
 				URL searchedFile = Tools.searchFiles(names, path);
 				if (searchedFile != null) {
 					fileUrl = searchedFile;
