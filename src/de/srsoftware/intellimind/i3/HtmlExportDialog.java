@@ -63,7 +63,7 @@ public class HtmlExportDialog extends JDialog {
     fileNameField=new JTextField(filename);
     folderPanel.add(fileNameField);
     
-    selectFolder=new JButton(languagePack.get("SELECT_FOLDER"));
+    selectFolder=new JButton(_("Select output folder"));
     selectFolder.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	filename=Tools.selectFolder();
@@ -72,7 +72,7 @@ public class HtmlExportDialog extends JDialog {
     });
     folderPanel.add(selectFolder);
     add(folderPanel);
-    exportOnlyCurrentMindmap=new JCheckBox(languagePack.get("EXPORT_ONLY_CURRENT_MINDMAP"));
+    exportOnlyCurrentMindmap=new JCheckBox(_("Export current mindmap only. Do not follow links."));
     exportOnlyCurrentMindmap.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	if (exportOnlyCurrentMindmap.isSelected()){
@@ -98,7 +98,7 @@ public class HtmlExportDialog extends JDialog {
     
     depthPanel=new JPanel();
      
-    maximumDepthCheckBox=new JCheckBox(languagePack.get("MAXIMUM_DEPTH"));
+    maximumDepthCheckBox=new JCheckBox(_("maximum depth"));
     maximumDepthCheckBox.setSelected(true);
     depthPanel.add(maximumDepthCheckBox);
     depthEditor=new JTextField("010");
@@ -119,17 +119,17 @@ public class HtmlExportDialog extends JDialog {
     depthPanel.add(decreaseDepth);
     depthPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     add(depthPanel);
-    interactiveExport=new JCheckBox(languagePack.get("INTERACTIVE_EXPORT"));
+    interactiveExport=new JCheckBox(_("interactive export"));
     add(interactiveExport);
     
-    exportToOneFile=new JRadioButton(languagePack.get("EXPORT_TO_ONE_FILE"));
+    exportToOneFile=new JRadioButton(_("export to one single file"));
     exportToOneFile.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	if (exportToOneFile.isSelected() && !exportOnlyCurrentMindmap.isSelected()) noMultipleFollows.setEnabled(true);
       }
     });
     add(exportToOneFile);
-    exportToMultiplefiles=new JRadioButton(languagePack.get("EXPORT_TO_MULTIPLE_FILES"));
+    exportToMultiplefiles=new JRadioButton(_("export into multiple files"));
     exportToMultiplefiles.setSelected(true);
     
     exportToMultiplefiles.addActionListener(new ActionListener() {
@@ -146,7 +146,7 @@ public class HtmlExportDialog extends JDialog {
     RadioButtons=new ButtonGroup();
     RadioButtons.add(exportToOneFile);
     RadioButtons.add(exportToMultiplefiles);
-    noMultipleFollows=new JCheckBox(languagePack.get("NO_MULTIPLE_FOLLOWS"));
+    noMultipleFollows=new JCheckBox(_("don't follow links to a special file more than one time"));
     noMultipleFollows.setSelected(true);
     noMultipleFollows.setEnabled(false);
     noMultipleFollows.addActionListener(new ActionListener() {
@@ -163,7 +163,7 @@ public class HtmlExportDialog extends JDialog {
     
     okCancelPanel=new JPanel();
     okCancelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    ok=new JButton(languagePack.get("OK"));
+    ok=new JButton(_("Ok"));
     ok.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	okPressed=true;
@@ -171,7 +171,7 @@ public class HtmlExportDialog extends JDialog {
       }
     });
     okCancelPanel.add(ok);
-    cancel=new JButton(languagePack.get("CANCEL"));
+    cancel=new JButton(_("Cancel"));
     cancel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
       	dispose();
@@ -187,6 +187,10 @@ public class HtmlExportDialog extends JDialog {
 
     setResizable(true);
   }
+  
+	public String _(String text){
+		return Translations.get(text);
+	}
 
 	protected void enableDepthPanel(boolean b) {
 		// TODO Auto-generated method stub
