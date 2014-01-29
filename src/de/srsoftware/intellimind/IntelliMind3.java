@@ -48,6 +48,40 @@ import de.srsoftware.tools.translations.Translations;
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
 	private static final long serialVersionUID = -6738627138627936663L;
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Translations.getFor(IntelliMind3.class);
+		IntelliMind3 intelliMind = new IntelliMind3();
+		try {
+			if (args!=null && args.length>0){
+				if (!args[0].contains(":")) args[0]="file://"+args[0];
+				mindmapToOpenAtStart=new URL(args[0]);
+			}
+			intelliMind.setMindmap(intelliMind.openMindmap(mindmapToOpenAtStart));			
+			if (trace!=null) {
+				(new Tracer(intelliMind.mindmapPanel,trace)).start();
+			}
+			/*
+			 * / intelliMind.setMindmap(intelliMind.openMindmap(new URL("http://srsoftware.dyndns.info/mindmaps/I/intelliMind3.imf"))); //
+			 */
+		} catch (FileNotFoundException e) {
+			intelliMind.fileNotFound(e);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	private static String _(String text) { 
+		return Translations.get(text);
+	}
+	private static String _(String key, Object insert) {
+		return Translations.get(key, insert);
+	}
 	private String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.5";
 	private String date = "Januar 2014";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
@@ -68,137 +102,235 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private JMenuItem IToRoot, IToParent, IToFirstChild, IToLastChild, IToNext, IToPrev, ILoadToRoot;
 	private JMenu InfoMenu;
 	private JMenuItem IHelp, IInfo, IPreferences, INodeDetails;
+
+	
 	private JMenuItem IMindmapForChild2, IInsertImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
+
 	private static String trace;
+
 	private static URL mindmapToOpenAtStart;
 	//private URL lastOpenedFile = null;
 
-	
 	public IntelliMind3() {
 		this("");
 
 		this.addComponentListener(this);
 	}
 
-	private void createComponents() {
-		setPreferredSize(new Dimension(640, 480));
-		setSize(getPreferredSize());
-		this.getContentPane().setLayout(new BorderLayout());
+	public IntelliMind3(String title) {
+		super(title);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(this);
+		addKeyListener(this);
+		createComponents();
+		loadPreferences();
+	}
 
-		createMainMenu();
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+		boolean commandKnown = false;
+		if (command.equals("bgColor") && (commandKnown = true)) mindmapPanel.setCurrentBackgroundColor(JColorChooser.showDialog(this, _("select background color"), mindmapPanel.getBackground()));
+		if (command.equals("bgColorTrace") && (commandKnown = true)) startStopBackgroundtrace();
+		if (command.equals("changeText") && (commandKnown = true)) mindmapPanel.editNode();
+		if (command.equals("changeBGColor") && (commandKnown = true)) {
+			mindmapPanel.setBackground(JColorChooser.showDialog(this, _("select background color"), mindmapPanel.getBackground()));
+			changeConfigurationFile();
+		}
+		if (command.equals("close") && (commandKnown = true) && closeMindmap()) System.exit(0);
+		if (command.equals("closeMindmap") && (commandKnown = true)) closeMindmap();
+		if (command.equals("copy") && (commandKnown = true)) mindmapPanel.copy();
+		if (command.equals("cut") && (commandKnown = true)) mindmapPanel.cut();
+		if (command.equals("decVertDist") && (commandKnown = true)) {
+				mindmapPanel.decreaseDistance();
+				changeConfigurationFile();
+		}
+		if (command.equals("delete") && (commandKnown = true)) mindmapPanel.deleteActive();
+		if (command.equals("deleteImage") && (commandKnown = true)) mindmapPanel.deleteActiveImage();
+		if (command.equals("deleteLink") && (commandKnown = true)) mindmapPanel.deleteActiveLink();
+		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
+		if (command.equals("export") && (commandKnown = true)) doHtmlExport();
+		
+		if (command.equals("fold") && (commandKnown=true)) mindmapPanel.toogleFold();
 
-		/*mindmapPanel = new StarTreePanel(); /*/
-		mindmapPanel = new RootTreePanel(); //*/
-		mindmapPanel.addActionListener(this);
-		add(mindmapPanel);
-		this.setVisible(true);
+		if (command.equals("foreColor") && (commandKnown = true)) mindmapPanel.setCurrentForegroundColor(JColorChooser.showDialog(this, _("select foreground color"), mindmapPanel.getForeground()));
+		if (command.equals("foreColorTrace") && (commandKnown = true)) startStopForegroundtrace();
+		if (command.equals("googleSearch") && (commandKnown = true)) Tools.execute("\"http://www.google.de/search?q=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
+		if (command.equals("imageSearch") && (commandKnown = true)) Tools.execute("\"http://images.google.de/images?q=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
+		if (command.equals("incVertDist") && (commandKnown = true)) {
+				mindmapPanel.increaseDistance();
+				changeConfigurationFile();
+		}
+		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",new Object[]{version,date}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
+		if (command.equals("insertImage") && (commandKnown = true)) mindmapPanel.setImageOfCurrentNode(selectImage());
+		if (command.equals("insertLink") && (commandKnown = true)) try {
+			mindmapPanel.setLinkOfCurrentNode(openFile());
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		if (command.equals("LoadHelp") && (commandKnown = true)) loadHelp();
+		if (command.equals("LoadToRoot") && (commandKnown = true)) moveCurrentNodeToRoot();
+		if (command.equals("mindmapForChild") && (commandKnown = true)) try {
+			mindmapPanel.appendNewChild(openMindmap());
+			this.requestFocus();
+		} catch (FileNotFoundException e1) {
+			fileNotFound(e1);
+		} catch (DataFormatException e1) {
+			fileNotSupported(e1);
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+		if (command.equals("navigateToRoot") && (commandKnown = true)) mindmapPanel.navigateToRoot();
+		if (command.equals("new") && (commandKnown = true)) createNewMindmap();
+		if (command.equals("newBrother") && (commandKnown = true)) insertNewBrother();
+		if (command.equals("newChild") && (commandKnown = true)) mindmapPanel.appendNewChild(createNewNode(mindmapPanel.tree.getOrigin()));
+		if (command.equals("navigateRight") && (commandKnown = true)) mindmapPanel.navigateRight();
+		if (command.equals("navigateLeft") && (commandKnown = true)) mindmapPanel.navigateLeft();
+		if (command.equals("navigateDown") && (commandKnown = true)) mindmapPanel.navigateDown();
+		if (command.equals("navigateToLastChild") && (commandKnown = true)) mindmapPanel.navigateToEnd();
+		if (command.equals("navigateUp") && (commandKnown = true)) mindmapPanel.navigateUp();
+		if (command.equals("switchToStarTree") && (commandKnown = true)) enableStarTree(true);		
+		if (command.equals("switchToRootedTree") && (commandKnown = true)) enableStarTree(false);		
+		if (command.equals("paste") && (commandKnown = true)) mindmapPanel.paste();
+		if (command.equals("open") && (commandKnown = true)) try {
+			setMindmap(openMindmap());
+		} catch (FileNotFoundException e1) {
+			fileNotFound(e1);
+		} catch (DataFormatException e1) {
+			fileNotSupported(e1);
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+		if (command.equals("refreshView") && (commandKnown = true)) mindmapPanel.refreshView();
+		if (command.equals("smaller") && (commandKnown = true)) {
+			mindmapPanel.setTextSmaller();
+			changeConfigurationFile();
+		}
+		if (command.equals("larger") && (commandKnown = true)) {
+			mindmapPanel.setTextLarger();
+			changeConfigurationFile();
+		}
+		if (command.equals("save") && (commandKnown = true)) mindmapPanel.saveNodes();
+		if (command.equals("saveAs") && (commandKnown = true)) {
+			mindmapPanel.saveRoot();
+			changeConfigurationFile();
+		}
+
+		if (command.equals("saveTreeAs") && (commandKnown = true)) {
+			mindmapPanel.saveCurrentFork();
+			this.requestFocus();
+		}
+		if (command.equals("setDefaultView")) {
+			mindmapPanel.setTextSize(18f);
+			mindmapPanel.setBackground(new Color(0, 155, 255));
+			mindmapPanel.setSize(mindmapPanel.getSize()); // forces distances to be newly calculated
+			changeConfigurationFile();
+		}
+		if (command.equals("wikiSearch")) Tools.execute("\"http://de.wikipedia.org/wiki/Spezial:Search?search=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
+		if (command.startsWith("SetTitle:") && (commandKnown = true)) setTitle(command.substring(9));
+		if (command.equals("NodeDetails") && (commandKnown = true)) mindmapPanel.showNodeDetails();
+		if (mindmapPanel.currentNode() != null) {
+			IInsertLink.setEnabled(mindmapPanel.currentNode().firstChild() == null);
+			IInsertLink2.setEnabled(mindmapPanel.currentNode().firstChild() == null);
+			IDeleteLink.setEnabled(mindmapPanel.currentNode().getLink() != null);
+			IDeleteLink2.setEnabled(mindmapPanel.currentNode().getLink() != null);
+		}
+		if (!commandKnown) System.out.println("actionPerformed recieved the following, unimplemented command: " + command);
+
+	}
+
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void componentMoved(ComponentEvent e) {
+		changeConfigurationFile();
+	}
+
+	public void componentResized(ComponentEvent e) {
+		changeConfigurationFile();
+	}
+
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}	
+
+	public void keyPressed(KeyEvent k) {
+		KeyStroke ks = KeyStroke.getKeyStrokeForEvent(k);
+		if (ks.equals(CtrlW)) this.actionPerformed(new ActionEvent(this, 0, "closeMindmap"));
+		if (ks.equals(CtrlPlus)) this.actionPerformed(new ActionEvent(this, 0, "incVertDist"));
+		if (ks.equals(CtrlMinus)) this.actionPerformed(new ActionEvent(this, 0, "decVertDist"));
+	}
+
+	public void keyReleased(KeyEvent e) {}
+
+	public void keyTyped(KeyEvent k) {}
+
+	public void windowActivated(WindowEvent arg0) {}
+
+	public void windowClosed(WindowEvent arg0) {}
+
+	public void windowClosing(WindowEvent arg0) {
+		try {
+			SuggestField.save();
+		} catch (IOException e) {
+		}
+		if (closeMindmap()) System.exit(0);
+	}
+
+	public void windowDeactivated(WindowEvent arg0) {}
+
+	public void windowDeiconified(WindowEvent arg0) {}
+	
+	public void windowIconified(WindowEvent arg0) {}
+
+	public void windowOpened(WindowEvent arg0) {}
+
+	private int aksForSavingMindmaps() {
+		// TODO Auto-generated method stub
+		return JOptionPane.showConfirmDialog(this, _("You have unsaved changes in your current mindmap. Shall those be saved?"), _("Error while trying to save"), JOptionPane.YES_NO_CANCEL_OPTION);
+	}
+
+	private void changeConfigurationFile() {
+		try {
+			BufferedWriter configFile = new BufferedWriter(new FileWriter(".intelliMind.config"));
+			try {				
+				configFile.write("Mindmap=" + getTrace() + "\n");
+			} catch (NullPointerException e) {
+
+			}
+			configFile.write("Backgroundcolor=" + mindmapPanel.getBackground().getRGB() + "\n");
+			configFile.write("NodeDistance=" + mindmapPanel.getDistance() + "\n"); // die Soll-Distanz zwischen den Knoten speichern
+			configFile.write("TextSize=" + mindmapPanel.getTextSize() + "\n"); // die Schriftgröße der Knoten speichern
+			configFile.write("WindowSize="+getSize().width+" "+getSize().height + "\n");
+			configFile.write("WindowLocation="+getLocation().x+" "+getLocation().y + "\n");
+			configFile.write("Display="+(mindmapPanel.getClass().getSimpleName()) + "\n");
+			configFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean closeMindmap() {
+		if (mindmapPanel.hasUnsavedNodes()) {
+			int choice = aksForSavingMindmaps();
+			switch (choice) {
+			case JOptionPane.YES_OPTION:
+				mindmapPanel.saveNodes();
+				break;
+			case JOptionPane.NO_OPTION:
+				mindmapPanel.flushTreeChanges();
+				break;
+			case JOptionPane.CANCEL_OPTION:
+				return false;
+			}
+		}
+		changeConfigurationFile();
+		mindmapPanel.setTree(null);
 		disableMindmapOptions();
-	}
-
-	private void createMainMenu() {
-		MainMenu = new JMenuBar(); // Hauptmenü-Leiste anlegen
-		createMindmapMenu();
-		createBearbeitenMenu();
-		createAnsichtMenu();
-		createSuchenMenu();
-		createNavigationMenu();
-		createInfoMenu();		
-		
-		setJMenuBar(MainMenu);
-	}
-
-	private void createInfoMenu() {
-		InfoMenu = new JMenu("Info");
-		InfoMenu.setMnemonic(KeyEvent.VK_I);
-
-		InfoMenu.add(IHelp = new JMenuItem(_("Help"), KeyEvent.VK_H));
-		IHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-		IHelp.setActionCommand("LoadHelp");
-		IHelp.addActionListener(this);
-
-		InfoMenu.add(IInfo = new JMenuItem(_("Info"), KeyEvent.VK_I));
-		IInfo.setActionCommand("InfoWindow");
-		IInfo.addActionListener(this);
-
-		InfoMenu.add(IPreferences = new JMenuItem(_("Preferences"), KeyEvent.VK_E));
-		IPreferences.addActionListener(this);
-
-		InfoMenu.add(INodeDetails = new JMenuItem(_("Node Details"), KeyEvent.VK_D));
-		INodeDetails.setActionCommand("NodeDetails");
-		INodeDetails.addActionListener(this);
-		
-		MainMenu.add(InfoMenu);
-	}
-
-	private void createNavigationMenu() {
-		NavigationMenu = new JMenu(_("Navigation"));
-		NavigationMenu.setMnemonic(KeyEvent.VK_N);
-
-		NavigationMenu.add(IToRoot = new JMenuItem(_("to root"), KeyEvent.VK_W));
-		IToRoot.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
-		IToRoot.setActionCommand("navigateToRoot");
-		IToRoot.addActionListener(this);
-
-		NavigationMenu.add(IToParent = new JMenuItem(_("to parent node"), KeyEvent.VK_U));
-		IToParent.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
-		IToParent.setActionCommand("navigateLeft");
-		IToParent.addActionListener(this);
-
-		NavigationMenu.addSeparator();
-
-		NavigationMenu.add(IToFirstChild = new JMenuItem(_("to first child node"), KeyEvent.VK_U));
-		IToFirstChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
-		IToFirstChild.setActionCommand("navigateRight");
-		IToFirstChild.addActionListener(this);
-
-		NavigationMenu.add(IToLastChild = new JMenuItem(_("to last child node"), KeyEvent.VK_L));
-		IToLastChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
-		IToLastChild.setActionCommand("navigateToLastChild");
-		IToLastChild.addActionListener(this);
-
-		NavigationMenu.addSeparator();
-
-		NavigationMenu.add(IToNext = new JMenuItem(_("to next node"), KeyEvent.VK_N));
-		IToNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
-		IToNext.setActionCommand("navigateDown");
-		IToNext.addActionListener(this);
-
-		NavigationMenu.add(IToPrev = new JMenuItem(_("to previous node"), KeyEvent.VK_V));
-		IToPrev.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
-		IToPrev.setActionCommand("navigateUp");
-		IToPrev.addActionListener(this);
-
-		NavigationMenu.addSeparator();
-
-		NavigationMenu.add(ILoadToRoot = new JMenuItem(_("set current subtree to root"), KeyEvent.VK_A));
-		ILoadToRoot.setAccelerator(KeyStroke.getKeyStroke(36, 0));
-		ILoadToRoot.setActionCommand("LoadToRoot");
-		ILoadToRoot.addActionListener(this);
-		
-		MainMenu.add(NavigationMenu);
-	}
-
-	private void createSuchenMenu() {
-		SuchenMenu = new JMenu(_("Search"));
-		SuchenMenu.setMnemonic(KeyEvent.VK_S);
-
-		SuchenMenu.add(IWikiSearch = new JMenuItem(_("on Wikipedia"), KeyEvent.VK_W));
-		IWikiSearch.setActionCommand("wikiSearch");
-		IWikiSearch.addActionListener(this);
-
-		SuchenMenu.add(IGoogleSearch = new JMenuItem(_("on Google"), KeyEvent.VK_G));
-		IGoogleSearch.setActionCommand("googleSearch");
-		IGoogleSearch.addActionListener(this);
-
-		SuchenMenu.add(IImageSearch = new JMenuItem(_("on Google Images"), KeyEvent.VK_B));
-		IImageSearch.setActionCommand("imageSearch");
-		IImageSearch.addActionListener(this);
-
-		SuchenMenu.add(IEbaySearch = new JMenuItem(_("on eBay"), KeyEvent.VK_E));
-		IEbaySearch.setActionCommand("ebaySearch");
-		IEbaySearch.addActionListener(this);
-		
-		MainMenu.add(SuchenMenu);
+		return true;
 	}
 
 	private void createAnsichtMenu() {
@@ -259,7 +391,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		
 		MainMenu.add(AnsichtMenu);
 	}
-
 	private void createBearbeitenMenu() {
 		BearbeitenMenu = new JMenu(_("Edit")); // Zweites...
 		BearbeitenMenu.setMnemonic(KeyEvent.VK_B);
@@ -391,6 +522,56 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		MainMenu.add(BearbeitenMenu);
 	}
 
+	private void createComponents() {
+		setPreferredSize(new Dimension(640, 480));
+		setSize(getPreferredSize());
+		this.getContentPane().setLayout(new BorderLayout());
+
+		createMainMenu();
+
+		/*mindmapPanel = new StarTreePanel(); /*/
+		mindmapPanel = new RootTreePanel(); //*/
+		mindmapPanel.addActionListener(this);
+		add(mindmapPanel);
+		this.setVisible(true);
+		disableMindmapOptions();
+	}
+
+	private void createInfoMenu() {
+		InfoMenu = new JMenu("Info");
+		InfoMenu.setMnemonic(KeyEvent.VK_I);
+
+		InfoMenu.add(IHelp = new JMenuItem(_("Help"), KeyEvent.VK_H));
+		IHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		IHelp.setActionCommand("LoadHelp");
+		IHelp.addActionListener(this);
+
+		InfoMenu.add(IInfo = new JMenuItem(_("Info"), KeyEvent.VK_I));
+		IInfo.setActionCommand("InfoWindow");
+		IInfo.addActionListener(this);
+
+		InfoMenu.add(IPreferences = new JMenuItem(_("Preferences"), KeyEvent.VK_E));
+		IPreferences.addActionListener(this);
+
+		InfoMenu.add(INodeDetails = new JMenuItem(_("Node Details"), KeyEvent.VK_D));
+		INodeDetails.setActionCommand("NodeDetails");
+		INodeDetails.addActionListener(this);
+		
+		MainMenu.add(InfoMenu);
+	}
+	
+	private void createMainMenu() {
+		MainMenu = new JMenuBar(); // Hauptmenü-Leiste anlegen
+		createMindmapMenu();
+		createBearbeitenMenu();
+		createAnsichtMenu();
+		createSuchenMenu();
+		createNavigationMenu();
+		createInfoMenu();		
+		
+		setJMenuBar(MainMenu);
+	}	
+
 	private void createMindmapMenu() {
 		MindmapMenu = new JMenu(_("Mindmap")); // Erstes Menü
 		MindmapMenu.setMnemonic(KeyEvent.VK_D);
@@ -449,17 +630,95 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		MainMenu.add(MindmapMenu);
 	}
 
-	private void enableStarTree(boolean enable) {
-		remove(mindmapPanel);
-		mindmapPanel.stopOrganizing();
-		Dimension size=mindmapPanel.getSize();		
-		if (enable)	mindmapPanel = new StarTreePanel(mindmapPanel);
-		else mindmapPanel = new RootTreePanel(mindmapPanel);
-		mindmapPanel.setSize(size);
-		mindmapPanel.addActionListener(this);
-		add(mindmapPanel);
-		//pack();
-	}	
+	private void createNavigationMenu() {
+		NavigationMenu = new JMenu(_("Navigation"));
+		NavigationMenu.setMnemonic(KeyEvent.VK_N);
+
+		NavigationMenu.add(IToRoot = new JMenuItem(_("to root"), KeyEvent.VK_W));
+		IToRoot.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+		IToRoot.setActionCommand("navigateToRoot");
+		IToRoot.addActionListener(this);
+
+		NavigationMenu.add(IToParent = new JMenuItem(_("to parent node"), KeyEvent.VK_U));
+		IToParent.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+		IToParent.setActionCommand("navigateLeft");
+		IToParent.addActionListener(this);
+
+		NavigationMenu.addSeparator();
+
+		NavigationMenu.add(IToFirstChild = new JMenuItem(_("to first child node"), KeyEvent.VK_U));
+		IToFirstChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+		IToFirstChild.setActionCommand("navigateRight");
+		IToFirstChild.addActionListener(this);
+
+		NavigationMenu.add(IToLastChild = new JMenuItem(_("to last child node"), KeyEvent.VK_L));
+		IToLastChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
+		IToLastChild.setActionCommand("navigateToLastChild");
+		IToLastChild.addActionListener(this);
+
+		NavigationMenu.addSeparator();
+
+		NavigationMenu.add(IToNext = new JMenuItem(_("to next node"), KeyEvent.VK_N));
+		IToNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
+		IToNext.setActionCommand("navigateDown");
+		IToNext.addActionListener(this);
+
+		NavigationMenu.add(IToPrev = new JMenuItem(_("to previous node"), KeyEvent.VK_V));
+		IToPrev.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
+		IToPrev.setActionCommand("navigateUp");
+		IToPrev.addActionListener(this);
+
+		NavigationMenu.addSeparator();
+
+		NavigationMenu.add(ILoadToRoot = new JMenuItem(_("set current subtree to root"), KeyEvent.VK_A));
+		ILoadToRoot.setAccelerator(KeyStroke.getKeyStroke(36, 0));
+		ILoadToRoot.setActionCommand("LoadToRoot");
+		ILoadToRoot.addActionListener(this);
+		
+		MainMenu.add(NavigationMenu);
+	}
+
+	private void createNewMindmap() {
+		TreeNode newRoot = createNewNode(null);
+		if (newRoot != null && closeMindmap()) {
+			setMindmap(newRoot);
+			setTitle(_("new Mindmap") + "*");
+			newRoot.treeChanged();
+			enableMindmapOptions();
+		}
+	}
+
+	private TreeNode createNewNode(Point point) {
+		// TODO Auto-generated method stub
+		// System.out.println("createNewNode");
+		String text = FormulaInputDialog.readInput(this, _("new mindmap node"), null);
+		this.requestFocus();
+		if (text == null) return null;
+		return new TreeNode(text,point);
+	}
+
+	private void createSuchenMenu() {
+		SuchenMenu = new JMenu(_("Search"));
+		SuchenMenu.setMnemonic(KeyEvent.VK_S);
+
+		SuchenMenu.add(IWikiSearch = new JMenuItem(_("on Wikipedia"), KeyEvent.VK_W));
+		IWikiSearch.setActionCommand("wikiSearch");
+		IWikiSearch.addActionListener(this);
+
+		SuchenMenu.add(IGoogleSearch = new JMenuItem(_("on Google"), KeyEvent.VK_G));
+		IGoogleSearch.setActionCommand("googleSearch");
+		IGoogleSearch.addActionListener(this);
+
+		SuchenMenu.add(IImageSearch = new JMenuItem(_("on Google Images"), KeyEvent.VK_B));
+		IImageSearch.setActionCommand("imageSearch");
+		IImageSearch.addActionListener(this);
+
+		SuchenMenu.add(IEbaySearch = new JMenuItem(_("on eBay"), KeyEvent.VK_E));
+		IEbaySearch.setActionCommand("ebaySearch");
+		IEbaySearch.addActionListener(this);
+		
+		MainMenu.add(SuchenMenu);
+	}
 
 	private void disableMindmapOptions() {
 		ISave.setEnabled(false);
@@ -473,6 +732,22 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		AnsichtMenu.setEnabled(false);
 		SuchenMenu.setEnabled(false);
 		NavigationMenu.setEnabled(false);
+	}
+
+	private void doHtmlExport() {
+		HtmlExportDialog exportDialog = new HtmlExportDialog(this, _("export to HTML"), true);
+		exportDialog.setVisible(true);
+		if (exportDialog.notCancelled()) {
+			try {
+				mindmapPanel.startHtmlExport(exportDialog.fileName(), exportDialog.onlyCurrent(), exportDialog.maxDepth(), exportDialog.interactive(), exportDialog.singleFile(), exportDialog.noMultipleFollow());
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (DataFormatException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void enableMindmapOptions() {
@@ -493,145 +768,49 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		SuchenMenu.setEnabled(true);
 		NavigationMenu.setEnabled(true);
 	}
-
-	public void actionPerformed(ActionEvent e) {
-		String command = e.getActionCommand();
-		boolean commandKnown = false;
-		if (command.equals("bgColor") && (commandKnown = true)) mindmapPanel.setCurrentBackgroundColor(JColorChooser.showDialog(this, _("select background color"), mindmapPanel.getBackground()));
-		if (command.equals("bgColorTrace") && (commandKnown = true)) startStopBackgroundtrace();
-		if (command.equals("changeText") && (commandKnown = true)) mindmapPanel.editNode();
-		if (command.equals("changeBGColor") && (commandKnown = true)) {
-			mindmapPanel.setBackground(JColorChooser.showDialog(this, _("select background color"), mindmapPanel.getBackground()));
-			changeConfigurationFile();
-		}
-		if (command.equals("close") && (commandKnown = true) && closeMindmap()) System.exit(0);
-		if (command.equals("closeMindmap") && (commandKnown = true)) closeMindmap();
-		if (command.equals("copy") && (commandKnown = true)) mindmapPanel.copy();
-		if (command.equals("cut") && (commandKnown = true)) mindmapPanel.cut();
-		if (command.equals("decVertDist") && (commandKnown = true)) {
-				mindmapPanel.decreaseDistance();
-				changeConfigurationFile();
-		}
-		if (command.equals("delete") && (commandKnown = true)) mindmapPanel.deleteActive();
-		if (command.equals("deleteImage") && (commandKnown = true)) mindmapPanel.deleteActiveImage();
-		if (command.equals("deleteLink") && (commandKnown = true)) mindmapPanel.deleteActiveLink();
-		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
-		if (command.equals("export") && (commandKnown = true)) doHtmlExport();
-		
-		if (command.equals("fold") && (commandKnown=true)) mindmapPanel.toogleFold();
-
-		if (command.equals("foreColor") && (commandKnown = true)) mindmapPanel.setCurrentForegroundColor(JColorChooser.showDialog(this, _("select foreground color"), mindmapPanel.getForeground()));
-		if (command.equals("foreColorTrace") && (commandKnown = true)) startStopForegroundtrace();
-		if (command.equals("googleSearch") && (commandKnown = true)) Tools.execute("\"http://www.google.de/search?q=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
-		if (command.equals("imageSearch") && (commandKnown = true)) Tools.execute("\"http://images.google.de/images?q=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
-		if (command.equals("incVertDist") && (commandKnown = true)) {
-				mindmapPanel.increaseDistance();
-				changeConfigurationFile();
-		}
-		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",new Object[]{version,date}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
-		if (command.equals("insertImage") && (commandKnown = true)) mindmapPanel.setImageOfCurrentNode(selectImage());
-		if (command.equals("insertLink") && (commandKnown = true)) try {
-			mindmapPanel.setLinkOfCurrentNode(openFile());
-		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		if (command.equals("LoadHelp") && (commandKnown = true)) loadHelp();
-		if (command.equals("LoadToRoot") && (commandKnown = true)) moveCurrentNodeToRoot();
-		if (command.equals("mindmapForChild") && (commandKnown = true)) try {
-			mindmapPanel.appendNewChild(openMindmap());
-			this.requestFocus();
-		} catch (FileNotFoundException e1) {
-			fileNotFound(e1);
-		} catch (DataFormatException e1) {
-			fileNotSupported(e1);
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-		}
-		if (command.equals("navigateToRoot") && (commandKnown = true)) mindmapPanel.navigateToRoot();
-		if (command.equals("new") && (commandKnown = true)) createNewMindmap();
-		if (command.equals("newBrother") && (commandKnown = true)) insertNewBrother();
-		if (command.equals("newChild") && (commandKnown = true)) mindmapPanel.appendNewChild(createNewNode(mindmapPanel.tree.getOrigin()));
-		if (command.equals("navigateRight") && (commandKnown = true)) mindmapPanel.navigateRight();
-		if (command.equals("navigateLeft") && (commandKnown = true)) mindmapPanel.navigateLeft();
-		if (command.equals("navigateDown") && (commandKnown = true)) mindmapPanel.navigateDown();
-		if (command.equals("navigateToLastChild") && (commandKnown = true)) mindmapPanel.navigateToEnd();
-		if (command.equals("navigateUp") && (commandKnown = true)) mindmapPanel.navigateUp();
-		if (command.equals("switchToStarTree") && (commandKnown = true)) enableStarTree(true);		
-		if (command.equals("switchToRootedTree") && (commandKnown = true)) enableStarTree(false);		
-		if (command.equals("paste") && (commandKnown = true)) mindmapPanel.paste();
-		if (command.equals("open") && (commandKnown = true)) try {
-			setMindmap(openMindmap());
-		} catch (FileNotFoundException e1) {
-			fileNotFound(e1);
-		} catch (DataFormatException e1) {
-			fileNotSupported(e1);
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-		}
-		if (command.equals("refreshView") && (commandKnown = true)) mindmapPanel.refreshView();
-		if (command.equals("smaller") && (commandKnown = true)) {
-			mindmapPanel.setTextSmaller();
-			changeConfigurationFile();
-		}
-		if (command.equals("larger") && (commandKnown = true)) {
-			mindmapPanel.setTextLarger();
-			changeConfigurationFile();
-		}
-		if (command.equals("save") && (commandKnown = true)) mindmapPanel.saveNodes();
-		if (command.equals("saveAs") && (commandKnown = true)) {
-			mindmapPanel.saveRoot();
-			changeConfigurationFile();
-		}
-
-		if (command.equals("saveTreeAs") && (commandKnown = true)) {
-			mindmapPanel.saveCurrentFork();
-			this.requestFocus();
-		}
-		if (command.equals("setDefaultView")) {
-			mindmapPanel.setTextSize(18f);
-			mindmapPanel.setBackground(new Color(0, 155, 255));
-			mindmapPanel.setSize(mindmapPanel.getSize()); // forces distances to be newly calculated
-			changeConfigurationFile();
-		}
-		if (command.equals("wikiSearch")) Tools.execute("\"http://de.wikipedia.org/wiki/Spezial:Search?search=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
-		if (command.startsWith("SetTitle:") && (commandKnown = true)) setTitle(command.substring(9));
-		if (command.equals("NodeDetails") && (commandKnown = true)) mindmapPanel.showNodeDetails();
-		if (mindmapPanel.currentNode() != null) {
-			IInsertLink.setEnabled(mindmapPanel.currentNode().firstChild() == null);
-			IInsertLink2.setEnabled(mindmapPanel.currentNode().firstChild() == null);
-			IDeleteLink.setEnabled(mindmapPanel.currentNode().getLink() != null);
-			IDeleteLink2.setEnabled(mindmapPanel.currentNode().getLink() != null);
-		}
-		if (!commandKnown) System.out.println("actionPerformed recieved the following, unimplemented command: " + command);
-
+	
+ 
+	private void enableStarTree(boolean enable) {
+		remove(mindmapPanel);
+		mindmapPanel.stopOrganizing();
+		Dimension size=mindmapPanel.getSize();		
+		if (enable)	mindmapPanel = new StarTreePanel(mindmapPanel);
+		else mindmapPanel = new RootTreePanel(mindmapPanel);
+		mindmapPanel.setSize(size);
+		mindmapPanel.addActionListener(this);
+		add(mindmapPanel);
+		//pack();
 	}
 
-	private void moveCurrentNodeToRoot() {
-		try {
-			setMindmap(openMindmap(mindmapPanel.currentNode().getRoot().nodeFile()));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (DataFormatException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+	private void fileNotFound(FileNotFoundException e) {
+		JOptionPane.showMessageDialog(this, _("file (#) could not be found.",e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
 	}
 
-	private void doHtmlExport() {
-		HtmlExportDialog exportDialog = new HtmlExportDialog(this, _("export to HTML"), true);
-		exportDialog.setVisible(true);
-		if (exportDialog.notCancelled()) {
-			try {
-				mindmapPanel.startHtmlExport(exportDialog.fileName(), exportDialog.onlyCurrent(), exportDialog.maxDepth(), exportDialog.interactive(), exportDialog.singleFile(), exportDialog.noMultipleFollow());
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (DataFormatException e) {
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
+	private void fileNotSupported(DataFormatException e) {
+		JOptionPane.showMessageDialog(this, _("files of this type (#) can currently not be opened.",e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
+	}
+
+	private String getTrace() {
+		TreeNode node = mindmapPanel.currentNode();
+		StringBuffer trace=new StringBuffer();
+		while (node.parent()!=null){
+			while (node.prev()!=null){
+				node=node.prev();
+				trace.insert(0, 'D');
 			}
+			node=node.parent();
+			trace.insert(0, "R");
+		}
+		return node.getRoot().nodeFile().toString()+"\nTrace="+trace;
+	}
+
+	private void insertNewBrother() {
+		// TODO Auto-generated method stub
+		TreeNode dummy = mindmapPanel.currentNode();
+		if (dummy.parent() != null) {
+			mindmapPanel.appendNewBrother(createNewNode(mindmapPanel.tree.getOrigin()));
+		} else {
+			JOptionPane.showMessageDialog(this, _("a mindmap's root must not have a brother"), _("Warning"), JOptionPane.OK_OPTION);
 		}
 	}
 
@@ -660,172 +839,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void fileNotFound(FileNotFoundException e) {
-		JOptionPane.showMessageDialog(this, _("file (#) could not be found.",e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
-	}
-
-	private void fileNotSupported(DataFormatException e) {
-		JOptionPane.showMessageDialog(this, _("files of this type (#) can currently not be opened.",e.toString().split(" ")[1]), _("Warning"), JOptionPane.OK_OPTION);
-	}
-	
-	private void startStopBackgroundtrace() {
-		// TODO Auto-generated method stub
-		if (mindmapPanel.traceBGColor()) {
-			IBGCTrace.setText("x " + _("propagate background color"));
-		} else {
-			IBGCTrace.setText(_("propagate background color"));
-		}
-	}
-
-	private void startStopForegroundtrace() {
-		// TODO Auto-generated method stub
-		if (mindmapPanel.traceForeColor()) {
-			IFGCTrace.setText("x " + _("propagate text color"));
-		} else {
-			IFGCTrace.setText(_("propagate text color"));
-		}
-	}
-
-	private void insertNewBrother() {
-		// TODO Auto-generated method stub
-		TreeNode dummy = mindmapPanel.currentNode();
-		if (dummy.parent() != null) {
-			mindmapPanel.appendNewBrother(createNewNode(mindmapPanel.tree.getOrigin()));
-		} else {
-			JOptionPane.showMessageDialog(this, _("a mindmap's root must not have a brother"), _("Warning"), JOptionPane.OK_OPTION);
-		}
-	}
-
-	private NodeImage selectImage() {
-		URL u = Tools.showSelectFileDialog(_("open image..."), null, new GenericFileFilter(_("image file"), "*.jpg;*.jpeg;*.gif;*.png"), this);
-		this.requestFocus();
-		return (u == null) ? null : new NodeImage(u);
-	}
-
-	private TreeNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException, URISyntaxException {
-		if (fileUrl == null) return null; // wenn keine URl angegeben ist: abbrechen
-		URL urlPlusExtension = null;
-		try {
-			urlPlusExtension = new URL(fileUrl.toString() + ".imf"); // alternative Url mit Standardendung erzeugen
-		} catch (MalformedURLException e) {	} // muss nicht gefangen werden: aus einer validen URL kann durch anhängen von ".imf" keine ungültige werden
-
-		if (Tools.fileIsLocal(fileUrl) && !Tools.fileExists(fileUrl)) { // wenn der Pfad ein lokaler ist und auf eine nicht existierde Datei zeigt:
-			if (Tools.fileExists(urlPlusExtension)) { // testen, ob die Datei mit zusätzlicher Endung .imf existiert
-				fileUrl = urlPlusExtension; // wenn ja: diese nutzen
-			} else { // wenn keine der beiden Dateinamen eine existierende datei bezeichnet: Fragen, ob Datei erzeugt werden soll
-				File f = new File(fileUrl.getPath());
-				String name = f.getName();
-				String path = f.getParent();
-				String[] names = { name, name + ".imf", name + ".mm" };
-				System.out.print(_("searching for #",name));
-				URL searchedFile = Tools.searchFiles(names, path);
-				if (searchedFile != null) {
-					fileUrl = searchedFile;
-				} else {
-					if (!fileUrl.toString().toLowerCase().endsWith(".mm") && !fileUrl.toString().toLowerCase().endsWith(".imf")) fileUrl = urlPlusExtension;
-					if (!requestFileCreation(fileUrl)) return null;
-				}
-			}
-		}
-
-		TreeNode result = new TreeNode();
-		try {
-			result.loadFromFile(fileUrl);
-			this.setTitle(fileUrl.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	private static String _(String text) { 
-		return Translations.get(text);
-	}
-	private static String _(String key, Object insert) {
-		return Translations.get(key, insert);
-	}
-
-	private int aksForSavingMindmaps() {
-		// TODO Auto-generated method stub
-		return JOptionPane.showConfirmDialog(this, _("You have unsaved changes in your current mindmap. Shall those be saved?"), _("Error while trying to save"), JOptionPane.YES_NO_CANCEL_OPTION);
-	}
-
-	private TreeNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
-		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
-		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap..."), null, new GenericFileFilter(_("mindmap file"), ".imf;.mm"), this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
-		//lastOpenedFile = fileUrl;
-		return openMindmap(fileUrl);
-	}
-	
-	private URL openFile() throws FileNotFoundException {
-		String filename=null;
-		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap"), filename, null, this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
-		//lastOpenedFile = fileUrl;
-		return fileUrl;
-	}	
-
-	private boolean requestFileCreation(URL fileUrl) {
-		if (JOptionPane.showConfirmDialog(this, _("File (#) could not be found. Shall this file be created?",fileUrl)) == 0) {
-			StringBuffer formula=new StringBuffer("\\small{"+fileUrl.getFile()+"}");
-			formula.insert(formula.lastIndexOf("/")+1, "}\\bold{");
-			formula.insert(formula.lastIndexOf("."), "}\\small{");
-			TreeNode newMindmap = new TreeNode(formula.toString());
-			newMindmap.saveTo(fileUrl);
-			return true;
-		}
-		return false;
-	}
-
-	private void createNewMindmap() {
-		TreeNode newRoot = createNewNode(null);
-		if (newRoot != null && closeMindmap()) {
-			setMindmap(newRoot);
-			setTitle(_("new Mindmap") + "*");
-			newRoot.treeChanged();
-			enableMindmapOptions();
-		}
-	}
-
-	private TreeNode createNewNode(Point point) {
-		// TODO Auto-generated method stub
-		// System.out.println("createNewNode");
-		String text = FormulaInputDialog.readInput(this, _("new mindmap node"), null);
-		this.requestFocus();
-		if (text == null) return null;
-		return new TreeNode(text,point);
-	}
-
-	private boolean closeMindmap() {
-		if (mindmapPanel.hasUnsavedNodes()) {
-			int choice = aksForSavingMindmaps();
-			switch (choice) {
-			case JOptionPane.YES_OPTION:
-				mindmapPanel.saveNodes();
-				break;
-			case JOptionPane.NO_OPTION:
-				mindmapPanel.flushTreeChanges();
-				break;
-			case JOptionPane.CANCEL_OPTION:
-				return false;
-			}
-		}
-		changeConfigurationFile();
-		mindmapPanel.setTree(null);
-		disableMindmapOptions();
-		return true;
-	}
-
-	public IntelliMind3(String title) {
-		super(title);
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		addWindowListener(this);
-		addKeyListener(this);
-		createComponents();
-		loadPreferences();
 	}
 
 	private void loadPreferences() {
@@ -882,6 +895,89 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 	}
 
+	private void moveCurrentNodeToRoot() {
+		try {
+			setMindmap(openMindmap(mindmapPanel.currentNode().getRoot().nodeFile()));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private URL openFile() throws FileNotFoundException {
+		String filename=null;
+		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap"), filename, null, this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
+		//lastOpenedFile = fileUrl;
+		return fileUrl;
+	}
+
+	private TreeNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
+		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
+		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap..."), null, new GenericFileFilter(_("mindmap file"), ".imf;.mm"), this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
+		//lastOpenedFile = fileUrl;
+		return openMindmap(fileUrl);
+	}
+	
+
+	private TreeNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException, URISyntaxException {
+		if (fileUrl == null) return null; // wenn keine URl angegeben ist: abbrechen
+		URL urlPlusExtension = null;
+		try {
+			urlPlusExtension = new URL(fileUrl.toString() + ".imf"); // alternative Url mit Standardendung erzeugen
+		} catch (MalformedURLException e) {	} // muss nicht gefangen werden: aus einer validen URL kann durch anhängen von ".imf" keine ungültige werden
+
+		if (Tools.fileIsLocal(fileUrl) && !Tools.fileExists(fileUrl)) { // wenn der Pfad ein lokaler ist und auf eine nicht existierde Datei zeigt:
+			if (Tools.fileExists(urlPlusExtension)) { // testen, ob die Datei mit zusätzlicher Endung .imf existiert
+				fileUrl = urlPlusExtension; // wenn ja: diese nutzen
+			} else { // wenn keine der beiden Dateinamen eine existierende datei bezeichnet: Fragen, ob Datei erzeugt werden soll
+				File f = new File(fileUrl.getPath());
+				String name = f.getName();
+				String path = f.getParent();
+				String[] names = { name, name + ".imf", name + ".mm" };
+				System.out.print(_("searching for #",name));
+				URL searchedFile = Tools.searchFiles(names, path);
+				if (searchedFile != null) {
+					fileUrl = searchedFile;
+				} else {
+					if (!fileUrl.toString().toLowerCase().endsWith(".mm") && !fileUrl.toString().toLowerCase().endsWith(".imf")) fileUrl = urlPlusExtension;
+					if (!requestFileCreation(fileUrl)) return null;
+				}
+			}
+		}
+
+		TreeNode result = new TreeNode();
+		try {
+			result.loadFromFile(fileUrl);
+			this.setTitle(fileUrl.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	private boolean requestFileCreation(URL fileUrl) {
+		if (JOptionPane.showConfirmDialog(this, _("File (#) could not be found. Shall this file be created?",fileUrl)) == 0) {
+			StringBuffer formula=new StringBuffer("\\small{"+fileUrl.getFile()+"}");
+			formula.insert(formula.lastIndexOf("/")+1, "}\\bold{");
+			formula.insert(formula.lastIndexOf("."), "}\\small{");
+			TreeNode newMindmap = new TreeNode(formula.toString());
+			newMindmap.saveTo(fileUrl);
+			return true;
+		}
+		return false;
+	}
+
+	private NodeImage selectImage() {
+		URL u = Tools.showSelectFileDialog(_("open image..."), null, new GenericFileFilter(_("image file"), "*.jpg;*.jpeg;*.gif;*.png"), this);
+		this.requestFocus();
+		return (u == null) ? null : new NodeImage(u);
+	}
+
 	private void setMindmap(TreeNode mindmapNode) {
 		if (mindmapNode != null && closeMindmap()) {
 			mindmapPanel.setTree(mindmapNode);
@@ -890,117 +986,21 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 	}
 
-	private void changeConfigurationFile() {
-		try {
-			BufferedWriter configFile = new BufferedWriter(new FileWriter(".intelliMind.config"));
-			try {				
-				configFile.write("Mindmap=" + getTrace() + "\n");
-			} catch (NullPointerException e) {
-
-			}
-			configFile.write("Backgroundcolor=" + mindmapPanel.getBackground().getRGB() + "\n");
-			configFile.write("NodeDistance=" + mindmapPanel.getDistance() + "\n"); // die Soll-Distanz zwischen den Knoten speichern
-			configFile.write("TextSize=" + mindmapPanel.getTextSize() + "\n"); // die Schriftgröße der Knoten speichern
-			configFile.write("WindowSize="+getSize().width+" "+getSize().height + "\n");
-			configFile.write("WindowLocation="+getLocation().x+" "+getLocation().y + "\n");
-			configFile.write("Display="+(mindmapPanel.getClass().getSimpleName()) + "\n");
-			configFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
- 
-	private String getTrace() {
-		TreeNode node = mindmapPanel.currentNode();
-		StringBuffer trace=new StringBuffer();
-		while (node.parent()!=null){
-			while (node.prev()!=null){
-				node=node.prev();
-				trace.insert(0, 'D');
-			}
-			node=node.parent();
-			trace.insert(0, "R");
-		}
-		return node.getRoot().nodeFile().toString()+"\nTrace="+trace;
-	}
-
-	public void windowActivated(WindowEvent arg0) {}
-
-	public void windowClosed(WindowEvent arg0) {}
-
-	public void windowClosing(WindowEvent arg0) {
-		try {
-			SuggestField.save();
-		} catch (IOException e) {
-		}
-		if (closeMindmap()) System.exit(0);
-	}
-
-	public void windowDeactivated(WindowEvent arg0) {}
-
-	public void windowDeiconified(WindowEvent arg0) {}
-
-	public void windowIconified(WindowEvent arg0) {}
-
-	public void windowOpened(WindowEvent arg0) {}
-
-	public void keyPressed(KeyEvent k) {
-		KeyStroke ks = KeyStroke.getKeyStrokeForEvent(k);
-		if (ks.equals(CtrlW)) this.actionPerformed(new ActionEvent(this, 0, "closeMindmap"));
-		if (ks.equals(CtrlPlus)) this.actionPerformed(new ActionEvent(this, 0, "incVertDist"));
-		if (ks.equals(CtrlMinus)) this.actionPerformed(new ActionEvent(this, 0, "decVertDist"));
-	}
-
-	public void keyReleased(KeyEvent e) {}
-	
-
-	public void keyTyped(KeyEvent k) {}
-
-	public void componentHidden(ComponentEvent e) {
+	private void startStopBackgroundtrace() {
 		// TODO Auto-generated method stub
-		
+		if (mindmapPanel.traceBGColor()) {
+			IBGCTrace.setText("x " + _("propagate background color"));
+		} else {
+			IBGCTrace.setText(_("propagate background color"));
+		}
 	}
 
-	public void componentMoved(ComponentEvent e) {
-		changeConfigurationFile();
-	}
-
-	public void componentResized(ComponentEvent e) {
-		changeConfigurationFile();
-	}
-
-	public void componentShown(ComponentEvent arg0) {
+	private void startStopForegroundtrace() {
 		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Translations.getFor(IntelliMind3.class);
-		IntelliMind3 intelliMind = new IntelliMind3();
-		try {
-			if (args!=null && args.length>0){
-				if (!args[0].contains(":")) args[0]="file://"+args[0];
-				mindmapToOpenAtStart=new URL(args[0]);
-			}
-			intelliMind.setMindmap(intelliMind.openMindmap(mindmapToOpenAtStart));			
-			if (trace!=null) {
-				(new Tracer(intelliMind.mindmapPanel,trace)).start();
-			}
-			/*
-			 * / intelliMind.setMindmap(intelliMind.openMindmap(new URL("http://srsoftware.dyndns.info/mindmaps/I/intelliMind3.imf"))); //
-			 */
-		} catch (FileNotFoundException e) {
-			intelliMind.fileNotFound(e);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (DataFormatException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		if (mindmapPanel.traceForeColor()) {
+			IFGCTrace.setText("x " + _("propagate text color"));
+		} else {
+			IFGCTrace.setText(_("propagate text color"));
 		}
 	}
 

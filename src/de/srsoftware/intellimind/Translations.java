@@ -12,6 +12,19 @@ public class Translations {
 		return key;
 	}
 
+	public static String get(String key, Object insert) {
+		String result=get(key);
+		if (result==null) result=key;
+		if (insert instanceof Object []){
+			Object[] oarray = (Object[])insert;
+			for (Object o:oarray){
+				result=result.replaceFirst("#", string(o));
+			}
+			return result;
+		}		
+		return result.replace("#", string(insert));
+	}
+	
 	private static Translation loadTranslations() {		
 		String locale=Locale.getDefault().getLanguage().toUpperCase();
 		System.out.print("Loading translation for "+locale+"...");
@@ -29,19 +42,6 @@ public class Translations {
 		}
 		System.out.println("Failed. Using en.");
 		return new Translation();
-	}
-	
-	public static String get(String key, Object insert) {
-		String result=get(key);
-		if (result==null) result=key;
-		if (insert instanceof Object []){
-			Object[] oarray = (Object[])insert;
-			for (Object o:oarray){
-				result=result.replaceFirst("#", string(o));
-			}
-			return result;
-		}		
-		return result.replace("#", string(insert));
 	}
 
 	private static String string(Object insert) {

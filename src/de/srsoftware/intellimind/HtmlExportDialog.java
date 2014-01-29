@@ -43,7 +43,17 @@ public class HtmlExportDialog extends JDialog {
     init(title,null,modal);
   }
   
-  public void init(String title,String text, boolean modal) {
+  public String _(String text){
+		return Translations.get(text);
+	}
+  
+	public String fileName() {
+		// TODO Auto-generated method stub
+		if (filename.charAt(filename.length()-1) != '/') filename=filename+"/";
+		return filename;
+	}
+
+	public void init(String title,String text, boolean modal) {
     addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent evt) { dispose(); }
     });
@@ -185,9 +195,35 @@ public class HtmlExportDialog extends JDialog {
 
     setResizable(true);
   }
-  
-	public String _(String text){
-		return Translations.get(text);
+
+	public boolean interactive() {
+		// TODO Auto-generated method stub
+		return interactiveExport.isSelected();
+	}
+
+	public int maxDepth() {
+		// TODO Auto-generated method stub
+		return (maximumDepthCheckBox.isSelected())?maxDepth:0;
+	}
+
+	public boolean noMultipleFollow() {
+		// TODO Auto-generated method stub
+		return noMultipleFollows.isSelected();
+	}
+
+	public boolean notCancelled() {
+		// TODO Auto-generated method stub
+		return okPressed;
+	}
+
+	public boolean onlyCurrent() {
+		// TODO Auto-generated method stub
+		return exportOnlyCurrentMindmap.isSelected();
+	}
+
+	public boolean singleFile() {
+		// TODO Auto-generated method stub
+		return !exportToMultiplefiles.isSelected();
 	}
 
 	protected void enableDepthPanel(boolean b) {
@@ -205,42 +241,6 @@ public class HtmlExportDialog extends JDialog {
 		String s=String.valueOf(maxDepth);
 		while (s.length()<3) s="0"+s;
 		depthEditor.setText(s);
-	}
-
-	public boolean notCancelled() {
-		// TODO Auto-generated method stub
-		return okPressed;
-	}
-
-	public boolean onlyCurrent() {
-		// TODO Auto-generated method stub
-		return exportOnlyCurrentMindmap.isSelected();
-	}
-
-	public int maxDepth() {
-		// TODO Auto-generated method stub
-		return (maximumDepthCheckBox.isSelected())?maxDepth:0;
-	}
-
-	public boolean interactive() {
-		// TODO Auto-generated method stub
-		return interactiveExport.isSelected();
-	}
-
-	public boolean singleFile() {
-		// TODO Auto-generated method stub
-		return !exportToMultiplefiles.isSelected();
-	}
-
-	public boolean noMultipleFollow() {
-		// TODO Auto-generated method stub
-		return noMultipleFollows.isSelected();
-	}
-
-	public String fileName() {
-		// TODO Auto-generated method stub
-		if (filename.charAt(filename.length()-1) != '/') filename=filename+"/";
-		return filename;
 	}
 
 }
