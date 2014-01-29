@@ -145,7 +145,7 @@ public class TranslationDE extends Translation{
 		trans.put("Warning", "Warnung");
 		trans.put("Warning: interactive export not supported, yet.", "Warnung: interactiver Export wird noch nicht unterstützt.");
 		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!", "Warnung! Die Datei # wurde gleich an mehreren Einbindungsstellen geändert. Nur die Änderungen einer Instanz werden unter # gespeichert werden!\nÄnderungen an den anderen Instanzen werden in Backupdateien im gleichen Ordner gespeichert!");
-		
+		trans.put("Welcome to IntelliMind #", "Wilkommen bei IntelliMind #");
 		trans.put(" Mo", " Mo");
 		trans.put(" Tu", " Di");
 		trans.put(" We", " Mi");
