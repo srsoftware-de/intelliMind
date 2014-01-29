@@ -12,10 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -305,7 +303,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void changeConfigurationFile() {
 		try {
-			config.set("mindmap",getTrace());
+			config.set("mindmap", mindmapPanel.tree.getSuperRoot().nodeFile());
+			config.set("trace",getTrace());
 		} catch (NullPointerException npe){}
 		config.set("language=",langConf);
 		config.set("backgroundColor",mindmapPanel.getBackground().getRGB());
@@ -813,7 +812,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			node=node.parent();
 			trace.insert(0, "R");
 		}
-		return node.getRoot().nodeFile().toString()+"\nTrace="+trace;
+		return trace.toString();
 	}
 
 	private void insertNewBrother() {
@@ -858,15 +857,14 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			String mindmap=config.get("mindmap");
 			if (mindmap!=null) mindmapToOpenAtStart=new URL(mindmap);
 			String bgColor = config.get("backgroundColor");
-			if (bgColor != null) mindmapPanel.setBackground(new Color(Integer.parseInt(bgColor.substring(16))));
+			if (bgColor != null) mindmapPanel.setBackground(new Color(Integer.parseInt(bgColor)));
 			String nodeDistance=config.get("nodeDistance");
-			if (nodeDistance!=null && mindmapPanel instanceof StarTreePanel) ((StarTreePanel) mindmapPanel).setDistance(Integer.parseInt(nodeDistance.substring(13)));
+			if (nodeDistance!=null && mindmapPanel instanceof StarTreePanel) ((StarTreePanel) mindmapPanel).setDistance(Integer.parseInt(nodeDistance));
 			String textSize=config.get("textSize");
-			if (textSize!=null) mindmapPanel.setTextSize(Float.parseFloat(textSize.substring(9)));
+			if (textSize!=null) mindmapPanel.setTextSize(Float.parseFloat(textSize));
 			trace=config.get("trace");
 			String windowSize = config.get("windowSize");
 			if (windowSize != null) {
-				windowSize=windowSize.substring(11).trim();
 				int h=windowSize.indexOf(' ');
 				int w=Integer.parseInt(windowSize.substring(0,h));
 				h=Integer.parseInt(windowSize.substring(h+1));
@@ -874,7 +872,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			}
 			String location=config.get("windowLocation");
 			if (location!=null){
-				location=location.substring(15).trim();
 				int y=location.indexOf(' ');
 				int x=Integer.parseInt(location.substring(0,y));
 				y=Integer.parseInt(location.substring(y+1));
@@ -882,7 +879,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			}
 			String display=config.get("display");
 			if (display!=null) {
-				display=display.substring(8).trim();
 				if (display.equals("StarTreePanel")) enableStarTree(true);
 			}
 		} catch (FileNotFoundException e) {
