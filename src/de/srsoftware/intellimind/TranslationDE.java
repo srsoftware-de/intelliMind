@@ -44,7 +44,7 @@ public class TranslationDE extends Translation{
 		trans.put("enter lower bounds for sum:", "Untere Grenze für Summe angeben:");
 		trans.put("Error while loading: ", "Fehler beim Laden von: ");
 		trans.put("Error while trying to save", "Fehler beim Speichern");
-		trans.put("exit", "beenden");
+		trans.put("exit", "Beenden");
 		trans.put("expand all subtrees",	"alle untergeordneten Knoten ausklappen");
 		trans.put("Export current mindmap only. Do not follow links.", "Nur das aktuelle Mindmap exportieren. Keinen Links folgen.");
 		trans.put("export to HTML", "als HTML-Dateien exportieren");
