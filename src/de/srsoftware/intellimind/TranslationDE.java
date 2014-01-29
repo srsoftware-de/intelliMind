@@ -7,7 +7,7 @@ import de.srsoftware.tools.translations.Translation;
 public class TranslationDE extends Translation{
 	
 	
-	public TreeMap<String, String> getTranslations(){
+	public TreeMap<String, String> getMap(){
 		TreeMap<String,String> trans=new TreeMap<String, String>();
 		trans.put("a mindmap's root must not have a brother","Die Wurzel eines Mindmaps kann keinen Nachbarn haben");
 		trans.put("Arrows", "Pfeile");
@@ -17,6 +17,7 @@ public class TranslationDE extends Translation{
 		trans.put("cases", "Fallunterscheidung");
 		trans.put("ceiling", "Aufrundung");
 		trans.put("change background color", "Hintergrundfarbe ändern");
+		trans.put("change language", "Sprache wechseln");
 		trans.put("Change text of current mindmap node", "Text des aktuellen Mindmap-Knotens bearbeiten");
 		trans.put("Choose link target manually:", "Linkziel händisch auswählen:");		
 		trans.put("close", "schließen");
@@ -115,6 +116,7 @@ public class TranslationDE extends Translation{
 		trans.put("select background color", "Hintergrundfarbe wählen");
 		trans.put("select foreground color", "Vordergrundfarbe wählen");
 		trans.put("Select output folder", "Ordner zum Speichern wählen");
+		trans.put("Select the languages you prefer to use (high priority first), separated by commas:", "Wählen Sie die von Ihnen bevorzugten Sprachen (höchste Priorität zuerst). Trennen Sie durch Kommass:");
 		trans.put("set current subtree to root", "aktuellen Teilbaum als Wurzel setzen");
 		trans.put("small", "klein");
 		trans.put("smaller", "kleiner");
@@ -141,6 +143,7 @@ public class TranslationDE extends Translation{
 		trans.put("Uparrow (single)", "Pfeil hoch (einfach)");
 		trans.put("View", "Ansicht");
 		trans.put("You have unsaved changes in your current mindmap. Shall those be saved?", "Sie haben ungespeicherte Änderungen in Ihrem offenen Mindmap. Sollen diese gespeichert werden?");
+		trans.put("You will need to restart for this settings to take effect", "Starten Sie das Programm neu, damit diese Änderungen aktiv werden");
 		trans.put("Waiting for #", "Warte auf #");
 		trans.put("Warning", "Warnung");
 		trans.put("Warning: interactive export not supported, yet.", "Warnung: interactiver Export wird noch nicht unterstützt.");

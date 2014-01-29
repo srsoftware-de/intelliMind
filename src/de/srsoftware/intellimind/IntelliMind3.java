@@ -119,7 +119,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	public IntelliMind3(String title) throws IOException {
 		super(title);
 		config=new Configuration("intelliMind3");
-		langConf=config.get("langs");
+		langConf=config.get("languages");
+		String[] langs = langConf.split(",");
+		for (String lang:langs){
+			if (Translations.getFor(IntelliMind3.class,lang)) break;
+		}		
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 		addKeyListener(this);
@@ -243,10 +247,10 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void selectLang() {
-		langConf="de,en";
+		if (langConf==null)	langConf="de,en";
 		langConf=JOptionPane.showInputDialog(_("Select the languages you prefer to use (high priority first), separated by commas:"), langConf);
-		
-  }
+		JOptionPane.showMessageDialog(this, _("You will need to restart for this settings to take effect"));
+	}
 	public void componentHidden(ComponentEvent e) {
 		// TODO Auto-generated method stub
 		
@@ -306,7 +310,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			config.set("mindmap", mindmapPanel.tree.getSuperRoot().nodeFile());
 			config.set("trace",getTrace());
 		} catch (NullPointerException npe){}
-		config.set("language=",langConf);
+		config.set("languages",langConf);
 		config.set("backgroundColor",mindmapPanel.getBackground().getRGB());
 		config.set("nodeDistance",mindmapPanel.getDistance()); // die Soll-Distanz zwischen den Knoten speichern
 		config.set("textSize",mindmapPanel.getTextSize()); // die Schriftgröße der Knoten speichern
