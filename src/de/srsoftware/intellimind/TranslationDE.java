@@ -118,6 +118,7 @@ public class TranslationDE extends Translation{
 		trans.put("Select output folder", "Ordner zum Speichern wählen");
 		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:", "<html><br>Wählen Sie die von Ihnen bevorzugten Sprachen<br>(höchste Priorität zuerst). Trennen Sie durch Kommata:");
 		trans.put("set current subtree to root", "aktuellen Teilbaum als Wurzel setzen");
+		trans.put("Show me allowed two-letter codes!", "Zeige mir erlaubte Zwei-Zeichen-Codes!");
 		trans.put("small", "klein");
 		trans.put("smaller", "kleiner");
 		trans.put("Sorry, currently no help is available here.", "Verzeihung! Im Moment ist hier keine Hilfe verfügbar.");
