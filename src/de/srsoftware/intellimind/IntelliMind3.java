@@ -120,10 +120,12 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		super(title);
 		config=new Configuration("intelliMind3");
 		langConf=config.get("languages");
-		String[] langs = langConf.split(",");
-		for (String lang:langs){
-			if (Translations.getFor(IntelliMind3.class,lang)) break;
-		}		
+		if (langConf!=null && !langConf.isEmpty()){
+			String[] langs = langConf.split(",");
+			for (String lang:langs){
+				if (Translations.getFor(IntelliMind3.class,lang)) break;
+			}
+		}
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 		addKeyListener(this);
