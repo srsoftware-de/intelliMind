@@ -20,8 +20,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.zip.DataFormatException;
 
+import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -37,6 +39,7 @@ import de.srsoftware.gui.treepanel.TreeNode;
 import de.srsoftware.gui.treepanel.TreePanel;
 import de.srsoftware.tools.Configuration;
 import de.srsoftware.tools.GenericFileFilter;
+import de.srsoftware.tools.HorizontalPanel;
 import de.srsoftware.tools.SuggestField;
 import de.srsoftware.tools.Tools;
 import de.srsoftware.tools.translations.Translations;
@@ -250,7 +253,20 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void selectLang() {
 		if (langConf==null)	langConf="de,en";
-		langConf=JOptionPane.showInputDialog(_("Select the languages you prefer to use (high priority first), separated by commas:"), langConf);
+		HorizontalPanel message=new HorizontalPanel();
+		JLabel text=new JLabel(_("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:"));
+		JButton codeButton=new JButton(_("Show me allowed two-letter codes!"));
+		codeButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				Tools.openWebpage("http://www.mathguide.de/info/tools/languagecode.html");
+			}
+		});
+		message.add(text);
+		message.add(codeButton);
+		message.skalieren();
+		langConf=JOptionPane.showInputDialog(this,message,langConf);
 		JOptionPane.showMessageDialog(this, _("You will need to restart for this settings to take effect"));
 	}
 	public void componentHidden(ComponentEvent e) {

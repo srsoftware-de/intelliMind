@@ -116,7 +116,7 @@ public class TranslationDE extends Translation{
 		trans.put("select background color", "Hintergrundfarbe wählen");
 		trans.put("select foreground color", "Vordergrundfarbe wählen");
 		trans.put("Select output folder", "Ordner zum Speichern wählen");
-		trans.put("Select the languages you prefer to use (high priority first), separated by commas:", "Wählen Sie die von Ihnen bevorzugten Sprachen (höchste Priorität zuerst). Trennen Sie durch Kommata:");
+		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:", "<html><br>Wählen Sie die von Ihnen bevorzugten Sprachen<br>(höchste Priorität zuerst). Trennen Sie durch Kommata:");
 		trans.put("set current subtree to root", "aktuellen Teilbaum als Wurzel setzen");
 		trans.put("small", "klein");
 		trans.put("smaller", "kleiner");
