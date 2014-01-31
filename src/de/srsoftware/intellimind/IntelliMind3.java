@@ -580,6 +580,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		IInfo.addActionListener(this);
 
 		InfoMenu.add(IPreferences = new JMenuItem(_("Preferences"), KeyEvent.VK_E));
+		IPreferences.setEnabled(false);
 		IPreferences.addActionListener(this);
 
 		InfoMenu.add(INodeDetails = new JMenuItem(_("Node Details"), KeyEvent.VK_D));
