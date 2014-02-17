@@ -1,0 +1,182 @@
+﻿// First - English, Second - Russian, Third - Ukrainian
+
+package de.srsoftware.intellimind;
+import java.util.TreeMap;
+
+import de.srsoftware.tools.translations.Translation;
+
+
+public class TranslationRU extends Translation{
+	
+	
+	public TreeMap<String, String> getMap(){
+		TreeMap<String,String> trans=new TreeMap<String, String>();
+		trans.put("a mindmap's root must not have a brother","Корень карты памяти не должен иметь соседей");
+		trans.put("Arrows", "Стрелки");
+		trans.put("big", "большой");
+		trans.put("bold", "жирный");
+		trans.put("Cancel", "Отмена");
+		trans.put("cases", "варианты");
+		trans.put("ceiling", "округление");
+//		trans.put("change background color");
+		//trans.put("change language");
+		trans.put("Change text of current mindmap node", "Изменить текст на текущем узле карты памяти");
+		trans.put("Choose link target manually:", "Введите ссылку:");		
+		trans.put("close", "закрыть");
+		trans.put("copy", "копировать");
+		trans.put("Could not find image #!", "Изображение # не найдено!");
+		trans.put("collapse/expand", "свернуть/развернуть");
+		trans.put("converting # to UTF-8...", "Конвертировать # в UTF-8...");
+		trans.put("cut", "вырезать");
+		trans.put("decrease node distance", "уменьшить расстояние между узлами");
+		trans.put("delete", "удалиь");
+		trans.put("delete image", "удалить рисунок");
+		trans.put("delete link", "удалить ссылку");
+		trans.put("done", "выполнено");
+		trans.put("don't follow links to a special file more than one time", "Не следуйте по ссылкам на специальный файл более одного раза");
+		trans.put("Downarrow (double)", "Стрелка вниз (двойная)");
+		trans.put("Downarrow (single)", "Стрелка вниз (тонкая)");
+		trans.put("Edit", "Правка");
+		trans.put("edit text", "правка текста");
+		trans.put("embedded tree (#) could not be resolved!", "Поддерево (#) не найдено!");
+	//	trans.put("enter base (and exponent, if you want):", "Bais (und Exponent, falls erwünscht) eingeben:");
+		trans.put("enter cases separated by comma or semicolon:", "Вводите варианты через запятую или точку с запятой");
+		trans.put("enter divisor:", "введите делитель");
+		trans.put("enter integral bounds, separated by comma:", "Введите границы интеграла через запятую:");
+	//	trans.put("enter lower bounds for product:", "Untere Grenze für Produkt angeben:");
+	//	trans.put("enter lower bounds for sum:", "Untere Grenze für Summe angeben:");
+		trans.put("Error while loading: ", "Ошибка во время загрузки: ");
+		trans.put("Error while trying to save", "Ошибка сохранения");
+		trans.put("exit", "Выход");
+		trans.put("expand all subtrees", "развернуть все дочерние узлы");
+		trans.put("Export current mindmap only. Do not follow links.", "Экспортировать текущую диаграмму связей. Не переходить по ссылкам.");
+		trans.put("export to HTML", "сохранить данные в формате HTML");
+		trans.put("export to one single file", "сохранить данные в один файл");
+		trans.put("export into multiple files", "сохранить данные в нескольких файлах");
+		trans.put("external link (#) could not be resolved!", "внешняя ссылка (#) не может быть решена!");
+		trans.put("File (#) could not be found.", "Файл (#) не найден.");
+		trans.put("File (#) could not be found. Shall this file be created?", "Файл (#) не найден. Создать файл?");
+		trans.put("file for tree", "Файл для дерева");
+		trans.put("File is not available at the moment. Will try again in #ms...", "В данный момент этот файл не доступен. Попробуйте снова через # мс...");
+		trans.put("File not found: ", "Файл не найден: ");
+		trans.put("files of this type (#) can currently not be opened.", "Файлы данного типа (#) в данный момент не могут быть открыты.");
+		trans.put("File type not supported: ", "Тип файла не поддерживается: ");
+		trans.put("floor", "Округление");
+		trans.put("fraction", "Дробь");
+		trans.put("Help", "Помощь");
+		trans.put("image file", "файл с рисунком");
+		trans.put("increase node distance", "Увеличить растояние между узлома");
+		trans.put("Information", "Информация");
+		trans.put("insert/edit link","вставка/правка ссылки");
+		trans.put("insert image","вставить рисунок");
+		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",
+							"IntelliMind3\nVersion #\nvon SRSoftware - www.srsoftware.de\nUrheber:\nStephan Richter (srichter@srsoftware.de)\nВсе права защищены\n#");
+		trans.put("integral", "интеграл");
+		trans.put("interactive export", "интерактивный экспорт");
+		trans.put("italic", "курсив");
+		trans.put("larger", "увеличить размер");
+		trans.put("LYING TREE layout", "Просмотр в виде горизонтального дерева");
+		trans.put("matrix", "матрица");
+		trans.put("maximum depth", "максимальная глубина");
+		trans.put("Mindmap", "диаграмма связей");
+		trans.put("mindmap file", "файл карты памяти");
+		trans.put("mindmap for subtree","Карта памяти для под-дерева");
+		trans.put("node background color","фоновый цвет узла");
+		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #", "Узел в файле:\n#\n\nТекст:\n#\n\nРисунок:\n#\n\nСсылка:\n#\n\nЦвет текста: #\nЦвет фона: #");
+		trans.put("# not ready to be read!", "# не готов для чтения!");
+		trans.put("paste", "вставка");
+		trans.put("new brother node", "новый соседний узел");
+		trans.put("new child node", "новый наследуемый узел");
+		trans.put("new Mindmap", "новая карта памяти");
+		trans.put("new mindmap node", "новый узел карты памяти");
+		trans.put("Node Details", "Информация об узле");
+		trans.put("Notification", "Предупреждение");
+		trans.put("Ok", "ОК");
+		trans.put("open", "открыть");
+		trans.put("open image...", "открыть рисунок...");
+		trans.put("open mindmap", "открыть карту памяти...");
+		trans.put("open mindmap...", "открыть карту памяти...");
+		trans.put("on eBay", "на eBay");
+		trans.put("on Google","в Google");
+		trans.put("on Google Images","в Google рисунках");
+		trans.put("on Wikipedia","в Wikipedia");
+		trans.put("overlined", "линия сверху");
+		trans.put("was not able to resolve path to file (#)!", "Путь к файлу (#) не найден!");
+		trans.put("Preferences", "Предпочтения");
+		trans.put("product", "произведение");
+		trans.put("propagate background color", "распространить цвет фона");
+		trans.put("propagate text color", "распространить цвет текста");
+		trans.put("refresh (F5)","обновить (F5)");
+		trans.put("restore default settings", "восстановить настройки разработчика");
+		trans.put("root", "корень");
+		trans.put("save", "сохранить");
+		trans.put("save as", "сохранить как");
+		trans.put("save subtree as...", "сохранить под-дерево как...");
+		trans.put("Search", "Поиск");
+		trans.put("searching for #","Искать #");
+		trans.put("searching for file #", "Искать файл #");
+		trans.put("Seems like your search will last longer. Cancel search?", "Для выполнения поиска по Вашему запросу нужно время. Отменить запрос?");
+		trans.put("select background color", "Выбрать цвет фона");
+		trans.put("select foreground color", "Выбрать цвет переднего фона");
+		trans.put("Select output folder", "Выберите папку для сохранения");
+		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:",
+							"<html><br>Укажите языки, которые Вы хотели бы <br>использовать (по приоритету) через запятую:");
+		trans.put("set current subtree to root", "Установить текущее под-дерево в корень");
+	//	trans.put("Show me allowed two-letter codes!", "Zeige mir erlaubte Zwei-Zeichen-Codes!");
+		trans.put("small", "Маленький");
+		trans.put("smaller", "Меньше");
+		trans.put("Sorry, currently no help is available here.", "К сожалению, нет доступной помощи");
+		trans.put("Sorry, I was not able to build an URL from \"#\"!", "К сожалению, я не смогу создать URL из \"#\"!");
+//		trans.put("Sorry, I was not able to save the file as \"#\"!", "Verzeihung, Ich konnte die Datei nicht unter \"#\" speichern!");
+//		trans.put("STAR TREE layout", "sternförmige Ansicht");
+//		trans.put("subscript", "tiefergestellt");
+//		trans.put("sum", "Summe");
+//		trans.put("superscript", "höhergestellt");
+//		trans.put("text color", "Textfarbe");
+//		trans.put("The file you selected already exists. Overwrite it?", "Die gewählte Datei existiert bereits. Soll sie überschrieben werden?");
+//		trans.put("The given text is not a valid URL!", "Die angegebene Zeichenkette ist keine gültige URL!");
+		trans.put("to parent node", "к родительскому узлу");
+		trans.put("to first child node", "к первому наследуемому узлу");
+		trans.put("to last child node", "к последнему наследуемому узлу");
+		trans.put("to next node", "к следующему узлу");
+		trans.put("to previous node", "к предыдущему узлу");
+		trans.put("to root", "в корень");
+		trans.put("Tree corrupt: UP-command found while at root node.", "Дерево повреждено: UP-комманда найдена в корневом узле.");
+		trans.put("typewriter", "печатный");
+		trans.put("underlined", "подчеркнутый");
+		trans.put("Uparrow (double)", "Стрелка вверх (двойная)");
+		trans.put("Uparrow (single)", "Стрелка вверх (одинарная)");
+		trans.put("View", "Вид");
+		trans.put("You have unsaved changes in your current mindmap. Shall those be saved?", "Имеются не сохраненные изменения в открытой карте памяти. Хотите их сохранить?");
+		trans.put("You will need to restart for this settings to take effect", "Для того, чтобы изменния вступили в силу, необходимо перезапустить программу");
+		trans.put("Waiting for #", "Подождите #");
+		trans.put("Warning", "Предупреждение");
+		trans.put("Warning: interactive export not supported, yet.", "Предупреждение: интерактивный экспорт временно не поддерживается.");
+		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!",
+							"Предупреждение! Файл # был одновременно изменен в двух или более местах. Изменения только одного примера будут сохранены в #!\nИзменения других примеров будут сохранены в резервные копии файлов в той же папке!");
+		trans.put("Welcome to IntelliMind #", "Добро пожаловать в IntellMind #");
+		
+		trans.put(" Mo", " Пн");
+		trans.put(" Tu", " Вт");
+		trans.put(" We", " Ср");
+		trans.put(" Th", " Чт");
+		trans.put(" Fr", " Пт");
+		trans.put(" Sa", " Сб");
+		trans.put(" Su", " Вс");
+		
+		trans.put("January", "Январь");
+		trans.put("February", "Февраль");
+		trans.put("March", "Март");
+		trans.put("April", "Апрель");
+		trans.put("May", "Май");
+		trans.put("June", "Июнь");
+		trans.put("July", "Июль");
+		trans.put("August", "Август");
+		trans.put("September", "Сентябрь");
+		trans.put("October", "Октябрь");
+		trans.put("November", "Ноябрь");
+		trans.put("December", "Декабрь");
+
+		return trans;
+	}
+}
