@@ -80,7 +80,7 @@ public class TranslationUK extends Translation{
 		trans.put("Mindmap", "діаграма зв'язків");
 		trans.put("mindmap file", "файл карти пам'яті");
 		trans.put("mindmap for subtree", "Карта пам'яті для під-дерева");
-		trans.put("Navigation", "Navigation");
+//		trans.put("Navigation", "Navigation");
 		trans.put("node background color", "фоновий колір вузла");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #",
 							"Вузл у файлі:\n#\n\nТекст:\n#\n\nЗображення:\n#\n\nПосилання:\n#\n\nКолір тексту: #\nКолір фону: #");

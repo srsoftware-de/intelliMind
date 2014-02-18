@@ -79,6 +79,7 @@ public class TranslationES extends Translation{
 		trans.put("Mindmap", "Mindmap");
 		trans.put("mindmap file", "documento del Mindmap");
 		trans.put("mindmap for subtree","cargar Mindmap como nodo secundario");
+//		trans.put("Navigation","Navigation");
 		trans.put("node background color","Color de fondo del nodo");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #", "Nodo en documento:\n#\n\nText:\n#\n\nImagen:\n#\n\nLink:\n#\n\ncolor de Texto: #\nColor de fondo: #");
 		trans.put("# not ready to be read!", "# aún no está listo para ser leído!");
