@@ -68,8 +68,8 @@ public class TranslationRU extends Translation{
 		trans.put("Information", "Информация");
 		trans.put("insert/edit link","вставка/правка ссылки");
 		trans.put("insert image","вставить рисунок");
-		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",
-							"IntelliMind3\nVersion #\nvon SRSoftware - www.srsoftware.de\nUrheber:\nStephan Richter (srichter@srsoftware.de)\nВсе права защищены\n#");
+		//trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
+//							"IntelliMind3\nVersion #\nvon SRSoftware - www.srsoftware.de\nUrheber:\nStephan Richter (srichter@srsoftware.de)\n\nÜbersetzt von:\n#\n\nВсе права защищены\n#");
 		trans.put("integral", "интеграл");
 		trans.put("interactive export", "интерактивный экспорт");
 		trans.put("italic", "курсив");
@@ -141,6 +141,7 @@ public class TranslationRU extends Translation{
 		trans.put("to next node", "к следующему узлу");
 		trans.put("to previous node", "к предыдущему узлу");
 		trans.put("to root", "в корень");
+//		trans.put("Translation by #", "Übersetzung: #");		
 		trans.put("Tree corrupt: UP-command found while at root node.", "Дерево повреждено: UP-комманда найдена в корневом узле.");
 		trans.put("typewriter", "печатный");
 		trans.put("underlined", "подчеркнутый");

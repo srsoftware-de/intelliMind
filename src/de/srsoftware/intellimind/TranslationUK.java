@@ -68,8 +68,8 @@ public class TranslationUK extends Translation{
 		trans.put("Information", "Інформація");
 		trans.put("insert/edit link", "вставка/правка посилання");
 		trans.put("insert image", "вставити рисунок");
-		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",
-							"IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nВсі права захищено\n#");
+//		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
+//							"IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nÜbersetzt von:\n#\nВсі права захищено\n#");
 		trans.put("integral", "інтеграл");
 		trans.put("interactive export", "інтерактивний експорт");
 		trans.put("italic", "курсив");
@@ -141,6 +141,7 @@ public class TranslationUK extends Translation{
 		trans.put("to next node", "до наступного вузла");
 		trans.put("to previous node", "до попереднього вузла");
 		trans.put("to root", "у корінь");
+//		trans.put("Translation by #", "Übersetzung: #");		
 		trans.put("Tree corrupt: UP-command found while at root node.", "Дерево пошкоджено: UP-команду знайдено у корневому вузлі.");
 		trans.put("typewriter", "друкований");
 		trans.put("underlined", "підкреслений");

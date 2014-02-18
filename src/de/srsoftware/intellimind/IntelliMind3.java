@@ -170,7 +170,8 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				mindmapPanel.increaseDistance();
 				changeConfigurationFile();
 		}
-		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",new Object[]{version,date}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
+		String translators="Nelly Mostajo Berrospi, Olga Kyselova";
+		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",new Object[]{version,translators,date}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
 		if (command.equals("insertImage") && (commandKnown = true)) mindmapPanel.setImageOfCurrentNode(selectImage());
 		if (command.equals("insertLink") && (commandKnown = true)) try {
 			mindmapPanel.setLinkOfCurrentNode(openFile());

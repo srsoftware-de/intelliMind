@@ -68,7 +68,8 @@ public class TranslationES extends Translation{
 		trans.put("Information", "Información");
 		trans.put("insert/edit link","Insertar/editar enlace");
 		trans.put("insert image","Insertar imagen");
-		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#", "IntelliMind3\nversión #\nen SRSoftware - www.srsoftware.de\nautor:\nStephan Richter (srichter@srsoftware.de)\ntodos los derechos reservados\n#");
+//		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
+//							"IntelliMind3\nversión #\nen SRSoftware - www.srsoftware.de\nautor:\nStephan Richter (srichter@srsoftware.de)\ntodos los derechos reservados\n#");
 		trans.put("integral", "integral");
 		trans.put("interactive export", "exportación interactiva");
 		trans.put("italic", "cursiva");
@@ -139,6 +140,7 @@ public class TranslationES extends Translation{
 		trans.put("to next node", "ir al siguiente nodo");
 		trans.put("to previous node", "ir al nodo anterior");
 		trans.put("to root", "a raíz");
+//		trans.put("Translation by #", "Übersetzung: #");		
 		trans.put("Tree corrupt: UP-command found while at root node.", "Mapa corrompido: Se encontró comando UP en nodo principal (raíz).");
 		trans.put("typewriter", "mecanografiado");
 		trans.put("underlined", "subrayar");
