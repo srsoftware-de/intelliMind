@@ -1,6 +1,4 @@
-﻿// First - English, Second - Russian, Third - Ukrainian
-
-package de.srsoftware.intellimind;
+﻿package de.srsoftware.intellimind;
 import java.util.TreeMap;
 
 import de.srsoftware.tools.translations.Translation;
@@ -18,8 +16,8 @@ public class TranslationRU extends Translation{
 		trans.put("Cancel", "Отмена");
 		trans.put("cases", "варианты");
 		trans.put("ceiling", "округление");
-//		trans.put("change background color");
-		//trans.put("change language");
+		trans.put("change background color","изменить цвет фона");
+		trans.put("change language","изменить язык ввода");
 		trans.put("Change text of current mindmap node", "Изменить текст на текущем узле карты памяти");
 		trans.put("Choose link target manually:", "Введите ссылку:");		
 		trans.put("close", "закрыть");
@@ -66,6 +64,7 @@ public class TranslationRU extends Translation{
 		trans.put("Help", "Помощь");
 		trans.put("image file", "файл с рисунком");
 		trans.put("increase node distance", "Увеличить растояние между узлома");
+		//trans.put("Info", "Info");
 		trans.put("Information", "Информация");
 		trans.put("insert/edit link","вставка/правка ссылки");
 		trans.put("insert image","вставить рисунок");
@@ -81,10 +80,11 @@ public class TranslationRU extends Translation{
 		trans.put("Mindmap", "диаграмма связей");
 		trans.put("mindmap file", "файл карты памяти");
 		trans.put("mindmap for subtree","Карта памяти для под-дерева");
+		//trans.put("Navigation", "Navigation");
 		trans.put("node background color","фоновый цвет узла");
-		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #", "Узел в файле:\n#\n\nТекст:\n#\n\nРисунок:\n#\n\nСсылка:\n#\n\nЦвет текста: #\nЦвет фона: #");
+		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #",
+							"Узел в файле:\n#\n\nТекст:\n#\n\nРисунок:\n#\n\nСсылка:\n#\n\nЦвет текста: #\nЦвет фона: #");
 		trans.put("# not ready to be read!", "# не готов для чтения!");
-		trans.put("paste", "вставка");
 		trans.put("new brother node", "новый соседний узел");
 		trans.put("new child node", "новый наследуемый узел");
 		trans.put("new Mindmap", "новая карта памяти");
@@ -101,7 +101,7 @@ public class TranslationRU extends Translation{
 		trans.put("on Google Images","в Google рисунках");
 		trans.put("on Wikipedia","в Wikipedia");
 		trans.put("overlined", "линия сверху");
-		trans.put("was not able to resolve path to file (#)!", "Путь к файлу (#) не найден!");
+		trans.put("paste", "вставка");
 		trans.put("Preferences", "Предпочтения");
 		trans.put("product", "произведение");
 		trans.put("propagate background color", "распространить цвет фона");
@@ -154,7 +154,8 @@ public class TranslationRU extends Translation{
 		trans.put("Warning: interactive export not supported, yet.", "Предупреждение: интерактивный экспорт временно не поддерживается.");
 		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!",
 							"Предупреждение! Файл # был одновременно изменен в двух или более местах. Изменения только одного примера будут сохранены в #!\nИзменения других примеров будут сохранены в резервные копии файлов в той же папке!");
-		trans.put("Welcome to IntelliMind #", "Добро пожаловать в IntellMind #");
+		trans.put("was not able to resolve path to file (#)!", "Путь к файлу (#) не найден!");
+				trans.put("Welcome to IntelliMind #", "Добро пожаловать в IntellMind #");
 		
 		trans.put(" Mo", " Пн");
 		trans.put(" Tu", " Вт");

@@ -1,6 +1,4 @@
-﻿// First - English, Second - Russian, Third - Ukrainian
-
-package de.srsoftware.intellimind;
+﻿package de.srsoftware.intellimind;
 import java.util.TreeMap;
 
 import de.srsoftware.tools.translations.Translation;
@@ -66,6 +64,7 @@ public class TranslationUK extends Translation{
 		trans.put("Help", "Допомога");
 		trans.put("image file", "файл з рисунком");
 		trans.put("increase node distance", "Збільшити відстань між вузлами");
+		//trans.put("Info", "Info");
 		trans.put("Information", "Інформація");
 		trans.put("insert/edit link", "вставка/правка посилання");
 		trans.put("insert image", "вставити рисунок");
@@ -81,11 +80,11 @@ public class TranslationUK extends Translation{
 		trans.put("Mindmap", "діаграма зв'язків");
 		trans.put("mindmap file", "файл карти пам'яті");
 		trans.put("mindmap for subtree", "Карта пам'яті для під-дерева");
+		trans.put("Navigation", "Navigation");
 		trans.put("node background color", "фоновий колір вузла");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #",
 							"Вузл у файлі:\n#\n\nТекст:\n#\n\nЗображення:\n#\n\nПосилання:\n#\n\nКолір тексту: #\nКолір фону: #");
 		trans.put("# not ready to be read!", "# не готовий для читання!");
-		trans.put("paste", "вставка");
 		trans.put("new brother node", "новий сусідній вузол");
 		trans.put("new child node", "новий наслідуємий вузол");
 		trans.put("new Mindmap", "нова карта пам'яті");
@@ -102,7 +101,7 @@ public class TranslationUK extends Translation{
 		trans.put("on Google Images", "у Google рисунках");
 		trans.put("on Wikipedia", "у Wikipedia");
 		trans.put("overlined", "лінія зверху");
-		trans.put("was not able to resolve path to file (#)!", "Шлях до файлу (#) не знайдено!");
+		trans.put("paste", "вставка");
 		trans.put("Preferences", "Уподобання");
 		trans.put("product", "добуток");
 		trans.put("propagate background color", "розповсюдити колір фону");
@@ -155,6 +154,7 @@ public class TranslationUK extends Translation{
 		trans.put("Warning: interactive export not supported, yet.", "Попередження: інтерактивний експорт тимчасово не підтримується");
 		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!", 
 							"Попередження! Файл # було одночасно змінено в двох або більше місцях. Зміни лише одного прикладу буде збережено у #!\nЗміни інших прикладів буде збережено у резервні копії файлів у тій же папці!");
+		trans.put("was not able to resolve path to file (#)!", "Шлях до файлу (#) не знайдено!");
 		trans.put("Welcome to IntelliMind #", "Вітаємо у IntellMind #");
 		
 		trans.put(" Mo", " Пн");

@@ -64,6 +64,7 @@ public class TranslationES extends Translation{
 		trans.put("Help", "Ayuda");
 		trans.put("image file", "documento de la imagen");
 		trans.put("increase node distance", "incrementar distancia entre nodos");
+//		trans.put("Info", "Info");
 		trans.put("Information", "Información");
 		trans.put("insert/edit link","Insertar/editar enlace");
 		trans.put("insert image","Insertar imagen");
@@ -81,7 +82,6 @@ public class TranslationES extends Translation{
 		trans.put("node background color","Color de fondo del nodo");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #", "Nodo en documento:\n#\n\nText:\n#\n\nImagen:\n#\n\nLink:\n#\n\ncolor de Texto: #\nColor de fondo: #");
 		trans.put("# not ready to be read!", "# aún no está listo para ser leído!");
-		trans.put("paste", "pegar");
 		trans.put("new brother node", "nuevo nodo contiguo");
 		trans.put("new child node", "nuevo nodo secundario");
 		trans.put("new Mindmap", "nuevo Mindmap");
@@ -98,7 +98,7 @@ public class TranslationES extends Translation{
 		trans.put("on Google Images","de Google Images");
 		trans.put("on Wikipedia","de Wikipedia");
 		trans.put("overlined", "colocar raya superior");
-		trans.put("was not able to resolve path to file (#)!", "No se pudo resolver la ubicación del documento (#) !");
+		trans.put("paste", "pegar");
 		trans.put("Preferences", "Preferencias");
 		trans.put("product", "producto");
 		trans.put("propagate background color", "extender color de fondo");
@@ -116,7 +116,8 @@ public class TranslationES extends Translation{
 		trans.put("select background color", "Seleccionar color de fondo");
 		trans.put("select foreground color", "Seleccionar color del primer plano");
 		trans.put("Select output folder", "Seleccionar carpeta de destino");
-		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:", "<html><br>Selecciona el idioma de tu preferencia a<br>usar (prioritario primero) separado por comas:");
+		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:",
+							"<html><br>Selecciona el idioma de tu preferencia a<br>usar (prioritario primero) separado por comas:");
 		trans.put("set current subtree to root", "convertir mapa secundario en raíz");
 		trans.put("Show me allowed two-letter codes!", "Mostrar códigos de dos letras permitidos!");
 		trans.put("small", "pequeño");
@@ -148,7 +149,9 @@ public class TranslationES extends Translation{
 		trans.put("Waiting for #", "Esperando por #");
 		trans.put("Warning", "Advertencia");
 		trans.put("Warning: interactive export not supported, yet.", "Advertencia: Exportación interactiva aún no disponible.");
-		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!", "Advertencia! El documento # está siendo editado en dos o más lugares al mismo tiempo. Sólo los cambios de una instancia serán guardados en # !\nCambios de otras instancias serán guardados en documento de reserva en la misma carpeta!");
+		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!",
+							"Advertencia! El documento # está siendo editado en dos o más lugares al mismo tiempo. Sólo los cambios de una instancia serán guardados en # !\nCambios de otras instancias serán guardados en documento de reserva en la misma carpeta!");
+		trans.put("was not able to resolve path to file (#)!", "No se pudo resolver la ubicación del documento (#) !");
 		trans.put("Welcome to IntelliMind #", "Bienvenido a IntelliMind #");
 		
 		trans.put(" Mo", " Lu");

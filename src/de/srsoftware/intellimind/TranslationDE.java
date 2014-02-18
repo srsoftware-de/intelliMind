@@ -61,13 +61,15 @@ public class TranslationDE extends Translation{
 		trans.put("File type not supported: ", "Dateityp wird nicht unterstützt: ");
 		trans.put("floor", "Abrundung");
 		trans.put("fraction", "Bruch");
-		trans.put("Help", "Hilfe");
+		trans.put("Help", "Hilfe");		
 		trans.put("image file", "Bilddatei");
 		trans.put("increase node distance", "Knotenabstand vergrößern");
+		trans.put("Info", "Info");
 		trans.put("Information", "Information");
 		trans.put("insert/edit link","Link einfügen/bearbeiten");
 		trans.put("insert image","Bild einfügen");
-		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#", "IntelliMind3\nVersion #\nvon SRSoftware - www.srsoftware.de\nUrheber:\nStephan Richter (srichter@srsoftware.de)\nAlle Rechte vorbehalten\n#");
+		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\nall rights reserved\n#",
+							"IntelliMind3\nVersion #\nvon SRSoftware - www.srsoftware.de\nUrheber:\nStephan Richter (srichter@srsoftware.de)\nAlle Rechte vorbehalten\n#");
 		trans.put("integral", "Integral");
 		trans.put("interactive export", "interaktiver Export");
 		trans.put("italic", "kursiv");
@@ -78,10 +80,10 @@ public class TranslationDE extends Translation{
 		trans.put("Mindmap", "Mindmap");
 		trans.put("mindmap file", "Mindmap-Datei");
 		trans.put("mindmap for subtree","Mindmap als Unterknoten laden");
+		trans.put("Navigation","Navigation");
 		trans.put("node background color","Hintergrundfarbe des Knotens");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #", "Knoten in Datei:\n#\n\nText:\n#\n\nBild:\n#\n\nLink:\n#\n\nTextfarbe: #\nHintergrundfarbe: #");
 		trans.put("# not ready to be read!", "# nicht bereit zum Lesen!");
-		trans.put("paste", "einfügen");
 		trans.put("new brother node", "neuer Nachbarknoten");
 		trans.put("new child node", "neuer Unterknoten");
 		trans.put("new Mindmap", "neues Mindmap");
@@ -98,11 +100,11 @@ public class TranslationDE extends Translation{
 		trans.put("on Google Images","bei Google Images");
 		trans.put("on Wikipedia","bei Wikipedia");
 		trans.put("overlined", "überstrichen");
-		trans.put("was not able to resolve path to file (#)!", "Pfad zu Datei (#) konnte nicht aufgelöst werden!");
-		trans.put("Preferences", "Eigenschaften");
+		trans.put("paste", "einfügen");
 		trans.put("product", "Produkt");
 		trans.put("propagate background color", "Hintergrundfarbe verschleppen");
 		trans.put("propagate text color", "Textfarbe verschleppen");
+		trans.put("Preferences", "Eigenschaften");
 		trans.put("refresh (F5)","aktualisieren (F5)");
 		trans.put("restore default settings", "Standardeinstellungen wiederherstellen");
 		trans.put("root", "Wurzel");
@@ -116,7 +118,8 @@ public class TranslationDE extends Translation{
 		trans.put("select background color", "Hintergrundfarbe wählen");
 		trans.put("select foreground color", "Vordergrundfarbe wählen");
 		trans.put("Select output folder", "Ordner zum Speichern wählen");
-		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:", "<html><br>Wählen Sie die von Ihnen bevorzugten Sprachen<br>(höchste Priorität zuerst). Trennen Sie durch Kommata:");
+		trans.put("<html><br>Select the languages you prefer to<br>use (high priority first) separated by commas:",
+							"<html><br>Wählen Sie die von Ihnen bevorzugten Sprachen<br>(höchste Priorität zuerst). Trennen Sie durch Kommata:");
 		trans.put("set current subtree to root", "aktuellen Teilbaum als Wurzel setzen");
 		trans.put("Show me allowed two-letter codes!", "Zeige mir erlaubte Zwei-Zeichen-Codes!");
 		trans.put("small", "klein");
@@ -148,7 +151,9 @@ public class TranslationDE extends Translation{
 		trans.put("Waiting for #", "Warte auf #");
 		trans.put("Warning", "Warnung");
 		trans.put("Warning: interactive export not supported, yet.", "Warnung: interactiver Export wird noch nicht unterstützt.");
-		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!", "Warnung! Die Datei # wurde gleich an mehreren Einbindungsstellen geändert. Nur die Änderungen einer Instanz werden unter # gespeichert werden!\nÄnderungen an den anderen Instanzen werden in Backupdateien im gleichen Ordner gespeichert!");
+		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!",
+							"Warnung! Die Datei # wurde gleich an mehreren Einbindungsstellen geändert. Nur die Änderungen einer Instanz werden unter # gespeichert werden!\nÄnderungen an den anderen Instanzen werden in Backupdateien im gleichen Ordner gespeichert!");
+		trans.put("was not able to resolve path to file (#)!", "Pfad zu Datei (#) konnte nicht aufgelöst werden!");
 		trans.put("Welcome to IntelliMind #", "Wilkommen bei IntelliMind #");
 		
 		trans.put(" Mo", " Mo");
