@@ -37,8 +37,8 @@ public class TranslationRU extends Translation{
 		trans.put("Edit", "Правка");
 		trans.put("edit text", "правка текста");
 		trans.put("embedded tree (#) could not be resolved!", "Поддерево (#) не найдено!");
-	//	trans.put("enter base (and exponent, if you want):", "Bais (und Exponent, falls erwünscht) eingeben:");
 		trans.put("enter cases separated by comma or semicolon:", "Вводите варианты через запятую или точку с запятой");
+//		trans.put("enter (degree,) radicand of the root expression:", "(Wurzelexponent, ) Radikant des Wurzelausdrucks eingeben:");
 		trans.put("enter divisor:", "введите делитель");
 		trans.put("enter integral bounds, separated by comma:", "Введите границы интеграла через запятую:");
 	//	trans.put("enter lower bounds for product:", "Untere Grenze für Produkt angeben:");
@@ -148,14 +148,14 @@ public class TranslationRU extends Translation{
 		trans.put("Uparrow (single)", "Стрелка вверх (одинарная)");
 		trans.put("View", "Вид");
 		trans.put("You have unsaved changes in your current mindmap. Shall those be saved?", "Имеются не сохраненные изменения в открытой карте памяти. Хотите их сохранить?");
-		trans.put("You will need to restart for this settings to take effect", "Для того, чтобы изменния вступили в силу, необходимо перезапустить программу");
+		trans.put("You need to restart the program to apply these settings!", "Для того, чтобы изменния вступили в силу, необходимо перезапустить программу");
 		trans.put("Waiting for #", "Подождите #");
 		trans.put("Warning", "Предупреждение");
 		trans.put("Warning: interactive export not supported, yet.", "Предупреждение: интерактивный экспорт временно не поддерживается.");
 		trans.put("Warning! The File # has been concurrently edited at two or more places. Only changes of one instance will be saved to #!\nChanges of other instances will be saved to backup files in the same folder!",
 							"Предупреждение! Файл # был одновременно изменен в двух или более местах. Изменения только одного примера будут сохранены в #!\nИзменения других примеров будут сохранены в резервные копии файлов в той же папке!");
 		trans.put("was not able to resolve path to file (#)!", "Путь к файлу (#) не найден!");
-				trans.put("Welcome to IntelliMind #", "Добро пожаловать в IntellMind #");
+		trans.put("Welcome to IntelliMind #", "Добро пожаловать в IntellMind #");
 		
 		trans.put(" Mo", " Пн");
 		trans.put(" Tu", " Вт");

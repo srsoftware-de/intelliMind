@@ -37,8 +37,8 @@ public class TranslationDE extends Translation{
 		trans.put("Edit", "Bearbeiten");
 		trans.put("edit text", "Text bearbeiten");
 		trans.put("embedded tree (#) could not be resolved!", "Eingebetteter Baum (#) konnte nicht aufgelöst werden!");
-		trans.put("enter base (and exponent, if you want):", "Bais (und Exponent, falls erwünscht) eingeben:");
 		trans.put("enter cases separated by comma or semicolon:", "Fälle, separiert durch Kommata oder Semikolon, eingeben:");
+		trans.put("enter (degree,) radicand of the root expression:", "(Wurzelexponent, ) Radikant des Wurzelausdrucks eingeben:");
 		trans.put("enter divisor:", "Divisor eingeben:");
 		trans.put("enter integral bounds, separated by comma:", "Integralgrenzen, getrennt durch Komma, eingeben:");
 		trans.put("enter lower bounds for product:", "Untere Grenze für Produkt angeben:");
@@ -147,7 +147,7 @@ public class TranslationDE extends Translation{
 		trans.put("Uparrow (single)", "Pfeil hoch (einfach)");
 		trans.put("View", "Ansicht");
 		trans.put("You have unsaved changes in your current mindmap. Shall those be saved?", "Sie haben ungespeicherte Änderungen in Ihrem offenen Mindmap. Sollen diese gespeichert werden?");
-		trans.put("You will need to restart for this settings to take effect", "Starten Sie das Programm neu, damit diese Änderungen aktiv werden");
+		trans.put("You need to restart the program to apply these settings!", "Starten Sie das Programm neu, damit diese Änderungen aktiv werden");
 		trans.put("Waiting for #", "Warte auf #");
 		trans.put("Warning", "Warnung");
 		trans.put("Warning: interactive export not supported, yet.", "Warnung: interactiver Export wird noch nicht unterstützt.");

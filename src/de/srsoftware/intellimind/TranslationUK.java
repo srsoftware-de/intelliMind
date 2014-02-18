@@ -37,8 +37,8 @@ public class TranslationUK extends Translation{
 		trans.put("Edit", "Правка");
 		trans.put("edit text", "правка тексту");
 		trans.put("embedded tree (#) could not be resolved!", "Піддерево (#) не знайдено!");
-	//	trans.put("enter base (and exponent, if you want):", "Bais (und Exponent, falls erwünscht) eingeben:");
 		trans.put("enter cases separated by comma or semicolon:", "введіть варіанти черз кому або крапку з комою");
+//		trans.put("enter (degree,) radicand of the root expression:", "(Wurzelexponent, ) Radikant des Wurzelausdrucks eingeben:");
 		trans.put("enter divisor:", "введіть дільник");
 		trans.put("enter integral bounds, separated by comma:", "Введіть границі інтегралу через кому");
 	//	trans.put("enter lower bounds for product:", "Untere Grenze für Produkt angeben:");
@@ -148,7 +148,7 @@ public class TranslationUK extends Translation{
 		trans.put("Uparrow (single)", "Стрілка вверх (одинарна)");
 		trans.put("View", "Вид");
 		trans.put("You have unsaved changes in your current mindmap. Shall those be saved?", "Відкрита карта пам'яті містить не збережені дані. Зберегти зміни?");
-		trans.put("You will need to restart for this settings to take effect", "необхідно перезапустити програму");
+		trans.put("You need to restart the program to apply these settings!", "необхідно перезапустити програму");
 		trans.put("Waiting for #", "Зачекайте #");
 		trans.put("Warning", "Попередження");
 		trans.put("Warning: interactive export not supported, yet.", "Попередження: інтерактивний експорт тимчасово не підтримується");

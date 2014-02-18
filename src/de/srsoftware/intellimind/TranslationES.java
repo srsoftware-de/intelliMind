@@ -37,9 +37,9 @@ public class TranslationES extends Translation{
 		trans.put("Edit", "Editar");
 		trans.put("edit text", "editar texto");
 		trans.put("embedded tree (#) could not be resolved!", "La ramificación interna (#) no pudo ser resuelta!");
-		trans.put("enter base (and exponent, if you want):", "Introducir base (y exponente, si se requiere):");
 		trans.put("enter cases separated by comma or semicolon:", "Introducir enunciados, separados por comas o punto y coma:");
 		trans.put("enter divisor:", "Introducir divisor:");
+//fr		trans.put("enter (degree,) radicand of the root expression:", "(Wurzelexponent, ) Radikant des Wurzelausdrucks eingeben:");		
 		trans.put("enter integral bounds, separated by comma:", "Introducir límites integrales separados por comas:");
 		trans.put("enter lower bounds for product:", "Introducir límites inferiores para el producto:");
 		trans.put("enter lower bounds for sum:", "Introducir límites inferiores para la suma:");
@@ -146,7 +146,7 @@ public class TranslationES extends Translation{
 		trans.put("Uparrow (single)", "Flecha hacia arriba (una vez)");
 		trans.put("View", "Vista");
 		trans.put("You have unsaved changes in your current mindmap. Shall those be saved?", "Hay cambios sin guardar en tu mindmap. Guardar cambios?");
-		trans.put("You will need to restart for this settings to take effect", "Se debe reiniciar programa para que se active este ajuste");
+		trans.put("You need to restart the program to apply these settings!", "Se debe reiniciar programa para que se active este ajuste");
 		trans.put("Waiting for #", "Esperando por #");
 		trans.put("Warning", "Advertencia");
 		trans.put("Warning: interactive export not supported, yet.", "Advertencia: Exportación interactiva aún no disponible.");

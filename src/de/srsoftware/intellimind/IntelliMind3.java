@@ -114,29 +114,27 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	//private URL lastOpenedFile = null;
 
 	public IntelliMind3() throws IOException {
-		this(_("Welcome to IntelliMind #",version));
-
-		this.addComponentListener(this);
-	}
-
-	public IntelliMind3(String title) throws IOException {
-		super(title);
+		super(_("Welcome to IntelliMind #",version));
 		config=new Configuration("intelliMind3");
 		langConf=config.get("languages");
-		if (langConf!=null && !langConf.isEmpty()){
-			String[] langs = langConf.split(",");
-			for (String lang:langs){
-				if (Translations.getFor(IntelliMind3.class,lang)) break;
-			}
-		}
+		setLang(langConf);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 		addKeyListener(this);
 		createComponents();
 		readConfig();
-		
+		this.addComponentListener(this);
 	}
 
+	private void setLang(String langConf) {	
+		if (langConf!=null && !langConf.isEmpty()){
+		String[] langs = langConf.split(",");
+		for (String lang:langs){
+			if (Translations.getFor(IntelliMind3.class,lang)) break;
+		}
+		super.setTitle(_("Welcome to IntelliMind #",version));
+	}
+}
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		boolean commandKnown = false;
@@ -267,7 +265,10 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		message.add(codeButton);
 		message.skalieren();
 		langConf=JOptionPane.showInputDialog(this,message,langConf);
-		JOptionPane.showMessageDialog(this, _("You will need to restart for this settings to take effect"));
+		String oldLang=_("You need to restart the program to apply these settings!");
+		setLang(langConf);
+		String newLang=_("You need to restart the program to apply these settings!");
+		JOptionPane.showMessageDialog(this,"<html>"+oldLang+"<br>"+newLang);
 	}
 	public void componentHidden(ComponentEvent e) {
 		// TODO Auto-generated method stub
