@@ -39,7 +39,7 @@ public class TranslationES extends Translation{
 		trans.put("embedded tree (#) could not be resolved!", "La ramificación interna (#) no pudo ser resuelta!");
 		trans.put("enter cases separated by comma or semicolon:", "Introducir enunciados, separados por comas o punto y coma:");
 		trans.put("enter divisor:", "Introducir divisor:");
-//fr		trans.put("enter (degree,) radicand of the root expression:", "(Wurzelexponent, ) Radikant des Wurzelausdrucks eingeben:");		
+		trans.put("enter (degree,) radicand of the root expression:", "Ingresar el (índice, ) radical que le corresponde a la función raíz:");		
 		trans.put("enter integral bounds, separated by comma:", "Introducir límites integrales separados por comas:");
 		trans.put("enter lower bounds for product:", "Introducir límites inferiores para el producto:");
 		trans.put("enter lower bounds for sum:", "Introducir límites inferiores para la suma:");
@@ -64,7 +64,7 @@ public class TranslationES extends Translation{
 		trans.put("Help", "Ayuda");
 		trans.put("image file", "documento de la imagen");
 		trans.put("increase node distance", "incrementar distancia entre nodos");
-//		trans.put("Info", "Info");
+		trans.put("Info", "Información");
 		trans.put("Information", "Información");
 		trans.put("insert/edit link","Insertar/editar enlace");
 		trans.put("insert image","Insertar imagen");
@@ -79,7 +79,7 @@ public class TranslationES extends Translation{
 		trans.put("Mindmap", "Mindmap");
 		trans.put("mindmap file", "documento del Mindmap");
 		trans.put("mindmap for subtree","cargar Mindmap como nodo secundario");
-//		trans.put("Navigation","Navigation");
+		trans.put("Navigation","Navegar");
 		trans.put("node background color","Color de fondo del nodo");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #", "Nodo en documento:\n#\n\nText:\n#\n\nImagen:\n#\n\nLink:\n#\n\ncolor de Texto: #\nColor de fondo: #");
 		trans.put("# not ready to be read!", "# aún no está listo para ser leído!");
@@ -94,10 +94,10 @@ public class TranslationES extends Translation{
 		trans.put("open image...", "abrir imagen...");
 		trans.put("open mindmap", "abrir Mindmap");
 		trans.put("open mindmap...", "abrir Mindmap...");
-		trans.put("on eBay","de eBay");
-		trans.put("on Google","de Google");
-		trans.put("on Google Images","de Google Images");
-		trans.put("on Wikipedia","de Wikipedia");
+		trans.put("on eBay","en eBay");
+		trans.put("on Google","en Google");
+		trans.put("on Google Images","en Google Images");
+		trans.put("on Wikipedia","en Wikipedia");
 		trans.put("overlined", "colocar raya superior");
 		trans.put("paste", "pegar");
 		trans.put("Preferences", "Preferencias");
