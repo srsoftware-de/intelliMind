@@ -569,7 +569,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	}
 
 	private void createInfoMenu() {
-		InfoMenu = new JMenu("Info");
+		InfoMenu = new JMenu(_("Info"));
 		InfoMenu.setMnemonic(KeyEvent.VK_I);
 
 		InfoMenu.add(IHelp = new JMenuItem(_("Help"), KeyEvent.VK_H));
