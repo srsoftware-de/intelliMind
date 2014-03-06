@@ -11,7 +11,7 @@ public class TranslationRU extends Translation{
 		TreeMap<String,String> trans=new TreeMap<String, String>();
 		trans.put("a mindmap's root must not have a brother","Корень карты памяти не должен иметь соседей");
 		trans.put("Arrows", "Стрелки");
-		trans.put("big", "Большой");
+		trans.put("big", "Крупный");
 		trans.put("bold", "Жирный");
 		trans.put("Cancel", "Отмена");
 		trans.put("cases", "Варианты");
@@ -73,7 +73,7 @@ public class TranslationRU extends Translation{
 		trans.put("integral", "Интеграл");
 		trans.put("interactive export", "Интерактивный экспорт");
 		trans.put("italic", "Курсив");
-		trans.put("larger", "Увеличить размер");
+		trans.put("larger", "Увеличить размер узла");
 		trans.put("LYING TREE layout", "Просмотр карты памяти в виде горизонтального дерева");
 		trans.put("matrix", "Матрица");
 		trans.put("maximum depth", "Максимальная глубина");
@@ -81,7 +81,7 @@ public class TranslationRU extends Translation{
 		trans.put("mindmap file", "Файл карты памяти");
 		trans.put("mindmap for subtree","Карта памяти для под-дерева");
 		trans.put("Navigation", "Навигация");
-		trans.put("node background color","фоновый цвет узла");
+		trans.put("node background color","Фоновый цвет узла");
 		trans.put("Node in File:\n#\n\nText:\n#\n\nImage:\n#\n\nLink:\n#\n\nText color: #\nBackground color: #",
 							"Узел в файле:\n#\n\nТекст:\n#\n\nРисунок:\n#\n\nСсылка:\n#\n\nЦвет текста: #\nЦвет фона: #");
 		trans.put("# not ready to be read!", "# не готов для чтения!");
@@ -123,11 +123,11 @@ public class TranslationRU extends Translation{
 							"<html><br>Укажите языки, которые Вы хотели бы <br>использовать (по приоритету) через запятую:");
 		trans.put("set current subtree to root", "Установить текущее под-дерево в корень");
 		trans.put("Show me allowed two-letter codes!", "Показывать сокращение в виде 2-х букв!");
-		trans.put("small", "Маленький");
-		trans.put("smaller", "Меньше");
+		trans.put("small", "Мелкий");
+		trans.put("smaller", "Уменьшить размер узла");
 		trans.put("Sorry, currently no help is available here.", "К сожалению, нет доступной помощи");
 		trans.put("Sorry, I was not able to build an URL from \"#\"!", "К сожалению, я не смогу создать URL из \"#\"!");
-    trans.put("Sorry, I was not able to save the file as \"#\"!", "К сожалению, я не могу сохранить файл как \"#\"!");
+         	trans.put("Sorry, I was not able to save the file as \"#\"!", "К сожалению, я не могу сохранить файл как \"#\"!");
 		trans.put("STAR TREE layout", "Просмотр карты памяти в виде звезды");
 		trans.put("subscript", "Нижний индекс");
 		trans.put("sum", "Сумма");
