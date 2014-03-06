@@ -11,7 +11,7 @@ public class TranslationUK extends Translation{
 		TreeMap<String,String> trans=new TreeMap<String, String>();
 		trans.put("a mindmap's root must not have a brother", "Корінь карти пам'яті не має мати сусідів");
 		trans.put("Arrows", "Стрілки");
-		trans.put("big", "Великий");
+		trans.put("big", "Крупний");
 		trans.put("bold", "Жирний");
 		trans.put("Cancel", "Відмінити");
 		trans.put("cases", "Варіанти");
@@ -73,7 +73,7 @@ public class TranslationUK extends Translation{
 		trans.put("integral", "Інтеграл");
 		trans.put("interactive export", "Інтерактивний експорт");
 		trans.put("italic", "Курсив");
-		trans.put("larger", "Зменшити розмір");
+		trans.put("larger", "Збільшити розмір вузла");
 		trans.put("LYING TREE layout", "Відображати карту пам'яті у вигляді горизонтального дерева");
 		trans.put("matrix", "Матриця");
 		trans.put("maximum depth", "Максимальна глибина");
@@ -123,8 +123,8 @@ public class TranslationUK extends Translation{
 							"<html><br>Введіть мови, що Ви хотіли б <br>використовувати (за пріоритетом) через кому:");
 		trans.put("set current subtree to root", "Встановити дане під-дерево у корінь");
 		trans.put("Show me allowed two-letter codes!", "Відображати скорочення у вигляді 2-х літер!");
-		trans.put("small", "Маленький");
-		trans.put("smaller", "Менше");
+		trans.put("small", "Мілкий");
+		trans.put("smaller", "Зменшити розмір вузла");
 		trans.put("Sorry, currently no help is available here.", "Нажаль, немає доступної допомоги");
 		trans.put("Sorry, I was not able to build an URL from \"#\"!", "Вибачте, я не можу зробити URL з \"#\"!");
 		trans.put("Sorry, I was not able to save the file as \"#\"!", "Вибачте, я не можу зберегти файл як \"#\"!");
@@ -158,13 +158,13 @@ public class TranslationUK extends Translation{
 		trans.put("was not able to resolve path to file (#)!", "Шлях до файлу (#) не знайдено!");
 		trans.put("Welcome to IntelliMind #", "Вітаємо у IntellMind #");
 		
-		trans.put(" Mo", " Пн");
-		trans.put(" Tu", " Вт");
-		trans.put(" We", " Ср");
-		trans.put(" Th", " Чт");
-		trans.put(" Fr", " Пт");
-		trans.put(" Sa", " Сб");
-		trans.put(" Su", " Нд");
+		trans.put(" Mo", " Пн.");
+		trans.put(" Tu", " Вт.");
+		trans.put(" We", " Ср.");
+		trans.put(" Th", " Чт.");
+		trans.put(" Fr", " Пт.");
+		trans.put(" Sa", " Сб.");
+		trans.put(" Su", " Нд.");
 		
 		trans.put("January", "Січень");
 		trans.put("February", "Лютий");
