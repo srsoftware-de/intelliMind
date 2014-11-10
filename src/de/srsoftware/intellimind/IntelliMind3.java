@@ -82,7 +82,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private static String _(String key, Object insert) {
 		return Translations.get(key, insert);
 	}
-	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.6";
+	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.7";
 	private String date = "Januar 2014";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
@@ -171,7 +171,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				changeConfigurationFile();
 		}
 		String translators="Nelly Mostajo Berrospi, Olga Kyselova";
-		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",new Object[]{version,translators,date}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
+		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#\nversion #",new Object[]{translators,date,version+"\n"+Version.get()}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
 		if (command.equals("insertImage") && (commandKnown = true)) mindmapPanel.setImageOfCurrentNode(selectImage());
 		if (command.equals("insertLink") && (commandKnown = true)) try {
 			mindmapPanel.setLinkOfCurrentNode(openFile());
