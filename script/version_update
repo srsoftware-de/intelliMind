@@ -1,0 +1,17 @@
+#!/bin/bash
+BASE=$(pwd)
+DIRS="intelliMind3 Formula Tools Translations TreePanel xml-formatter"
+echo 'package de.srsoftware.intellimind;' > $BASE/Version.java
+echo '' >> $BASE/Version.java
+echo 'public class Version {' >> $BASE/Version.java
+echo '  public static String get(){' >> $BASE/Version.java
+echo -n '    return "' >> $BASE/Version.java
+for DIR in $DIRS; do
+  cd $HOME/workspace/$DIR
+  LINE="$DIR: $(git symbolic-ref --short HEAD) / $(git rev-parse HEAD)\\n"
+  cd $BACK
+  echo -n "$LINE" >> $BASE/Version.java
+done
+echo '";' >>$BASE/Version.java
+echo '  }' >> $BASE/Version.java
+echo '}' >> $BASE/Version.java
