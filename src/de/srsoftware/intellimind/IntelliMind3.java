@@ -83,7 +83,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private static String _(String key, Object insert) {
 		return Translations.get(key, insert);
 	}
-	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.8";
+	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.9";
 	private String date = "November 2014";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
