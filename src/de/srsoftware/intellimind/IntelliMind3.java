@@ -84,7 +84,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return Translations.get(key, insert);
 	}
 	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.8";
-	private String date = "Januar 2014";
+	private String date = "November 2014";
 	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
 	private KeyStroke CtrlW=KeyStroke.getKeyStroke(KeyEvent.VK_W,2);
