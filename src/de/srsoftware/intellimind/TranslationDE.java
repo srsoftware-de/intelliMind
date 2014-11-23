@@ -30,6 +30,7 @@ public class TranslationDE extends Translation{
 		trans.put("delete", "entfernen");
 		trans.put("delete image", "Bild entfernen");
 		trans.put("delete link", "Link entfernen");
+		trans.put("directory for subtree", "Verzeichnis als Unterknoten laden");
 		trans.put("done", "fertig");
 		trans.put("don't follow links to a special file more than one time", "Links auf ein bestimmtes Mindmap nicht mehr als einmal folgen");
 		trans.put("Downarrow (double)", "Pfeil runter (doppelt)");

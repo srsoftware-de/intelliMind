@@ -461,8 +461,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		IMindmapForChild2.setActionCommand("mindmapForChild");
 		IMindmapForChild2.addActionListener(this);
 
-		BearbeitenMenu.add(IDirectoryForChild = new JMenuItem(_("directory for subtree"), KeyEvent.VK_M));
-		IDirectoryForChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 8));
+		BearbeitenMenu.add(IDirectoryForChild = new JMenuItem(_("directory for subtree"),KeyEvent.VK_R));
 		IDirectoryForChild.setActionCommand("directoryForChild");
 		IDirectoryForChild.addActionListener(this);
 
