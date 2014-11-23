@@ -38,6 +38,7 @@ import de.srsoftware.gui.treepanel.StarTreePanel;
 import de.srsoftware.gui.treepanel.TreeNode;
 import de.srsoftware.gui.treepanel.TreePanel;
 import de.srsoftware.tools.Configuration;
+import de.srsoftware.tools.DirectoryFilter;
 import de.srsoftware.tools.GenericFileFilter;
 import de.srsoftware.tools.HorizontalPanel;
 import de.srsoftware.tools.SuggestField;
@@ -107,6 +108,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private JMenuItem IMindmapForChild2, IInsertImage2, IInsertLink2, IDeleteLink2, ICut2, ICopy2, IPaste2, IDelete2, IBGColor2, IForeColor2;
 	private String langConf;
 	private Configuration config;
+	private JMenuItem IDirectoryForChild;
 
 	private static String trace;
 
@@ -157,6 +159,19 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		if (command.equals("delete") && (commandKnown = true)) mindmapPanel.deleteActive();
 		if (command.equals("deleteImage") && (commandKnown = true)) mindmapPanel.deleteActiveImage();
 		if (command.equals("deleteLink") && (commandKnown = true)) mindmapPanel.deleteActiveLink();
+		if (command.equals("directoryForChild") && (commandKnown = true)) try {
+			mindmapPanel.appendNewChild(openDirectory());
+			this.requestFocus();
+		} catch (FileNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		} catch (DataFormatException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		} catch (URISyntaxException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 		if (command.equals("ebaySearch") && (commandKnown = true)) Tools.execute("\"http://search.ebay.de/search/search.dll?satitle=" + mindmapPanel.currentNode().getTextWithoutPath() + "\"");
 		if (command.equals("export") && (commandKnown = true)) doHtmlExport();
 		
@@ -445,6 +460,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		IMindmapForChild2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 8));
 		IMindmapForChild2.setActionCommand("mindmapForChild");
 		IMindmapForChild2.addActionListener(this);
+
+		BearbeitenMenu.add(IDirectoryForChild = new JMenuItem(_("directory for subtree"), KeyEvent.VK_M));
+		IDirectoryForChild.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 8));
+		IDirectoryForChild.setActionCommand("directoryForChild");
+		IDirectoryForChild.addActionListener(this);
 
 		BearbeitenMenu.addSeparator();
 
@@ -947,6 +967,13 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return openMindmap(fileUrl);
 	}
 	
+	private TreeNode openDirectory() throws FileNotFoundException, DataFormatException, URISyntaxException {
+		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
+		URL fileUrl = Tools.showSelectFileDialog(_("open directory..."), null, new DirectoryFilter(_("directory")), this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
+		//lastOpenedFile = fileUrl;
+		return openMindmap(fileUrl);
+	}
 
 	private TreeNode openMindmap(URL fileUrl) throws FileNotFoundException, DataFormatException, URISyntaxException {
 		if (fileUrl == null) return null; // wenn keine URl angegeben ist: abbrechen
