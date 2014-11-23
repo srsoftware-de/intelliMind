@@ -342,7 +342,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 
 	private void changeConfigurationFile() {
 		try {
-			config.set("mindmap", mindmapPanel.tree.getSuperRoot().nodeFile());
+			if (mindmapPanel.tree==null){
+				config.unset("mindmap");
+			} else {
+				config.set("mindmap", mindmapPanel.tree.getSuperRoot().nodeFile());
+			}
 			config.set("trace",getTrace());
 		} catch (NullPointerException npe){}
 		config.set("languages",langConf);

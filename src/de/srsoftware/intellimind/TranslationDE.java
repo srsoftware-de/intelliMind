@@ -96,6 +96,7 @@ public class TranslationDE extends Translation{
 		trans.put("open image...", "Bild öffnen...");
 		trans.put("open mindmap", "Mindmap öffnen");
 		trans.put("open mindmap...", "Mindmap öffnen...");
+		trans.put("open directory...", "Verzeichnis öffnen...");
 		trans.put("on eBay","bei eBay");
 		trans.put("on Google","bei Google");
 		trans.put("on Google Images","bei Google Images");
