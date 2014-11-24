@@ -187,9 +187,25 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 		String translators="Nelly Mostajo Berrospi, Olga Kyselova";
 		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#\nversion #",new Object[]{translators,date,version+"\n"+Version.get()}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
-		if (command.equals("insertImage") && (commandKnown = true)) mindmapPanel.setImageOfCurrentNode(selectImage());
+		if (command.equals("insertImage") && (commandKnown = true)) {
+			String currentImage=null;
+			if (mindmapPanel !=null){
+				TreeNode currentNode = mindmapPanel.currentNode();
+				if (currentNode != null && currentNode.getNodeImage() != null){
+					currentImage=currentNode.getNodeImage().getUrl().toString();
+				}
+			}
+			mindmapPanel.setImageOfCurrentNode(selectImage(currentImage));
+		}
 		if (command.equals("insertLink") && (commandKnown = true)) try {
-			mindmapPanel.setLinkOfCurrentNode(openFile());
+			String currentLink=null;
+			if (mindmapPanel!=null){
+				TreeNode currentNode = mindmapPanel.currentNode();
+				if (currentNode!=null && currentNode.getLink() !=null){
+					currentLink=currentNode.getLink().toString();
+				}
+			}
+			mindmapPanel.setLinkOfCurrentNode(openFile(currentLink));
 		} catch (FileNotFoundException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -954,10 +970,10 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		}
 	}
 
-	private URL openFile() throws FileNotFoundException {
+	private URL openFile(String currentFile) throws FileNotFoundException {
 		String filename=null;
 		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap"), filename, null, this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"),currentFile);
 		//lastOpenedFile = fileUrl;
 		return fileUrl;
 	}
@@ -965,7 +981,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private TreeNode openMindmap() throws FileNotFoundException, DataFormatException, URISyntaxException {
 		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
 		URL fileUrl = Tools.showSelectFileDialog(_("open mindmap..."), null, new GenericFileFilter(_("mindmap file"), ".imf;.mm"), this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"),"");
 		//lastOpenedFile = fileUrl;
 		return openMindmap(fileUrl);
 	}
@@ -973,7 +989,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private TreeNode openDirectory() throws FileNotFoundException, DataFormatException, URISyntaxException {
 		//String filename = (lastOpenedFile == null) ? null : lastOpenedFile.toString();
 		URL fileUrl = Tools.showSelectFileDialog(_("open directory..."), null, new DirectoryFilter(_("directory")), this);
-		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"));
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Choose link target manually:"),"");
 		//lastOpenedFile = fileUrl;
 		return openMindmap(fileUrl);
 	}
@@ -1026,10 +1042,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 		return false;
 	}
 
-	private NodeImage selectImage() {
-		URL u = Tools.showSelectFileDialog(_("open image..."), null, new GenericFileFilter(_("image file"), "*.jpg;*.jpeg;*.gif;*.png"), this);
+	private NodeImage selectImage(String currentImage) {
+		URL fileUrl = Tools.showSelectFileDialog(_("open image..."), null, new GenericFileFilter(_("image file"), "*.jpg;*.jpeg;*.gif;*.png"), this);
+		if (fileUrl == null) fileUrl = Tools.showUrlInputDialog(this, _("Enter image path manually:"),currentImage);
 		this.requestFocus();
-		return (u == null) ? null : new NodeImage(u);
+		return (fileUrl == null) ? null : new NodeImage(fileUrl);
 	}
 
 	private void setMindmap(TreeNode mindmapNode) {

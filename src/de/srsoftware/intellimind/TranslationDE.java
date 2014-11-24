@@ -41,6 +41,7 @@ public class TranslationDE extends Translation{
 		trans.put("enter cases separated by comma or semicolon:", "Fälle, separiert durch Kommata oder Semikolon, eingeben:");
 		trans.put("enter (degree,) radicand of the root expression:", "(Wurzelexponent, ) Radikant des Wurzelausdrucks eingeben:");
 		trans.put("enter divisor:", "Divisor eingeben:");
+		trans.put("Enter image path manually:", "Bildpfad händisch angeben:");
 		trans.put("enter integral bounds, separated by comma:", "Integralgrenzen, getrennt durch Komma, eingeben:");
 		trans.put("enter lower bounds for product:", "Untere Grenze für Produkt angeben:");
 		trans.put("enter lower bounds for sum:", "Untere Grenze für Summe angeben:");
