@@ -1,7 +1,7 @@
-﻿package de.srsoftware.intellimind;
+﻿package de.keawe.intellimind;
 import java.util.TreeMap;
 
-import de.srsoftware.tools.translations.Translation;
+import de.keawe.tools.translations.Translation;
 
 
 public class TranslationUK extends Translation{
@@ -68,8 +68,8 @@ public class TranslationUK extends Translation{
 		trans.put("Information", "Інформація");
 		trans.put("insert/edit link", "Вставка/правка посилання");
 		trans.put("insert image", "Вставити рисунок");
-		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
-							"IntelliMind3\nВерсія #\nby SRSoftware - www.srsoftware.de\nАвтор:\nStephan Richter (s.richter@srsoftware.de)\n\nПереклад:\n#\nВсі права захищено\n#");
+		trans.put("IntelliMind3\nversion #\nby keawe - www.keawe.de\nauthor:\nStephan Richter (s.richter@keawe.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
+							"IntelliMind3\nВерсія #\nby keawe - www.keawe.de\nАвтор:\nStephan Richter (s.richter@keawe.de)\n\nПереклад:\n#\nВсі права захищено\n#");
 		trans.put("integral", "Інтеграл");
 		trans.put("interactive export", "Інтерактивний експорт");
 		trans.put("italic", "Курсив");

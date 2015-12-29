@@ -1,4 +1,4 @@
-package de.srsoftware.intellimind;
+package de.keawe.intellimind;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -18,8 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import de.srsoftware.tools.Tools;
-import de.srsoftware.tools.translations.Translations;
+import de.keawe.tools.Tools;
+import de.keawe.tools.translations.Translations;
 
 
 public class HtmlExportDialog extends JDialog {

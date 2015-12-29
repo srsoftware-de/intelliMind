@@ -1,4 +1,4 @@
-package de.srsoftware.intellimind;
+package de.keawe.intellimind;
 import java.util.TreeMap;
 
 

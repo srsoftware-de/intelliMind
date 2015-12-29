@@ -1,4 +1,4 @@
-package de.srsoftware.intellimind;
+package de.keawe.intellimind;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,19 +31,19 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import de.srsoftware.formula.FormulaInputDialog;
-import de.srsoftware.gui.treepanel.NodeImage;
-import de.srsoftware.gui.treepanel.RootTreePanel;
-import de.srsoftware.gui.treepanel.StarTreePanel;
-import de.srsoftware.gui.treepanel.TreeNode;
-import de.srsoftware.gui.treepanel.TreePanel;
-import de.srsoftware.tools.Configuration;
-import de.srsoftware.tools.DirectoryFilter;
-import de.srsoftware.tools.GenericFileFilter;
-import de.srsoftware.tools.HorizontalPanel;
-import de.srsoftware.tools.SuggestField;
-import de.srsoftware.tools.Tools;
-import de.srsoftware.tools.translations.Translations;
+import de.keawe.formula.FormulaInputDialog;
+import de.keawe.gui.treepanel.NodeImage;
+import de.keawe.gui.treepanel.RootTreePanel;
+import de.keawe.gui.treepanel.StarTreePanel;
+import de.keawe.gui.treepanel.TreeNode;
+import de.keawe.gui.treepanel.TreePanel;
+import de.keawe.tools.Configuration;
+import de.keawe.tools.DirectoryFilter;
+import de.keawe.tools.GenericFileFilter;
+import de.keawe.tools.HorizontalPanel;
+import de.keawe.tools.SuggestField;
+import de.keawe.tools.Tools;
+import de.keawe.tools.translations.Translations;
 
 public class IntelliMind3 extends JFrame implements ActionListener, WindowListener, KeyListener, ComponentListener {
 
@@ -64,9 +64,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			if (trace!=null) {
 				(new Tracer(intelliMind.mindmapPanel,trace)).start();
 			}
-			/*
-			 * / intelliMind.setMindmap(intelliMind.openMindmap(new URL("http://srsoftware.dyndns.info/mindmaps/I/intelliMind3.imf"))); //
-			 */
 		} catch (FileNotFoundException e) {
 			intelliMind.fileNotFound(e);
 		} catch (MalformedURLException e) {
@@ -83,9 +80,9 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private static String _(String key, Object insert) {
 		return Translations.get(key, insert);
 	}
-	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.5.9";
-	private String date = "November 2014";
-	private static String helpFile="http://mindmaps.srsoftware.de/Hilfe zu IntelliMind/hilfe.imf";
+	private static String version = /* Beim Updaten Versionshistory aktualisieren! */ "0.6.0";
+	private String date = "Dezember 2015";
+	private static String helpFile="https://mindmaps.keawe.de/Hilfe zu IntelliMind/hilfe.imf";
 	private TreePanel mindmapPanel;
 	private KeyStroke CtrlW=KeyStroke.getKeyStroke(KeyEvent.VK_W,2);
 	private KeyStroke CtrlMinus=KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,2);
@@ -186,7 +183,7 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 				changeConfigurationFile();
 		}
 		String translators="Nelly Mostajo Berrospi, Olga Kyselova";
-		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#\nversion #",new Object[]{translators,date,version+"\n"+Version.get()}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
+		if (command.equals("InfoWindow") && (commandKnown = true)) JOptionPane.showMessageDialog(this, _("IntelliMind3\nby keawe - www.keawe.de\nauthor:\nStephan Richter (s.richter@keawe.de)\n\nTranslation by:\n#\n\nall rights reserved\n#\nversion #",new Object[]{translators,date,version+"\n"+Version.get()}), _("Information"), JOptionPane.INFORMATION_MESSAGE);
 		if (command.equals("insertImage") && (commandKnown = true)) {
 			String currentImage=null;
 			if (mindmapPanel !=null){
@@ -919,7 +916,11 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 	private void readConfig() {
 		try {
 			String mindmap=config.get("mindmap");
-			if (mindmap!=null) mindmapToOpenAtStart=new URL(mindmap);
+			if (mindmap==null) {
+				mindmapToOpenAtStart = new URL(helpFile);
+			} else {
+				mindmapToOpenAtStart=new URL(mindmap);
+			}
 			String bgColor = config.get("backgroundColor");
 			if (bgColor != null) mindmapPanel.setBackground(new Color(Integer.parseInt(bgColor)));
 			String nodeDistance=config.get("nodeDistance");
@@ -945,14 +946,6 @@ public class IntelliMind3 extends JFrame implements ActionListener, WindowListen
 			if (display!=null) {
 				if (display.equals("StarTreePanel")) enableStarTree(true);
 			}
-		} catch (FileNotFoundException e) {
-			try {
-				mindmapToOpenAtStart = new URL(helpFile);
-			} catch (MalformedURLException e1) {
-				e1.printStackTrace();
-			}
-			mindmapPanel.setBackground(new Color(0, 155, 255));
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,6 @@
-package de.srsoftware.intellimind;
+package de.keawe.intellimind;
 
-import de.srsoftware.gui.treepanel.TreePanel;
+import de.keawe.gui.treepanel.TreePanel;
 
 	public class Tracer extends Thread{
 		private TreePanel mindmap;

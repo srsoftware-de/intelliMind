@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 'package de.srsoftware.intellimind;' > Version.java
+echo 'package de.keawe.intellimind;' > Version.java
 echo '' >> Version.java
 echo 'public class Version {' >> Version.java
 echo '  public static String get(){' >> Version.java

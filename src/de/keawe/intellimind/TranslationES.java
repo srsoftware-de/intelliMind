@@ -1,7 +1,7 @@
-package de.srsoftware.intellimind;
+package de.keawe.intellimind;
 import java.util.TreeMap;
 
-import de.srsoftware.tools.translations.Translation;
+import de.keawe.tools.translations.Translation;
 
 
 public class TranslationES extends Translation{
@@ -68,8 +68,8 @@ public class TranslationES extends Translation{
 		trans.put("Information", "Información");
 		trans.put("insert/edit link","Insertar/editar enlace");
 		trans.put("insert image","Insertar imagen");
-//		trans.put("IntelliMind3\nversion #\nby SRSoftware - www.srsoftware.de\nauthor:\nStephan Richter (s.richter@srsoftware.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
-//							"IntelliMind3\nversión #\nen SRSoftware - www.srsoftware.de\nautor:\nStephan Richter (srichter@srsoftware.de)\ntodos los derechos reservados\n#");
+//		trans.put("IntelliMind3\nversion #\nby keawe - www.keawe.de\nauthor:\nStephan Richter (s.richter@keawe.de)\n\nTranslation by:\n#\n\nall rights reserved\n#",
+//							"IntelliMind3\nversión #\nen keawe - www.keawe.de\nautor:\nStephan Richter (srichter@keawe.de)\ntodos los derechos reservados\n#");
 		trans.put("integral", "integral");
 		trans.put("interactive export", "exportación interactiva");
 		trans.put("italic", "cursiva");
