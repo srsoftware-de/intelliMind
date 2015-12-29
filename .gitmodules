@@ -1,0 +1,15 @@
+[submodule "libs/Tools"]
+	path = libs/Tools
+	url = https://github.com/StephanRichter/Tools
+[submodule "libs/Translations"]
+	path = libs/Translations
+	url = https://github.com/StephanRichter/Translations
+[submodule "libs/Formula"]
+	path = libs/Formula
+	url = https://github.com/StephanRichter/Formula
+[submodule "libs/TreePanel"]
+	path = libs/TreePanel
+	url = https://github.com/StephanRichter/TreePanel
+[submodule "libs/xml-formatter"]
+	path = libs/xml-formatter
+	url = https://github.com/StephanRichter/xml-formatter

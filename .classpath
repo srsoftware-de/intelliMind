@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/TreePanel"/>
-	<classpathentry kind="src" path="/Tools"/>
-	<classpathentry kind="src" path="/Formula"/>
-	<classpathentry kind="src" path="/Translations"/>
+	<classpathentry kind="src" path="libs/xml-formatter/src"/>
+	<classpathentry kind="src" path="libs/TreePanel/src"/>
+	<classpathentry kind="src" path="libs/Formula/src"/>
+	<classpathentry kind="src" path="libs/Tools/src"/>
+	<classpathentry kind="src" path="libs/Translations/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-1.7.0-openjdk-1.7.0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
